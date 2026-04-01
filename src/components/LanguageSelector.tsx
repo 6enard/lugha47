@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen } from 'lucide-react';
+import { ArrowLeft, Languages, ArrowRight } from 'lucide-react';
 
 interface Language {
   id: string;
@@ -22,46 +22,46 @@ export function LanguageSelector({
     <>
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-emerald-600 font-semibold hover:text-emerald-700 mb-8 transition"
+        className="group flex items-center gap-2 text-emerald-600 font-semibold hover:text-emerald-700 mb-12 transition-all duration-300 hover:gap-3"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
         Back to Dashboard
       </button>
 
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+      <div className="mb-16 text-center">
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
           Choose Your Language
         </h1>
-        <p className="text-lg text-gray-600">
-          Select a language to start learning today
+        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          Select a language to start your cultural journey today
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {languages.map((language) => (
-          <div
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {languages.map((language, index) => (
+          <button
             key={language.id}
-            className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl hover:border-emerald-200 transition group"
+            onClick={() => onSelectLanguage(language.id)}
+            className="group bg-white rounded-3xl shadow-lg p-8 border border-gray-200/50 hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 text-left hover:-translate-y-2"
+            style={{ animationDelay: `${index * 100}ms` }}
           >
-            <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-emerald-200 transition">
-              <BookOpen className="w-6 h-6 text-emerald-600" />
+            <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+              <Languages className="w-10 h-10 text-white" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-1">
+            <h3 className="text-3xl font-bold text-gray-900 mb-2">
               {language.name}
             </h3>
-            <p className="text-sm text-emerald-600 font-semibold mb-3">
+            <p className="text-xl text-emerald-600 font-bold mb-4">
               {language.nativeSpelling}
             </p>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 mb-6 leading-relaxed">
               {language.description}
             </p>
-            <button
-              onClick={() => onSelectLanguage(language.id)}
-              className="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition"
-            >
+            <div className="flex items-center gap-2 text-emerald-600 font-bold group-hover:gap-3 transition-all duration-300">
               Start Learning
-            </button>
-          </div>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </button>
         ))}
       </div>
     </>

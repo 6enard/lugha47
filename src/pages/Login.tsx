@@ -46,18 +46,18 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-sky-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 rounded-2xl mb-4">
-            <Languages className="w-8 h-8 text-white" />
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-3xl mb-6 shadow-xl">
+            <Languages className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">LUGHA47</h1>
-          <p className="text-gray-600">Welcome back! Continue learning</p>
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-emerald-700 to-teal-700 bg-clip-text text-transparent mb-3">LUGHA47</h1>
+          <p className="text-gray-600 text-lg">Welcome back! Continue learning</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Log In</h2>
+        <div className="bg-white rounded-3xl shadow-2xl p-10 border border-gray-200/50">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Log In</h2>
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
@@ -73,7 +73,7 @@ export function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-3">
                 Email Address
               </label>
               <input
@@ -82,13 +82,13 @@ export function Login() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 text-lg"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-bold text-gray-700 mb-3">
                 Password
               </label>
               <input
@@ -97,7 +97,7 @@ export function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 text-lg"
                 placeholder="Enter your password"
               />
             </div>
@@ -105,15 +105,15 @@ export function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:shadow-lg text-white font-bold py-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:scale-105 text-lg"
             >
               {loading ? 'Logging In...' : 'Log In'}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-gray-600">
+          <p className="mt-8 text-center text-gray-600 text-base">
             Don't have an account?{' '}
-            <Link to="/signup" className="text-emerald-600 hover:text-emerald-700 font-semibold">
+            <Link to="/signup" className="text-emerald-600 hover:text-emerald-700 font-bold">
               Sign Up
             </Link>
           </p>
