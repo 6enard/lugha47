@@ -1,13 +1,12 @@
-import lessonsData from '../data/lessons.json';
 import { db } from '../lib/firebase';
 import {
   doc,
   setDoc,
-  getDoc,
   collection,
   query,
   where,
   getDocs,
+  orderBy,
 } from 'firebase/firestore';
 
 export interface Language {
@@ -59,15 +58,51 @@ export interface QuizResult {
 }
 
 export const getLanguages = async (): Promise<Language[]> => {
-  return lessonsData.languages;
+  try {
+    const languagesRef = collection(db, 'languages');
+    const snapshot = await getDocs(languagesRef);
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Language[];
+  } catch (error) {
+    console.error('Error fetching languages:', error);
+    return [];
+  }
 };
 
 export const getLessons = async (): Promise<Lesson[]> => {
-  return lessonsData.lessons;
+  try {
+    const lessonsRef = collection(db, 'lessons');
+    const q = query(lessonsRef, orderBy('orderIndex', 'asc'));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Lesson[];
+  } catch (error) {
+    console.error('Error fetching lessons:', error);
+    return [];
+  }
 };
 
 export const getLessonContent = async (lessonId: string): Promise<LessonContent[]> => {
-  return lessonsData.lessonContent.filter((content) => content.lessonId === lessonId);
+  try {
+    const contentRef = collection(db, 'lessonContent');
+    const q = query(
+      contentRef,
+      where('lessonId', '==', lessonId),
+      orderBy('orderIndex', 'asc')
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as LessonContent[];
+  } catch (error) {
+    console.error('Error fetching lesson content:', error);
+    return [];
+  }
 };
 
 export const saveUserLanguageSelection = async (
@@ -134,8 +169,22 @@ export const getUserProgress = async (userId: string): Promise<Record<string, bo
 };
 
 export const getQuizQuestions = async (lessonId: string): Promise<QuizQuestion[]> => {
-  const quizData = lessonsData as any;
-  return quizData.quizQuestions?.filter((q: QuizQuestion) => q.lessonId === lessonId) || [];
+  try {
+    const questionsRef = collection(db, 'quizQuestions');
+    const q = query(
+      questionsRef,
+      where('lessonId', '==', lessonId),
+      orderBy('orderIndex', 'asc')
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as QuizQuestion[];
+  } catch (error) {
+    console.error('Error fetching quiz questions:', error);
+    return [];
+  }
 };
 
 export const saveQuizResult = async (result: QuizResult): Promise<void> => {
