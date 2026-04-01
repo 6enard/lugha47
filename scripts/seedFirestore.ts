@@ -1,5 +1,5 @@
 import admin from 'firebase-admin';
-import lessonsData from '../src/data/lessons.json\' assert { type: 'json' };
+const lessonsData = require('../src/data/lessons.json');
 
 admin.initializeApp({
   projectId: "lugha47",
