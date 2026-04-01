@@ -1,0 +1,412 @@
+{
+  "languages": [
+    {
+      "id": "kalenjin",
+      "name": "Kalenjin",
+      "nativeSpelling": "Kalenjin",
+      "description": "Learn the language of the Kalenjin community"
+    },
+    {
+      "id": "kikuyu",
+      "name": "Kikuyu",
+      "nativeSpelling": "Gĩkũyũ",
+      "description": "Discover the Kikuyu language and culture"
+    },
+    {
+      "id": "luo",
+      "name": "Luo",
+      "nativeSpelling": "Dholuo",
+      "description": "Master the Luo language"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "lesson-1",
+      "title": "Basic Greetings",
+      "description": "Learn common greetings and introductions",
+      "orderIndex": 1
+    },
+    {
+      "id": "lesson-2",
+      "title": "Numbers 1-10",
+      "description": "Master counting from one to ten",
+      "orderIndex": 2
+    },
+    {
+      "id": "lesson-3",
+      "title": "Family Members",
+      "description": "Learn words for family relationships",
+      "orderIndex": 3
+    }
+  ],
+  "lessonContent": [
+    {
+      "id": "content-1",
+      "lessonId": "lesson-1",
+      "kalenjin": "Chamge",
+      "kikuyu": "Wĩ mwega",
+      "luo": "Oyawore",
+      "english": "Good morning",
+      "orderIndex": 1
+    },
+    {
+      "id": "content-2",
+      "lessonId": "lesson-1",
+      "kalenjin": "Misoi",
+      "kikuyu": "Ũhoro waku",
+      "luo": "Nadi",
+      "english": "Hello / How are you?",
+      "orderIndex": 2
+    },
+    {
+      "id": "content-3",
+      "lessonId": "lesson-1",
+      "kalenjin": "Kongoi",
+      "kikuyu": "Nĩ wega",
+      "luo": "Adwaro",
+      "english": "Thank you / I'm fine",
+      "orderIndex": 3
+    },
+    {
+      "id": "content-4",
+      "lessonId": "lesson-1",
+      "kalenjin": "Koguutyo",
+      "kikuyu": "Tiguo wega",
+      "luo": "Oriti",
+      "english": "Goodbye",
+      "orderIndex": 4
+    },
+    {
+      "id": "content-5",
+      "lessonId": "lesson-2",
+      "kalenjin": "Agenge",
+      "kikuyu": "Ĩmwe",
+      "luo": "Achiel",
+      "english": "One",
+      "orderIndex": 1
+    },
+    {
+      "id": "content-6",
+      "lessonId": "lesson-2",
+      "kalenjin": "Oeng",
+      "kikuyu": "Igĩrĩ",
+      "luo": "Ariyo",
+      "english": "Two",
+      "orderIndex": 2
+    },
+    {
+      "id": "content-7",
+      "lessonId": "lesson-2",
+      "kalenjin": "Somok",
+      "kikuyu": "Ithatũ",
+      "luo": "Adek",
+      "english": "Three",
+      "orderIndex": 3
+    },
+    {
+      "id": "content-8",
+      "lessonId": "lesson-2",
+      "kalenjin": "Angwan",
+      "kikuyu": "Inya",
+      "luo": "Ang'wen",
+      "english": "Four",
+      "orderIndex": 4
+    },
+    {
+      "id": "content-9",
+      "lessonId": "lesson-2",
+      "kalenjin": "Mut",
+      "kikuyu": "Ithano",
+      "luo": "Abich",
+      "english": "Five",
+      "orderIndex": 5
+    },
+    {
+      "id": "content-9a",
+      "lessonId": "lesson-2",
+      "kalenjin": "Lo",
+      "kikuyu": "Ithathatũ",
+      "luo": "Auchiel",
+      "english": "Six",
+      "orderIndex": 6
+    },
+    {
+      "id": "content-9b",
+      "lessonId": "lesson-2",
+      "kalenjin": "Tisab",
+      "kikuyu": "Mũgwanja",
+      "luo": "Abiriyo",
+      "english": "Seven",
+      "orderIndex": 7
+    },
+    {
+      "id": "content-9c",
+      "lessonId": "lesson-2",
+      "kalenjin": "Sisit",
+      "kikuyu": "Inyanya",
+      "luo": "Aboro",
+      "english": "Eight",
+      "orderIndex": 8
+    },
+    {
+      "id": "content-9d",
+      "lessonId": "lesson-2",
+      "kalenjin": "Sogol",
+      "kikuyu": "Kenda",
+      "luo": "Ochiko",
+      "english": "Nine",
+      "orderIndex": 9
+    },
+    {
+      "id": "content-9e",
+      "lessonId": "lesson-2",
+      "kalenjin": "Taman",
+      "kikuyu": "Ikũmi",
+      "luo": "Apar",
+      "english": "Ten",
+      "orderIndex": 10
+    },
+    {
+      "id": "content-10",
+      "lessonId": "lesson-3",
+      "kalenjin": "Papa",
+      "kikuyu": "Baba",
+      "luo": "Wuoro",
+      "english": "Father",
+      "orderIndex": 1
+    },
+    {
+      "id": "content-11",
+      "lessonId": "lesson-3",
+      "kalenjin": "Kogo",
+      "kikuyu": "Maitũ",
+      "luo": "Mama",
+      "english": "Mother",
+      "orderIndex": 2
+    },
+    {
+      "id": "content-12",
+      "lessonId": "lesson-3",
+      "kalenjin": "Lakwet",
+      "kikuyu": "Mũrũ wa nyina",
+      "luo": "Owadwa",
+      "english": "Brother",
+      "orderIndex": 3
+    },
+    {
+      "id": "content-13",
+      "lessonId": "lesson-3",
+      "kalenjin": "Chepkile",
+      "kikuyu": "Mwarĩ wa nyina",
+      "luo": "Nyamera",
+      "english": "Sister",
+      "orderIndex": 4
+    }
+  ],
+  "quizQuestions": [
+    {
+      "id": "quiz-1-1",
+      "lessonId": "lesson-1",
+      "question": "Good morning",
+      "correctAnswer": "kalenjin",
+      "options": {
+        "kalenjin": "Chamge",
+        "kikuyu": "Wĩ mwega",
+        "luo": "Oyawore"
+      },
+      "orderIndex": 1
+    },
+    {
+      "id": "quiz-1-2",
+      "lessonId": "lesson-1",
+      "question": "Hello / How are you?",
+      "correctAnswer": "kalenjin",
+      "options": {
+        "kalenjin": "Misoi",
+        "kikuyu": "Wĩ mwega",
+        "luo": "Nadi"
+      },
+      "orderIndex": 2
+    },
+    {
+      "id": "quiz-1-3",
+      "lessonId": "lesson-1",
+      "question": "Goodbye",
+      "correctAnswer": "luo",
+      "options": {
+        "kalenjin": "Koguutyo",
+        "kikuyu": "Tiguo wega",
+        "luo": "Oriti"
+      },
+      "orderIndex": 3
+    },
+    {
+      "id": "quiz-1-4",
+      "lessonId": "lesson-1",
+      "question": "Thank you / I'm fine",
+      "correctAnswer": "kikuyu",
+      "options": {
+        "kalenjin": "Chamge",
+        "kikuyu": "Nĩ wega",
+        "luo": "Oyawore"
+      },
+      "orderIndex": 4
+    },
+    {
+      "id": "quiz-2-1",
+      "lessonId": "lesson-2",
+      "question": "One",
+      "correctAnswer": "luo",
+      "options": {
+        "kalenjin": "Agenge",
+        "kikuyu": "Ĩmwe",
+        "luo": "Achiel"
+      },
+      "orderIndex": 1
+    },
+    {
+      "id": "quiz-2-2",
+      "lessonId": "lesson-2",
+      "question": "Three",
+      "correctAnswer": "kalenjin",
+      "options": {
+        "kalenjin": "Somok",
+        "kikuyu": "Inya",
+        "luo": "Ariyo"
+      },
+      "orderIndex": 2
+    },
+    {
+      "id": "quiz-2-3",
+      "lessonId": "lesson-2",
+      "question": "Five",
+      "correctAnswer": "kikuyu",
+      "options": {
+        "kalenjin": "Ang'wan",
+        "kikuyu": "Ithano",
+        "luo": "Adek"
+      },
+      "orderIndex": 3
+    },
+    {
+      "id": "quiz-2-4",
+      "lessonId": "lesson-2",
+      "question": "Two",
+      "correctAnswer": "luo",
+      "options": {
+        "kalenjin": "Oeng",
+        "kikuyu": "Igĩrĩ",
+        "luo": "Ariyo"
+      },
+      "orderIndex": 4
+    },
+    {
+      "id": "quiz-2-5",
+      "lessonId": "lesson-2",
+      "question": "Six",
+      "correctAnswer": "kalenjin",
+      "options": {
+        "kalenjin": "Lo",
+        "kikuyu": "Ithathatũ",
+        "luo": "Auchiel"
+      },
+      "orderIndex": 5
+    },
+    {
+      "id": "quiz-2-6",
+      "lessonId": "lesson-2",
+      "question": "Seven",
+      "correctAnswer": "kalenjin",
+      "options": {
+        "kalenjin": "Tisab",
+        "kikuyu": "Mũgwanja",
+        "luo": "Abiriyo"
+      },
+      "orderIndex": 6
+    },
+    {
+      "id": "quiz-2-7",
+      "lessonId": "lesson-2",
+      "question": "Eight",
+      "correctAnswer": "kalenjin",
+      "options": {
+        "kalenjin": "Sisit",
+        "kikuyu": "Inyanya",
+        "luo": "Aboro"
+      },
+      "orderIndex": 7
+    },
+    {
+      "id": "quiz-2-8",
+      "lessonId": "lesson-2",
+      "question": "Nine",
+      "correctAnswer": "kikuyu",
+      "options": {
+        "kalenjin": "Sogol",
+        "kikuyu": "Kenda",
+        "luo": "Ochiko"
+      },
+      "orderIndex": 8
+    },
+    {
+      "id": "quiz-2-9",
+      "lessonId": "lesson-2",
+      "question": "Ten",
+      "correctAnswer": "kalenjin",
+      "options": {
+        "kalenjin": "Taman",
+        "kikuyu": "Ikũmi",
+        "luo": "Apar"
+      },
+      "orderIndex": 9
+    },
+    {
+      "id": "quiz-3-1",
+      "lessonId": "lesson-3",
+      "question": "Father",
+      "correctAnswer": "luo",
+      "options": {
+        "kalenjin": "Papa",
+        "kikuyu": "Baba",
+        "luo": "Wuoro"
+      },
+      "orderIndex": 1
+    },
+    {
+      "id": "quiz-3-2",
+      "lessonId": "lesson-3",
+      "question": "Mother",
+      "correctAnswer": "kalenjin",
+      "options": {
+        "kalenjin": "Kogo",
+        "kikuyu": "Maitũ",
+        "luo": "Mama"
+      },
+      "orderIndex": 2
+    },
+    {
+      "id": "quiz-3-3",
+      "lessonId": "lesson-3",
+      "question": "Sister",
+      "correctAnswer": "kikuyu",
+      "options": {
+        "kalenjin": "Lakwet",
+        "kikuyu": "Mwarĩ wa nyina",
+        "luo": "Owadwa"
+      },
+      "orderIndex": 3
+    },
+    {
+      "id": "quiz-3-4",
+      "lessonId": "lesson-3",
+      "question": "Brother",
+      "correctAnswer": "kalenjin",
+      "options": {
+        "kalenjin": "Lakwet",
+        "kikuyu": "Mũrũ wa nyina",
+        "luo": "Owadwa"
+      },
+      "orderIndex": 4
+    }
+  ]
+}
