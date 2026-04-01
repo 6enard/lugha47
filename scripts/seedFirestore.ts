@@ -1,5 +1,5 @@
 import admin from 'firebase-admin';
-import lessonsData from '../src/data/lessons.json' assert { type: 'json' };
+import lessonsData from '../src/data/lessons.json\' assert { type: 'json' };
 
 admin.initializeApp({
   projectId: "lugha47",
