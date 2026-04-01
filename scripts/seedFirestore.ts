@@ -1,7 +1,9 @@
 import * as admin from 'firebase-admin';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import lessonsData from '../src/data/lessons.json\' assert { type: 'json' };
+
+const lessonsDataPath = resolve(process.cwd(), 'src/data/lessons.json');
+const lessonsData = JSON.parse(readFileSync(lessonsDataPath, 'utf8'));
 
 try {
   const serviceAccountPath = resolve(process.cwd(), 'serviceAccountKey.json');

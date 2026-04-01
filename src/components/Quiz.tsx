@@ -5,7 +5,6 @@ export interface QuizQuestion {
   id: string;
   lessonId: string;
   question: string;
-  correctAnswer: string;
   options: {
     kalenjin: string;
     kikuyu: string;
@@ -46,7 +45,7 @@ export function Quiz({ questions, languageId, onComplete, onRetry }: QuizProps) 
     setSelectedAnswer(answer);
     setIsAnswered(true);
 
-    if (answer === currentQuestion.correctAnswer) {
+    if (answer === languageId) {
       setScore(score + 1);
     }
   };
@@ -58,8 +57,7 @@ export function Quiz({ questions, languageId, onComplete, onRetry }: QuizProps) 
       setIsAnswered(false);
     } else {
       setIsComplete(true);
-      const finalScore = selectedAnswer === currentQuestion.correctAnswer ? score + 1 : score;
-      onComplete(finalScore, questions.length);
+      onComplete(score, questions.length);
     }
   };
 
@@ -161,7 +159,7 @@ export function Quiz({ questions, languageId, onComplete, onRetry }: QuizProps) 
 
         <div className="space-y-4">
           {Object.entries(currentQuestion.options).map(([lang, translation]) => {
-            const isCorrect = lang === currentQuestion.correctAnswer;
+            const isCorrect = lang === languageId;
             const isSelected = selectedAnswer === lang;
 
             let buttonClass = 'w-full p-5 rounded-xl border-2 text-left font-semibold text-lg transition ';

@@ -37,7 +37,6 @@ export interface QuizQuestion {
   id: string;
   lessonId: string;
   question: string;
-  correctAnswer: string;
   options: {
     kalenjin: string;
     kikuyu: string;
