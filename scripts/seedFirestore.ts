@@ -1,62 +1,59 @@
-// scripts/seedFirestore.ts
-import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc, writeBatch } from 'firebase/firestore';
+import * as admin from 'firebase-admin';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import lessonsData from '../src/data/lessons.json\' assert { type: 'json' };
 
-// Use ESM-compatible JSON import
-import lessonsData from '../src/data/lessons.json' assert { type: 'json' };
+try {
+  const serviceAccountPath = resolve(process.cwd(), 'serviceAccountKey.json');
+  const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'));
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBZ2sW5qKVZw7V7aqR12W4kxAyuYOXHJ6I",
-  authDomain: "lugha47.firebaseapp.com",
-  projectId: "lugha47",
-  storageBucket: "lugha47.firebasestorage.app",
-  messagingSenderId: "470488484415",
-  appId: "1:470488484415:web:17841b6049973cfd89068a",
-  measurementId: "G-VE1GLG2S2G"
-};
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    projectId: "lugha47"
+  });
+} catch (error) {
+  console.error('❌ Error loading service account key.');
+  console.error('Please follow the instructions in SEEDING_INSTRUCTIONS.md');
+  console.error('\nQuick steps:');
+  console.error('1. Go to Firebase Console → Project Settings → Service Accounts');
+  console.error('2. Click "Generate new private key"');
+  console.error('3. Save the file as "serviceAccountKey.json" in the project root');
+  console.error('\nError details:', error instanceof Error ? error.message : error);
+  process.exit(1);
+}
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = admin.firestore();
 
 async function seedDatabase() {
   console.log('Starting database seed...');
 
   try {
-    // ------------------------
-    // Seed languages
-    // ------------------------
     console.log('Seeding languages...');
     const languagesPromises = lessonsData.languages.map((language: any) =>
-      setDoc(doc(db, 'languages', language.id), language)
+      db.collection('languages').doc(language.id).set(language)
     );
     await Promise.all(languagesPromises);
     console.log(`✓ Seeded ${lessonsData.languages.length} languages`);
 
-    // ------------------------
-    // Seed lessons
-    // ------------------------
     console.log('Seeding lessons...');
     const lessonsPromises = lessonsData.lessons.map((lesson: any) =>
-      setDoc(doc(db, 'lessons', lesson.id), lesson)
+      db.collection('lessons').doc(lesson.id).set(lesson)
     );
     await Promise.all(lessonsPromises);
     console.log(`✓ Seeded ${lessonsData.lessons.length} lessons`);
 
-    // ------------------------
-    // Seed lesson content (batched)
-    // ------------------------
     console.log('Seeding lesson content...');
-    let contentBatch = writeBatch(db);
+    let contentBatch = db.batch();
     let contentCount = 0;
 
     for (const content of lessonsData.lessonContent) {
-      const contentRef = doc(db, 'lessonContent', content.id);
+      const contentRef = db.collection('lessonContent').doc(content.id);
       contentBatch.set(contentRef, content);
       contentCount++;
 
       if (contentCount % 500 === 0) {
         await contentBatch.commit();
-        contentBatch = writeBatch(db);
+        contentBatch = db.batch();
       }
     }
 
@@ -65,22 +62,19 @@ async function seedDatabase() {
     }
     console.log(`✓ Seeded ${lessonsData.lessonContent.length} lesson content items`);
 
-    // ------------------------
-    // Seed quiz questions (batched)
-    // ------------------------
     if (lessonsData.quizQuestions && lessonsData.quizQuestions.length > 0) {
       console.log('Seeding quiz questions...');
-      let quizBatch = writeBatch(db);
+      let quizBatch = db.batch();
       let quizCount = 0;
 
       for (const question of lessonsData.quizQuestions) {
-        const questionRef = doc(db, 'quizQuestions', question.id);
+        const questionRef = db.collection('quizQuestions').doc(question.id);
         quizBatch.set(questionRef, question);
         quizCount++;
 
         if (quizCount % 500 === 0) {
           await quizBatch.commit();
-          quizBatch = writeBatch(db);
+          quizBatch = db.batch();
         }
       }
 
@@ -94,9 +88,10 @@ async function seedDatabase() {
     process.exit(0);
   } catch (error) {
     console.error('❌ Error seeding database:', error);
+    console.error('\nIf you see permission errors, check your Firestore security rules.');
+    console.error('You may need to temporarily allow writes for seeding.');
     process.exit(1);
   }
 }
 
-// Run the seeder
 seedDatabase();
