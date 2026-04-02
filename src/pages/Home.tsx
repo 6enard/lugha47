@@ -74,9 +74,11 @@ export function Home() {
               onClick={() => setView('dashboard')}
               className="flex items-center gap-3 hover:opacity-80 transition-all duration-300 group"
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
-                <Languages className="w-6 h-6 text-white" />
-              </div>
+              <img
+                src="/lughalogo.png"
+                alt="LUGHA47 Logo"
+                className="w-12 h-12 object-contain group-hover:scale-105 transition-all duration-300"
+              />
               <span className="text-2xl font-bold bg-gradient-to-r from-emerald-700 to-teal-700 bg-clip-text text-transparent">LUGHA47</span>
             </button>
             <div className="flex items-center gap-6">

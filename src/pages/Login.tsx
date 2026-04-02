@@ -49,8 +49,12 @@ export function Login() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-3xl mb-6 shadow-xl">
-            <Languages className="w-10 h-10 text-white" />
+          <div className="inline-flex items-center justify-center w-20 h-20 mb-6">
+            <img
+              src="/lughalogo.png"
+              alt="LUGHA47 Logo"
+              className="w-20 h-20 object-contain"
+            />
           </div>
           <h1 className="text-5xl font-bold bg-gradient-to-r from-emerald-700 to-teal-700 bg-clip-text text-transparent mb-3">LUGHA47</h1>
           <p className="text-gray-600 text-lg">Welcome back! Continue learning</p>
