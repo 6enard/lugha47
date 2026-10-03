@@ -6,8 +6,8 @@ import {
   query,
   where,
   getDocs,
-  orderBy,
 } from 'firebase/firestore';
+import staticData from '../data/lessons.json';
 
 export interface Language {
   id: string;
@@ -57,51 +57,17 @@ export interface QuizResult {
 }
 
 export const getLanguages = async (): Promise<Language[]> => {
-  try {
-    const languagesRef = collection(db, 'languages');
-    const snapshot = await getDocs(languagesRef);
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as Language[];
-  } catch (error) {
-    console.error('Error fetching languages:', error);
-    return [];
-  }
+  return staticData.languages as Language[];
 };
 
 export const getLessons = async (): Promise<Lesson[]> => {
-  try {
-    const lessonsRef = collection(db, 'lessons');
-    const q = query(lessonsRef, orderBy('orderIndex', 'asc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as Lesson[];
-  } catch (error) {
-    console.error('Error fetching lessons:', error);
-    return [];
-  }
+  return (staticData.lessons as Lesson[]).sort((a, b) => a.orderIndex - b.orderIndex);
 };
 
 export const getLessonContent = async (lessonId: string): Promise<LessonContent[]> => {
-  try {
-    const contentRef = collection(db, 'lessonContent');
-    const q = query(
-      contentRef,
-      where('lessonId', '==', lessonId),
-      orderBy('orderIndex', 'asc')
-    );
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as LessonContent[];
-  } catch (error) {
-    console.error('Error fetching lesson content:', error);
-    return [];
-  }
+  return (staticData.lessonContent as LessonContent[])
+    .filter((c) => c.lessonId === lessonId)
+    .sort((a, b) => a.orderIndex - b.orderIndex);
 };
 
 export const saveUserLanguageSelection = async (
@@ -116,7 +82,6 @@ export const saveUserLanguageSelection = async (
     });
   } catch (error) {
     console.error('Error saving language selection:', error);
-    throw error;
   }
 };
 
@@ -146,7 +111,6 @@ export const saveUserProgress = async (
     });
   } catch (error) {
     console.error('Error saving user progress:', error);
-    throw error;
   }
 };
 
@@ -168,22 +132,9 @@ export const getUserProgress = async (userId: string): Promise<Record<string, bo
 };
 
 export const getQuizQuestions = async (lessonId: string): Promise<QuizQuestion[]> => {
-  try {
-    const questionsRef = collection(db, 'quizQuestions');
-    const q = query(
-      questionsRef,
-      where('lessonId', '==', lessonId),
-      orderBy('orderIndex', 'asc')
-    );
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as QuizQuestion[];
-  } catch (error) {
-    console.error('Error fetching quiz questions:', error);
-    return [];
-  }
+  return (staticData.quizQuestions as QuizQuestion[])
+    .filter((q) => q.lessonId === lessonId)
+    .sort((a, b) => a.orderIndex - b.orderIndex);
 };
 
 export const saveQuizResult = async (result: QuizResult): Promise<void> => {
@@ -199,7 +150,6 @@ export const saveQuizResult = async (result: QuizResult): Promise<void> => {
     });
   } catch (error) {
     console.error('Error saving quiz result:', error);
-    throw error;
   }
 };
 
