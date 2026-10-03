@@ -58,6 +58,10 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
       kalenjin: 'Kalenjin',
       kikuyu: 'Kikuyu',
       luo: 'Luo',
+      kamba: 'Kamba',
+      luhya: 'Luhya',
+      gusii: 'Gusii',
+      somali: 'Somali',
     };
     return names[lang] || lang;
   };
@@ -163,6 +167,14 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
           return currentCard.kikuyu;
         case 'luo':
           return currentCard.luo;
+        case 'kamba':
+          return currentCard.kamba;
+        case 'luhya':
+          return currentCard.luhya;
+        case 'gusii':
+          return currentCard.gusii;
+        case 'somali':
+          return currentCard.somali;
         default:
           return currentCard.kalenjin;
       }

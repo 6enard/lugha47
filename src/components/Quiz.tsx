@@ -9,6 +9,10 @@ export interface QuizQuestion {
     kalenjin: string;
     kikuyu: string;
     luo: string;
+    kamba: string;
+    luhya: string;
+    gusii: string;
+    somali: string;
   };
   orderIndex: number;
 }
@@ -36,6 +40,10 @@ export function Quiz({ questions, languageId, onComplete, onRetry, onBackToLesso
       kalenjin: 'Kalenjin',
       kikuyu: 'Kikuyu',
       luo: 'Luo',
+      kamba: 'Kamba',
+      luhya: 'Luhya',
+      gusii: 'Gusii',
+      somali: 'Somali',
     };
     return names[lang] || lang;
   };

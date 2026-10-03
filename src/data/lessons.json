@@ -17,6 +17,30 @@
       "name": "Luo",
       "nativeSpelling": "Dholuo",
       "description": "Master the Luo language"
+    },
+    {
+      "id": "kamba",
+      "name": "Kamba",
+      "nativeSpelling": "Kikamba",
+      "description": "Learn the Kamba language and culture"
+    },
+    {
+      "id": "luhya",
+      "name": "Luhya",
+      "nativeSpelling": "Luluhya",
+      "description": "Discover the Luhya language and traditions"
+    },
+    {
+      "id": "gusii",
+      "name": "Gusii",
+      "nativeSpelling": "Ekegusii",
+      "description": "Master the Gusii language"
+    },
+    {
+      "id": "somali",
+      "name": "Somali",
+      "nativeSpelling": "Soomaali",
+      "description": "Learn the Somali language and heritage"
     }
   ],
   "lessons": [
@@ -46,6 +70,10 @@
       "kalenjin": "Chamge",
       "kikuyu": "Wĩ mwega",
       "luo": "Oyawore",
+      "kamba": "Ũ mwega",
+      "luhya": "Mulembe",
+      "gusii": "Oigose",
+      "somali": "Subax wanaagsan",
       "english": "Good morning",
       "orderIndex": 1
     },
@@ -55,6 +83,10 @@
       "kalenjin": "Misoi",
       "kikuyu": "Ũhoro waku",
       "luo": "Nadi",
+      "kamba": "Ũlaũ",
+      "luhya": "Oliwila",
+      "gusii": "Nigwe",
+      "somali": "Sidee tahay",
       "english": "Hello / How are you?",
       "orderIndex": 2
     },
@@ -64,6 +96,10 @@
       "kalenjin": "Kongoi",
       "kikuyu": "Nĩ wega",
       "luo": "Adwaro",
+      "kamba": "Nĩ mwega",
+      "luhya": "Ndi mwega",
+      "gusii": "Ndega",
+      "somali": "Waan fiicanahay",
       "english": "Thank you / I'm fine",
       "orderIndex": 3
     },
@@ -73,6 +109,10 @@
       "kalenjin": "Koguutyo",
       "kikuyu": "Tiguo wega",
       "luo": "Oriti",
+      "kamba": "Tata",
+      "luhya": "Nisikhe",
+      "gusii": "Sala ogenda",
+      "somali": "Nabad gelyo",
       "english": "Goodbye",
       "orderIndex": 4
     },
@@ -82,6 +122,10 @@
       "kalenjin": "Agenge",
       "kikuyu": "Ĩmwe",
       "luo": "Achiel",
+      "kamba": "Ĩmwe",
+      "luhya": "Mulala",
+      "gusii": "Moja",
+      "somali": "Kow",
       "english": "One",
       "orderIndex": 1
     },
@@ -91,6 +135,10 @@
       "kalenjin": "Oeng",
       "kikuyu": "Igĩrĩ",
       "luo": "Ariyo",
+      "kamba": "Iĩ",
+      "luhya": "Ibili",
+      "gusii": "Biri",
+      "somali": "Laba",
       "english": "Two",
       "orderIndex": 2
     },
@@ -100,6 +148,10 @@
       "kalenjin": "Somok",
       "kikuyu": "Ithatũ",
       "luo": "Adek",
+      "kamba": "Ithatũ",
+      "luhya": "Itatu",
+      "gusii": "Saru",
+      "somali": "Saddex",
       "english": "Three",
       "orderIndex": 3
     },
@@ -109,6 +161,10 @@
       "kalenjin": "Angwan",
       "kikuyu": "Inya",
       "luo": "Ang'wen",
+      "kamba": "Inya",
+      "luhya": "Inya",
+      "gusii": "Onto",
+      "somali": "Afar",
       "english": "Four",
       "orderIndex": 4
     },
@@ -118,6 +174,10 @@
       "kalenjin": "Mut",
       "kikuyu": "Ithano",
       "luo": "Abich",
+      "kamba": "Ithanũ",
+      "luhya": "Isanu",
+      "gusii": "Isitano",
+      "somali": "Shan",
       "english": "Five",
       "orderIndex": 5
     },
@@ -127,6 +187,10 @@
       "kalenjin": "Lo",
       "kikuyu": "Ithathatũ",
       "luo": "Auchiel",
+      "kamba": "Ithanthatũ",
+      "luhya": "Isitat",
+      "gusii": "Sitati",
+      "somali": "Lix",
       "english": "Six",
       "orderIndex": 6
     },
@@ -136,6 +200,10 @@
       "kalenjin": "Tisab",
       "kikuyu": "Mũgwanja",
       "luo": "Abiriyo",
+      "kamba": "Mũgwanja",
+      "luhya": "Isaba",
+      "gusii": "Isooro",
+      "somali": "Todoba",
       "english": "Seven",
       "orderIndex": 7
     },
@@ -145,6 +213,10 @@
       "kalenjin": "Sisit",
       "kikuyu": "Inyanya",
       "luo": "Aboro",
+      "kamba": "Ĩnana",
+      "luhya": "Isaanu",
+      "gusii": "Naana",
+      "somali": "Sideed",
       "english": "Eight",
       "orderIndex": 8
     },
@@ -154,6 +226,10 @@
       "kalenjin": "Sogol",
       "kikuyu": "Kenda",
       "luo": "Ochiko",
+      "kamba": "Kenda",
+      "luhya": "Isenda",
+      "gusii": "Otore",
+      "somali": "Sagal",
       "english": "Nine",
       "orderIndex": 9
     },
@@ -163,6 +239,10 @@
       "kalenjin": "Taman",
       "kikuyu": "Ikũmi",
       "luo": "Apar",
+      "kamba": "Ikũmi",
+      "luhya": "Likumi",
+      "gusii": "Egasi",
+      "somali": "Toban",
       "english": "Ten",
       "orderIndex": 10
     },
@@ -172,6 +252,10 @@
       "kalenjin": "Papa",
       "kikuyu": "Baba",
       "luo": "Wuoro",
+      "kamba": "Baba",
+      "luhya": "Papa",
+      "gusii": "Baba",
+      "somali": "Aabbe",
       "english": "Father",
       "orderIndex": 1
     },
@@ -181,6 +265,10 @@
       "kalenjin": "Kogo",
       "kikuyu": "Maitũ",
       "luo": "Mama",
+      "kamba": "Maitũ",
+      "luhya": "Mama",
+      "gusii": "Mama",
+      "somali": "Hooyo",
       "english": "Mother",
       "orderIndex": 2
     },
@@ -190,6 +278,10 @@
       "kalenjin": "Lakwet",
       "kikuyu": "Mũrũ wa nyina",
       "luo": "Owadwa",
+      "kamba": "Mũnai",
+      "luhya": "Indume",
+      "gusii": "Omosacha",
+      "somali": "Walaal",
       "english": "Brother",
       "orderIndex": 3
     },
@@ -199,6 +291,10 @@
       "kalenjin": "Chepkile",
       "kikuyu": "Mwarĩ wa nyina",
       "luo": "Nyamera",
+      "kamba": "Mwende",
+      "luhya": "Ineni",
+      "gusii": "Omosuba",
+      "somali": "Walaal",
       "english": "Sister",
       "orderIndex": 4
     }
@@ -211,7 +307,11 @@
       "options": {
         "kalenjin": "Chamge",
         "kikuyu": "Wĩ mwega",
-        "luo": "Oyawore"
+        "luo": "Oyawore",
+        "kamba": "Ũ mwega",
+        "luhya": "Mulembe",
+        "gusii": "Oigose",
+        "somali": "Subax wanaagsan"
       },
       "orderIndex": 1
     },
@@ -222,7 +322,11 @@
       "options": {
         "kalenjin": "Misoi",
         "kikuyu": "Ũhoro waku",
-        "luo": "Nadi"
+        "luo": "Nadi",
+        "kamba": "Ũlaũ",
+        "luhya": "Oliwila",
+        "gusii": "Nigwe",
+        "somali": "Sidee tahay"
       },
       "orderIndex": 2
     },
@@ -233,7 +337,11 @@
       "options": {
         "kalenjin": "Kongoi",
         "kikuyu": "Nĩ wega",
-        "luo": "Adwaro"
+        "luo": "Adwaro",
+        "kamba": "Nĩ mwega",
+        "luhya": "Ndi mwega",
+        "gusii": "Ndega",
+        "somali": "Waan fiicanahay"
       },
       "orderIndex": 3
     },
@@ -244,7 +352,11 @@
       "options": {
         "kalenjin": "Koguutyo",
         "kikuyu": "Tiguo wega",
-        "luo": "Oriti"
+        "luo": "Oriti",
+        "kamba": "Tata",
+        "luhya": "Nisikhe",
+        "gusii": "Sala ogenda",
+        "somali": "Nabad gelyo"
       },
       "orderIndex": 4
     },
@@ -255,7 +367,11 @@
       "options": {
         "kalenjin": "Agenge",
         "kikuyu": "Ĩmwe",
-        "luo": "Achiel"
+        "luo": "Achiel",
+        "kamba": "Ĩmwe",
+        "luhya": "Mulala",
+        "gusii": "Moja",
+        "somali": "Kow"
       },
       "orderIndex": 1
     },
@@ -266,7 +382,11 @@
       "options": {
         "kalenjin": "Oeng",
         "kikuyu": "Igĩrĩ",
-        "luo": "Ariyo"
+        "luo": "Ariyo",
+        "kamba": "Iĩ",
+        "luhya": "Ibili",
+        "gusii": "Biri",
+        "somali": "Laba"
       },
       "orderIndex": 2
     },
@@ -277,7 +397,11 @@
       "options": {
         "kalenjin": "Somok",
         "kikuyu": "Ithatũ",
-        "luo": "Adek"
+        "luo": "Adek",
+        "kamba": "Ithatũ",
+        "luhya": "Itatu",
+        "gusii": "Saru",
+        "somali": "Saddex"
       },
       "orderIndex": 3
     },
@@ -288,7 +412,11 @@
       "options": {
         "kalenjin": "Angwan",
         "kikuyu": "Inya",
-        "luo": "Ang'wen"
+        "luo": "Ang'wen",
+        "kamba": "Inya",
+        "luhya": "Inya",
+        "gusii": "Onto",
+        "somali": "Afar"
       },
       "orderIndex": 4
     },
@@ -299,7 +427,11 @@
       "options": {
         "kalenjin": "Mut",
         "kikuyu": "Ithano",
-        "luo": "Abich"
+        "luo": "Abich",
+        "kamba": "Ithanũ",
+        "luhya": "Isanu",
+        "gusii": "Isitano",
+        "somali": "Shan"
       },
       "orderIndex": 5
     },
@@ -310,7 +442,11 @@
       "options": {
         "kalenjin": "Lo",
         "kikuyu": "Ithathatũ",
-        "luo": "Auchiel"
+        "luo": "Auchiel",
+        "kamba": "Ithanthatũ",
+        "luhya": "Isitat",
+        "gusii": "Sitati",
+        "somali": "Lix"
       },
       "orderIndex": 6
     },
@@ -321,7 +457,11 @@
       "options": {
         "kalenjin": "Tisab",
         "kikuyu": "Mũgwanja",
-        "luo": "Abiriyo"
+        "luo": "Abiriyo",
+        "kamba": "Mũgwanja",
+        "luhya": "Isaba",
+        "gusii": "Isooro",
+        "somali": "Todoba"
       },
       "orderIndex": 7
     },
@@ -332,7 +472,11 @@
       "options": {
         "kalenjin": "Sisit",
         "kikuyu": "Inyanya",
-        "luo": "Aboro"
+        "luo": "Aboro",
+        "kamba": "Ĩnana",
+        "luhya": "Isaanu",
+        "gusii": "Naana",
+        "somali": "Sideed"
       },
       "orderIndex": 8
     },
@@ -343,7 +487,11 @@
       "options": {
         "kalenjin": "Sogol",
         "kikuyu": "Kenda",
-        "luo": "Ochiko"
+        "luo": "Ochiko",
+        "kamba": "Kenda",
+        "luhya": "Isenda",
+        "gusii": "Otore",
+        "somali": "Sagal"
       },
       "orderIndex": 9
     },
@@ -354,7 +502,11 @@
       "options": {
         "kalenjin": "Taman",
         "kikuyu": "Ikũmi",
-        "luo": "Apar"
+        "luo": "Apar",
+        "kamba": "Ikũmi",
+        "luhya": "Likumi",
+        "gusii": "Egasi",
+        "somali": "Toban"
       },
       "orderIndex": 10
     },
@@ -365,7 +517,11 @@
       "options": {
         "kalenjin": "Papa",
         "kikuyu": "Baba",
-        "luo": "Wuoro"
+        "luo": "Wuoro",
+        "kamba": "Baba",
+        "luhya": "Papa",
+        "gusii": "Baba",
+        "somali": "Aabbe"
       },
       "orderIndex": 1
     },
@@ -376,7 +532,11 @@
       "options": {
         "kalenjin": "Kogo",
         "kikuyu": "Maitũ",
-        "luo": "Mama"
+        "luo": "Mama",
+        "kamba": "Maitũ",
+        "luhya": "Mama",
+        "gusii": "Mama",
+        "somali": "Hooyo"
       },
       "orderIndex": 2
     },
@@ -387,7 +547,11 @@
       "options": {
         "kalenjin": "Lakwet",
         "kikuyu": "Mũrũ wa nyina",
-        "luo": "Owadwa"
+        "luo": "Owadwa",
+        "kamba": "Mũnai",
+        "luhya": "Indume",
+        "gusii": "Omosacha",
+        "somali": "Walaal"
       },
       "orderIndex": 3
     },
@@ -398,7 +562,11 @@
       "options": {
         "kalenjin": "Chepkile",
         "kikuyu": "Mwarĩ wa nyina",
-        "luo": "Nyamera"
+        "luo": "Nyamera",
+        "kamba": "Mwende",
+        "luhya": "Ineni",
+        "gusii": "Omokhana",
+        "somali": "Walaasha"
       },
       "orderIndex": 4
     }

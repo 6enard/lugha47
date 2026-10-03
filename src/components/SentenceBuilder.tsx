@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, XCircle, Sparkles, RotateCcw } from 'lucide-react';
-import { SentenceExercise, SentenceBlock, getLanguageName } from '../data/sentences';
+import { SentenceExercise, SentenceBlock, getLanguageName, LanguageId } from '../data/sentences';
 
 interface SentenceBuilderProps {
   exercises: SentenceExercise[];
@@ -29,7 +29,7 @@ export function SentenceBuilder({ exercises, languageId, onComplete, onBack }: S
 
   const initBlocks = useCallback(() => {
     if (!currentExercise) return;
-    const blocks = currentExercise.blocks[languageId as 'kalenjin' | 'kikuyu' | 'luo'];
+    const blocks = currentExercise.blocks[languageId as LanguageId];
     setAvailableBlocks(shuffle(blocks));
     setPlacedBlocks([]);
     setCheckResult(null);
@@ -53,7 +53,7 @@ export function SentenceBuilder({ exercises, languageId, onComplete, onBack }: S
   };
 
   const handleCheck = () => {
-    const correctOrder = currentExercise.correctOrder[languageId as 'kalenjin' | 'kikuyu' | 'luo'];
+    const correctOrder = currentExercise.correctOrder[languageId as LanguageId];
     const placedIds = placedBlocks.map((b) => b.id);
     const isCorrect = placedIds.length === correctOrder.length &&
       placedIds.every((id, i) => id === correctOrder[i]);

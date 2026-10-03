@@ -1,4 +1,4 @@
-export type LanguageId = 'kalenjin' | 'kikuyu' | 'luo';
+export type LanguageId = 'kalenjin' | 'kikuyu' | 'luo' | 'kamba' | 'luhya' | 'gusii' | 'somali';
 
 export interface CultureItem {
   id: string;
@@ -339,10 +339,430 @@ const luoCulture: LanguageCulture = {
   ],
 };
 
+/* ─────────────────────────────────────
+   KAMBA
+───────────────────────────────────── */
+const kambaCulture: LanguageCulture = {
+  languageId: 'kamba',
+  languageName: 'Kamba',
+  nativeName: 'Kikamba',
+  region: 'Eastern Kenya — Machakos, Makueni, Kitui, parts of Makueni and Kajiado',
+  overview: 'The Kamba (Akamba) are a Bantu people of eastern Kenya, historically known as long-distance traders who carried goods between the coast and the interior. They are skilled artisans, especially in woodcarving, and have a rich oral tradition of storytelling, proverbs, and music.',
+  categories: [
+    {
+      id: 'kamba-greetings',
+      title: 'Traditional Greetings',
+      icon: 'message',
+      description: 'How the Kamba greet each other',
+      orderIndex: 1,
+      items: [
+        { id: 'g1', title: 'Ũ mwega', description: 'A general greeting', nativeText: 'Ũ mwega!', englishText: 'Hello / You are well!' },
+        { id: 'g2', title: 'Ũlaũ', description: 'Asking about well-being', nativeText: 'Ũlaũ?', englishText: 'How are you?' },
+        { id: 'g3', title: 'Nĩ mwega', description: 'The standard positive response', nativeText: 'Nĩ mwega.', englishText: 'I am fine.' },
+        { id: 'g4', title: 'Tata', description: 'A farewell greeting', nativeText: 'Tata.', englishText: 'Goodbye.' },
+      ],
+    },
+    {
+      id: 'kamba-names',
+      title: 'Common Names & Meanings',
+      icon: 'users',
+      description: 'Kamba names and their significance',
+      orderIndex: 2,
+      items: [
+        { id: 'n1', title: 'Mutua', description: 'One who is left behind or remains', extra: 'A common Kamba male name' },
+        { id: 'n2', title: 'Syombua', description: 'A female name associated with beauty', extra: 'A popular Kamba female name' },
+        { id: 'n3', title: 'Kilonzi', description: 'Born during a time of drought', extra: 'Reflects environmental conditions at birth' },
+        { id: 'n4', title: 'Mwende', description: 'One who is loved', extra: 'A beloved female name' },
+        { id: 'n5', title: 'Mbaluka', description: 'Born during a time of famine', extra: 'A name reflecting hardship at birth' },
+        { id: 'n6', title: 'Ndinda', description: 'A female name given to a child born after twins', extra: 'A name with special birth-order significance' },
+      ],
+    },
+    {
+      id: 'kamba-foods',
+      title: 'Traditional Foods',
+      icon: 'utensils',
+      description: 'Staples of the Kamba diet',
+      orderIndex: 3,
+      items: [
+        { id: 'f1', title: 'Ugali', description: 'Maize meal, the staple carbohydrate eaten with vegetables, beans, or meat.', nativeText: 'Ĩthaa', englishText: 'Ugali' },
+        { id: 'f2', title: 'Muthokoi', description: 'Maize cooked with beans, a signature Kamba dish especially popular in Kitui and Machakos.', nativeText: 'Muthokoi', englishText: 'Maize and beans dish' },
+        { id: 'f3', title: 'Kikamba Porridge', description: 'Fermented porridge made from millet or sorghum, served at ceremonies.', nativeText: 'Ũcũrũ', englishText: 'Fermented porridge' },
+        { id: 'f4', title: 'Nzũ', description: 'Roasted or boiled pigeon peas, a drought-resistant crop central to Kamba agriculture.', nativeText: 'Nzũ', englishText: 'Pigeon peas' },
+      ],
+    },
+    {
+      id: 'kamba-practices',
+      title: 'Cultural Practices',
+      icon: 'globe',
+      description: 'Traditions and customs of the Kamba',
+      orderIndex: 4,
+      items: [
+        { id: 'p1', title: 'Initiation (Mwali)', description: 'A rite of passage for young Kamba boys and girls, involving seclusion, teachings, and ceremonies marking the transition to adulthood.' },
+        { id: 'p2', title: 'Dowry (Ntheo)', description: 'The bride-price ceremony where the groom\'s family presents goats and other gifts to the bride\'s family to formalize the marriage.' },
+        { id: 'p3', title: 'Woodcarving Tradition', description: 'The Kamba are famous for their woodcarving skills, creating sculptures, utensils, and decorative items that are sold across Kenya and internationally.' },
+        { id: 'p4', title: 'Trading Heritage', description: 'Historically, the Kamba were long-distance traders who carried ivory, salt, and beads between the coast and the interior, establishing trade routes through eastern Kenya.' },
+      ],
+    },
+    {
+      id: 'kamba-proverbs',
+      title: 'Proverbs',
+      icon: 'book',
+      description: 'Wisdom passed through generations',
+      orderIndex: 5,
+      items: [
+        { id: 'pr1', title: 'Proverb 1', description: 'A proverb about unity', nativeText: 'Mbee ya kĩnthũ nĩ ĩmwe.', englishText: 'The footprints of one person are the same.' },
+        { id: 'pr2', title: 'Proverb 2', description: 'A proverb about patience', nativeText: 'Mūndū ũndũence wa mbũa nĩ wĩ kĩndũ.', englishText: 'A person who waits for rain has something.' },
+        { id: 'pr3', title: 'Proverb 3', description: 'A proverb about wisdom', nativeText: 'Kĩlumi kya ũndũ ndĩkethĩwa.', englishText: 'The teeth of a wise person do not bite in vain.' },
+      ],
+    },
+    {
+      id: 'kamba-songs',
+      title: 'Songs & Music',
+      icon: 'music',
+      description: 'Traditional music and dance',
+      orderIndex: 6,
+      items: [
+        { id: 's1', title: 'Kilumi', description: 'A traditional Kamba dance performed at ceremonies, featuring rhythmic drumming, singing, and energetic movements.' },
+        { id: 's2', title: 'Wathi', description: 'A communal singing and dancing event where the community gathers to celebrate weddings, harvests, or initiations.' },
+        { id: 's3', title: 'Mbeni', description: 'A playful song-and-dance performed by young people, often involving teasing and courtship themes.' },
+      ],
+    },
+    {
+      id: 'kamba-region',
+      title: 'County & Region Context',
+      icon: 'map',
+      description: 'Where the Kamba people live',
+      orderIndex: 7,
+      items: [
+        { id: 'r1', title: 'Machakos County', description: 'The heartland of the Kamba people, known for its hills and the historic Machakos town, one of Kenya\'s oldest colonial settlements.' },
+        { id: 'r2', title: 'Kitui County', description: 'A vast semi-arid region where the Kamba practice drought-resistant farming, including pigeon peas and sorghum.' },
+        { id: 'r3', title: 'Makueni County', description: 'An agricultural region with a growing focus on mango farming and water conservation projects.' },
+        { id: 'r4', title: 'Kajiado County (parts)', description: 'Some Kamba communities live alongside the Maasai in this border region, creating a rich cultural interchange.' },
+      ],
+    },
+  ],
+};
+
+/* ─────────────────────────────────────
+   LUHYA
+───────────────────────────────────── */
+const luhyaCulture: LanguageCulture = {
+  languageId: 'luhya',
+  languageName: 'Luhya',
+  nativeName: 'Luluhya',
+  region: 'Western Kenya — Kakamega, Bungoma, Vihiga, Busia, Butere, Mumias, Trans Nzoia',
+  overview: 'The Luhya (Abaluhya) are Kenya\'s second-largest ethnic group, a Bantu people of western Kenya. They are a cluster of 18 sub-groups including the Bukusu, Maragoli, Wanga, Nyore, and Tiriki, each with distinct dialects but shared cultural traditions. The Luhya are known for their agricultural heritage, bullfighting tradition, and vibrant initiation ceremonies.',
+  categories: [
+    {
+      id: 'luhya-greetings',
+      title: 'Traditional Greetings',
+      icon: 'message',
+      description: 'How the Luhya greet each other',
+      orderIndex: 1,
+      items: [
+        { id: 'g1', title: 'Mulembe', description: 'A universal Luhya greeting meaning peace', nativeText: 'Mulembe!', englishText: 'Peace / Hello!' },
+        { id: 'g2', title: 'Oliwila', description: 'Asking about well-being', nativeText: 'Oliwila?', englishText: 'How are you?' },
+        { id: 'g3', title: 'Ndi mwega', description: 'The standard positive response', nativeText: 'Ndi mwega.', englishText: 'I am fine.' },
+        { id: 'g4', title: 'Nisikhe', description: 'A farewell greeting', nativeText: 'Nisikhe.', englishText: 'Goodbye / Stay well.' },
+      ],
+    },
+    {
+      id: 'luhya-names',
+      title: 'Common Names & Meanings',
+      icon: 'users',
+      description: 'Luhya names and their significance',
+      orderIndex: 2,
+      items: [
+        { id: 'n1', title: 'Wanjala', description: 'Born during a time of famine', extra: 'A common male name reflecting hardship at birth' },
+        { id: 'n2', title: 'Namusonge', description: 'A female name given to one born during circumcision season', extra: 'Connected to the Luhya initiation tradition' },
+        { id: 'n3', title: 'Wamalwa', description: 'Born during beer-making season', extra: 'Reflects the agricultural calendar' },
+        { id: 'n4', title: 'Shiroya', description: 'A female name associated with beauty', extra: 'A popular name among the Maragoli' },
+        { id: 'n5', title: 'Wafula', description: 'Born during the rainy season', extra: 'One of the most common Bukusu names' },
+        { id: 'n6', title: 'Nafula', description: 'Female counterpart, born during rains', extra: 'A widespread female name among the Bukusu' },
+      ],
+    },
+    {
+      id: 'luhya-foods',
+      title: 'Traditional Foods',
+      icon: 'utensils',
+      description: 'Staples of the Luhya diet',
+      orderIndex: 3,
+      items: [
+        { id: 'f1', title: 'Obusuma', description: 'Ugali made from millet or maize flour, the cornerstone of Luhya meals.', nativeText: 'Obusuma', englishText: 'Ugali' },
+        { id: 'f2', title: 'Ingokho', description: 'Chicken stew, a prized dish in Luhya culture, often served to honored guests.', nativeText: 'Ingokho', englishText: 'Chicken' },
+        { id: 'f3', title: 'Tsimba', description: 'A dish of groundnuts (peanuts) cooked with vegetables, rich and nutritious.', nativeText: 'Tsimba', englishText: 'Groundnut sauce' },
+        { id: 'f4', title: 'Obutunga', description: 'Traditional vegetables including spider plant, amaranth, and cowpea leaves, often cooked with cream.', nativeText: 'Obutunga', englishText: 'Traditional vegetables' },
+      ],
+    },
+    {
+      id: 'luhya-practices',
+      title: 'Cultural Practices',
+      icon: 'globe',
+      description: 'Traditions and customs of the Luhya',
+      orderIndex: 4,
+      items: [
+        { id: 'p1', title: 'Bukusu Circumcision (Sikhe)', description: 'The Bukusu sub-group practices circumcision as a rite of passage, performed every two years. It is a public ceremony symbolizing bravery and the transition to manhood.' },
+        { id: 'p2', title: 'Bullfighting', description: 'A traditional Luhya sport, especially among the Idakho and Isukha sub-groups, where bulls are raised and trained to fight in public events that draw large crowds.' },
+        { id: 'p3', title: 'Dowry (Owenje)', description: 'Marriage negotiations involve the groom\'s family presenting cattle and other gifts to the bride\'s family, with extensive negotiation and celebration.' },
+        { id: 'p4', title: 'Sengwer Dance', description: 'A traditional dance performed at funerals and celebrations, featuring rhythmic movements and communal singing that binds the community together.' },
+      ],
+    },
+    {
+      id: 'luhya-proverbs',
+      title: 'Proverbs',
+      icon: 'book',
+      description: 'Wisdom passed through generations',
+      orderIndex: 5,
+      items: [
+        { id: 'pr1', title: 'Proverb 1', description: 'A proverb about unity', nativeText: 'Omundu nomundu shingokhola.', englishText: 'A person is a person through others.' },
+        { id: 'pr2', title: 'Proverb 2', description: 'A proverb about patience', nativeText: 'Esinzila tsiolukhwa.', englishText: 'A path is followed step by step.' },
+        { id: 'pr3', title: 'Proverb 3', description: 'A proverb about wisdom', nativeText: 'Omwoyo omulayi nikhumanyi.', englishText: 'A good heart is wisdom.' },
+      ],
+    },
+    {
+      id: 'luhya-songs',
+      title: 'Songs & Music',
+      icon: 'music',
+      description: 'Traditional music and dance',
+      orderIndex: 6,
+      items: [
+        { id: 's1', title: 'Lipala', description: 'A popular Luhya dance style featuring drums, singing, and call-and-response, often performed at celebrations and political rallies.' },
+        { id: 's2', title: 'Isukuti', description: 'A drum-based music and dance tradition of the Isukha and Idakho sub-groups, recognized by UNESCO as intangible cultural heritage.' },
+        { id: 's3', title: 'Sinfwa', description: 'Funeral songs sung to honor the dead, recounting their life and deeds, accompanied by slow rhythmic drumming.' },
+      ],
+    },
+    {
+      id: 'luhya-region',
+      title: 'County & Region Context',
+      icon: 'map',
+      description: 'Where the Luhya people live',
+      orderIndex: 7,
+      items: [
+        { id: 'r1', title: 'Kakamega County', description: 'The most populous Luhya county, home to the Maragoli and Idakho sub-groups, and famous for Kakamega Forest, Kenya\'s last tropical rainforest.' },
+        { id: 'r2', title: 'Bungoma County', description: 'The heartland of the Bukusu sub-group, known for the circumcision tradition and Mount Elgon on the border.' },
+        { id: 'r3', title: 'Vihiga County', description: 'Home to the Maragoli and Tiriki sub-groups, a densely populated agricultural region.' },
+        { id: 'r4', title: 'Busia County', description: 'A border county where the Luhya meet the Luo and communities across the Uganda border, creating a diverse cultural landscape.' },
+      ],
+    },
+  ],
+};
+
+/* ─────────────────────────────────────
+   GUSII
+───────────────────────────────────── */
+const gusiiCulture: LanguageCulture = {
+  languageId: 'gusii',
+  languageName: 'Gusii',
+  nativeName: 'Ekegusii',
+  region: 'Western Kenya — Kisii, Nyamira, parts of Homabay and Kericho',
+  overview: 'The Gusii (Abagusii) are a Bantu people of the Gusii highlands in western Kenya. They are known for their intensive agriculture, particularly banana and tea farming, as well as their soapstone carving tradition. The Gusii have a strong cultural identity centered around clan relationships and age-set systems.',
+  categories: [
+    {
+      id: 'gusii-greetings',
+      title: 'Traditional Greetings',
+      icon: 'message',
+      description: 'How the Gusii greet each other',
+      orderIndex: 1,
+      items: [
+        { id: 'g1', title: 'Oigose', description: 'A general greeting', nativeText: 'Oigose!', englishText: 'Hello / Greetings!' },
+        { id: 'g2', title: 'Nigwe', description: 'Asking about well-being', nativeText: 'Nigwe?', englishText: 'How are you?' },
+        { id: 'g3', title: 'Ndega', description: 'The standard positive response', nativeText: 'Ndega, eraki.', englishText: 'I am fine, thank you.' },
+        { id: 'g4', title: 'Sala ogenda', description: 'A farewell greeting', nativeText: 'Sala ogenda.', englishText: 'Goodbye / Stay well.' },
+      ],
+    },
+    {
+      id: 'gusii-names',
+      title: 'Common Names & Meanings',
+      icon: 'users',
+      description: 'Gusii names and their significance',
+      orderIndex: 2,
+      items: [
+        { id: 'n1', title: 'Ondieki', description: 'Born in the morning', extra: 'A common Gusii male name' },
+        { id: 'n2', title: 'Kemunto', description: 'A female name given to a child born after a short labor', extra: 'A popular female name among the Gusii' },
+        { id: 'n3', title: 'Oigo', description: 'Born during a time of plenty', extra: 'A name reflecting abundance at birth' },
+        { id: 'n4', title: 'Bochaberi', description: 'Born when visitors arrived', extra: 'A name associated with hospitality' },
+        { id: 'n5', title: 'Nyaberi', description: 'Born during the harvest season', extra: 'Connected to the agricultural calendar' },
+        { id: 'n6', title: 'Moraa', description: 'A female name meaning beautiful', extra: 'A widely used female name among the Gusii' },
+      ],
+    },
+    {
+      id: 'gusii-foods',
+      title: 'Traditional Foods',
+      icon: 'utensils',
+      description: 'Staples of the Gusii diet',
+      orderIndex: 3,
+      items: [
+        { id: 'f1', title: 'Obokima', description: 'Ugali made from millet or maize flour, eaten with vegetables, meat, or fish.', nativeText: 'Obokima', englishText: 'Ugali' },
+        { id: 'f2', title: 'Rinjore', description: 'Traditional fermented milk, similar to mursik, stored in calabashes and valued for its probiotic qualities.', nativeText: 'Rinjore', englishText: 'Fermented milk' },
+        { id: 'f3', title: 'Ebitore', description: 'A dish of boiled bananas mixed with beans or vegetables, a staple in the Gusii highlands.', nativeText: 'Ebitore', englishText: 'Banana and beans dish' },
+        { id: 'f4', title: 'Obosoro', description: 'Traditional leafy greens including amaranth and cowpea leaves, cooked with cream or groundnut paste.', nativeText: 'Obosoro', englishText: 'Traditional vegetables' },
+      ],
+    },
+    {
+      id: 'gusii-practices',
+      title: 'Cultural Practices',
+      icon: 'globe',
+      description: 'Traditions and customs of the Gusii',
+      orderIndex: 4,
+      items: [
+        { id: 'p1', title: 'Circumcision (Morangi)', description: 'A rite of passage for young men, performed every few years. It is accompanied by seclusion, teachings, and community celebration.' },
+        { id: 'p2', title: 'Dowry (Echika)', description: 'Marriage involves negotiation between families, with the groom presenting cattle, goats, and cash to the bride\'s family over multiple visits.' },
+        { id: 'p3', title: 'Soapstone Carving', description: 'The Gusii, particularly in Tabaka, are famous for soapstone carving, producing sculptures and decorative items sold worldwide. This craft is a major economic and cultural activity.' },
+        { id: 'p4', title: 'Banana Farming', description: 'The Gusii highlands are ideal for banana cultivation, and bananas are central to both the diet and the economy, with varieties used for cooking, brewing, and snacks.' },
+      ],
+    },
+    {
+      id: 'gusii-proverbs',
+      title: 'Proverbs',
+      icon: 'book',
+      description: 'Wisdom passed through generations',
+      orderIndex: 5,
+      items: [
+        { id: 'pr1', title: 'Proverb 1', description: 'A proverb about community', nativeText: 'Omosacha ta momura.', englishText: 'A person is not an island.' },
+        { id: 'pr2', title: 'Proverb 2', description: 'A proverb about wisdom', nativeText: 'Egetega kigeretwe nkegogoro.', englishText: 'A trap is set by the wise.' },
+        { id: 'pr3', title: 'Proverb 3', description: 'A proverb about patience', nativeText: 'Ekegwechi kigenda kiongo.', englishText: 'The millipede walks slowly but arrives.' },
+      ],
+    },
+    {
+      id: 'gusii-songs',
+      title: 'Songs & Music',
+      icon: 'music',
+      description: 'Traditional music and dance',
+      orderIndex: 6,
+      items: [
+        { id: 's1', title: 'Ekegogo', description: 'A traditional Gusii dance performed at celebrations, featuring drums, singing, and rhythmic movements by both men and women.' },
+        { id: 's2', title: 'Obokano', description: 'The eight-stringed lyre played by Gusii musicians, similar to the Luo nyatiti, used to accompany storytelling and praise songs.' },
+        { id: 's3', title: 'Eritongori', description: 'A praise song sung to honor heroes and accomplished members of the community, especially at gatherings and ceremonies.' },
+      ],
+    },
+    {
+      id: 'gusii-region',
+      title: 'County & Region Context',
+      icon: 'map',
+      description: 'Where the Gusii people live',
+      orderIndex: 7,
+      items: [
+        { id: 'r1', title: 'Kisii County', description: 'The heartland of the Gusii people, known for its high population density, fertile highlands, and soapstone quarries in Tabaka.' },
+        { id: 'r2', title: 'Nyamira County', description: 'A primarily Gusii county known for tea farming and banana cultivation, with a strong cultural identity.' },
+        { id: 'r3', title: 'Bomet County (parts)', description: 'Some Gusii communities live alongside the Kipsigis in this border county, creating cultural exchange.' },
+        { id: 'r4', title: 'Homabay County (parts)', description: 'Gusii communities in the northern parts of Homabay interact with the Luo, creating a rich border culture.' },
+      ],
+    },
+  ],
+};
+
+/* ─────────────────────────────────────
+   SOMALI
+───────────────────────────────────── */
+const somaliCulture: LanguageCulture = {
+  languageId: 'somali',
+  languageName: 'Somali',
+  nativeName: 'Soomaali',
+  region: 'Northeastern Kenya — Wajir, Garissa, Mandera, and parts of Isiolo and Marsabit',
+  overview: 'The Somali of Kenya are a Cushitic people inhabiting the northeast, sharing language and culture with Somalis across the Horn of Africa. They are predominantly pastoralist, with camel and goat herding central to their way of life. Somali culture places strong emphasis on poetry, clan identity, hospitality, and Islamic traditions.',
+  categories: [
+    {
+      id: 'somali-greetings',
+      title: 'Traditional Greetings',
+      icon: 'message',
+      description: 'How the Somali greet each other',
+      orderIndex: 1,
+      items: [
+        { id: 'g1', title: 'Subax wanaagsan', description: 'A morning greeting', nativeText: 'Subax wanaagsan!', englishText: 'Good morning!' },
+        { id: 'g2', title: 'Sidee tahay', description: 'Asking about well-being', nativeText: 'Sidee tahay?', englishText: 'How are you?' },
+        { id: 'g3', title: 'Waan fiicanahay', description: 'The standard positive response', nativeText: 'Waan fiicanahay, mahadsanid.', englishText: 'I am fine, thank you.' },
+        { id: 'g4', title: 'Nabad gelyo', description: 'A farewell greeting', nativeText: 'Nabad gelyo.', englishText: 'Goodbye / Peace be with you.' },
+      ],
+    },
+    {
+      id: 'somali-names',
+      title: 'Common Names & Meanings',
+      icon: 'users',
+      description: 'Somali names and their significance',
+      orderIndex: 2,
+      items: [
+        { id: 'n1', title: 'Abdi', description: 'A name meaning servant (of God), common in Islamic naming', extra: 'One of the most common Somali male names' },
+        { id: 'n2', title: 'Amina', description: 'A female name meaning trustworthy or honest', extra: 'A widely used Somali female name' },
+        { id: 'n3', title: 'Hassan', description: 'A name of Arabic origin meaning handsome or good', extra: 'A common name across the Somali community' },
+        { id: 'n4', title: 'Fadumo', description: 'The Somali form of Fatima, honoring the Prophet\'s daughter', extra: 'One of the most common female names' },
+        { id: 'n5', title: 'Mahad', description: 'A name meaning one who is praised', extra: 'A respected male name in Somali culture' },
+        { id: 'n6', title: 'Halima', description: 'A female name meaning gentle and patient', extra: 'A traditional name with deep cultural roots' },
+      ],
+    },
+    {
+      id: 'somali-foods',
+      title: 'Traditional Foods',
+      icon: 'utensils',
+      description: 'Staples of the Somali diet',
+      orderIndex: 3,
+      items: [
+        { id: 'f1', title: 'Canjeero', description: 'A thin, spongy flatbread similar to injera, eaten with soups, stews, or tea. It is the staple of Somali breakfast.', nativeText: 'Canjeero', englishText: 'Somali flatbread' },
+        { id: 'f2', title: 'Cambuulo', description: 'A dish of adzuki beans cooked with butter and sugar, often served for dinner with bread.', nativeText: 'Cambuulo', englishText: 'Beans and butter dish' },
+        { id: 'f3', title: 'Suqaar', description: 'A meat stew made with goat or camel meat, spiced with cumin, coriander, and cardamom, served with rice or flatbread.', nativeText: 'Suqaar', englishText: 'Spiced meat stew' },
+        { id: 'f4', title: 'Camel Milk', description: 'Fresh camel milk, a nutritional staple in Somali pastoralist life, drunk plain or used in tea.', nativeText: 'Caano geel', englishText: 'Camel milk' },
+      ],
+    },
+    {
+      id: 'somali-practices',
+      title: 'Cultural Practices',
+      icon: 'globe',
+      description: 'Traditions and customs of the Somali',
+      orderIndex: 4,
+      items: [
+        { id: 'p1', title: 'Camel Herding', description: 'Camels are central to Somali life — they provide milk, transport, and wealth. A man\'s social status is often measured by the size of his camel herd.' },
+        { id: 'p2', title: 'Xeer (Customary Law)', description: 'A traditional Somali legal system based on customary law, used to resolve disputes over grazing rights, marriage, and compensation, guided by elders.' },
+        { id: 'p3', title: 'Poetry Tradition', description: 'Somalia is known as the "Nation of Poets." Poetry is used to record history, settle disputes, express love, and praise heroes, with oral poetry passed through generations.' },
+        { id: 'p4', title: 'Hospitality (Dhiirrigel)', description: 'Somali culture places extreme importance on hospitality. A guest is always welcomed with tea, food, and shelter, and turning away a visitor is considered deeply shameful.' },
+      ],
+    },
+    {
+      id: 'somali-proverbs',
+      title: 'Proverbs',
+      icon: 'book',
+      description: 'Wisdom passed through generations',
+      orderIndex: 5,
+      items: [
+        { id: 'pr1', title: 'Proverb 1', description: 'A proverb about unity', nativeText: 'Mid mid keli, mid wada labaad.', englishText: 'One by one is one, together is two.' },
+        { id: 'pr2', title: 'Proverb 2', description: 'A proverb about patience', nativeText: 'Geel jabisa waa la qoriyaa.', englishText: 'A camel is loaded little by little.' },
+        { id: 'pr3', title: 'Proverb 3', description: 'A proverb about wisdom', nativeText: 'Aqoon la\'aani waa iftiin la\'aan.', englishText: 'Lack of knowledge is lack of light.' },
+      ],
+    },
+    {
+      id: 'somali-songs',
+      title: 'Songs & Music',
+      icon: 'music',
+      description: 'Traditional music and dance',
+      orderIndex: 6,
+      items: [
+        { id: 's1', title: 'Dhaanto', description: 'A traditional Somali dance and song style featuring rhythmic clapping, drums, and call-and-response singing, performed at weddings and celebrations.' },
+        { id: 's2', title: 'Buraanbur', description: 'A traditional women\'s dance performed at weddings and ceremonies, featuring rhythmic movements, ululation, and poetry recitation.' },
+        { id: 's3', title: 'Hees', description: 'Work songs sung during herding, water collection, or building, reflecting the rhythm of daily pastoralist life and keeping morale high.' },
+      ],
+    },
+    {
+      id: 'somali-region',
+      title: 'County & Region Context',
+      icon: 'map',
+      description: 'Where the Somali people live in Kenya',
+      orderIndex: 7,
+      items: [
+        { id: 'r1', title: 'Wajir County', description: 'A predominantly Somali county in northeastern Kenya, known for pastoralism and the Wajir International Airport, a historic stopover.' },
+        { id: 'r2', title: 'Garissa County', description: 'Home to a large Somali population, situated along the Tana River, with Garissa town as a commercial hub for the northeast.' },
+        { id: 'r3', title: 'Mandera County', description: 'A border county touching Somalia and Ethiopia, with a predominantly Somali population and strong cross-border cultural ties.' },
+        { id: 'r4', title: 'Isiolo County (parts)', description: 'A county where Somali, Borana, and Samburu communities coexist, creating a rich cultural mosaic at the edge of the north.' },
+      ],
+    },
+  ],
+};
+
 const cultureByLanguage: Record<LanguageId, LanguageCulture> = {
   kalenjin: kalenjinCulture,
   kikuyu: kikuyuCulture,
   luo: luoCulture,
+  kamba: kambaCulture,
+  luhya: luhyaCulture,
+  gusii: gusiiCulture,
+  somali: somaliCulture,
 };
 
 export function getCultureForLanguage(languageId: string): LanguageCulture | null {

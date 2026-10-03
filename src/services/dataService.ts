@@ -31,6 +31,10 @@ export interface LessonContent {
   kalenjin: string;
   kikuyu: string;
   luo: string;
+  kamba: string;
+  luhya: string;
+  gusii: string;
+  somali: string;
   english: string;
   orderIndex: number;
 }
@@ -43,6 +47,10 @@ export interface QuizQuestion {
     kalenjin: string;
     kikuyu: string;
     luo: string;
+    kamba: string;
+    luhya: string;
+    gusii: string;
+    somali: string;
   };
   orderIndex: number;
 }
