@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { ArrowRight, Check } from 'lucide-react';
 
 export function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signup } = useAuth();
+  const { signup, user } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) navigate('/');
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,11 +23,9 @@ export function Signup() {
 
     try {
       setError('');
-      setSuccess('');
       setLoading(true);
       await signup(email, password);
-      setSuccess('Account created successfully! Redirecting...');
-      setTimeout(() => { navigate('/'); }, 1500);
+      navigate('/');
     } catch (err: any) {
       let errorMessage = 'Failed to create account. Please try again.';
       if (err.code === 'auth/email-already-in-use') errorMessage = 'This email is already registered. Please log in instead.';
@@ -36,24 +38,34 @@ export function Signup() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-sm w-full">
+      <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <img src="/lughalogo.png" alt="LUGHA47" className="w-16 h-16 object-contain mx-auto mb-4" />
+          <button onClick={() => navigate('/')} className="inline-block">
+            <img src="/lughalogo.png" alt="LUGHA47" className="w-14 h-14 object-contain mx-auto mb-3" />
+          </button>
           <h1 className="text-3xl font-bold text-forest-700 font-heading mb-1">LUGHA47</h1>
           <p className="text-ink-400 text-sm">Start your language learning journey</p>
         </div>
 
         <div className="card p-8">
-          <h2 className="text-xl font-bold text-ink-900 mb-6">Create Account</h2>
+          <h2 className="text-2xl font-bold text-ink-900 mb-2">Create Account</h2>
+          <p className="text-ink-400 text-sm mb-6">Free to join — no subscription required.</p>
+
+          {/* Benefits list */}
+          <div className="space-y-2 mb-6">
+            {['Access all 7 Kenyan languages', 'Track your quiz progress', 'Conversation & culture lessons'].map((benefit) => (
+              <div key={benefit} className="flex items-center gap-2 text-sm text-ink-600">
+                <div className="w-5 h-5 bg-forest-50 rounded-full flex items-center justify-center flex-shrink-0 border border-forest-100">
+                  <Check className="w-3 h-3 text-forest-600" />
+                </div>
+                {benefit}
+              </div>
+            ))}
+          </div>
 
           {error && (
-            <div className="bg-kanga-50 border border-kanga-200 text-kanga-700 px-4 py-3 rounded-lg mb-4 text-sm">
+            <div className="bg-kanga-50 border border-kanga-200 text-kanga-700 px-4 py-3 rounded-xl mb-4 text-sm">
               {error}
-            </div>
-          )}
-          {success && (
-            <div className="bg-forest-50 border border-forest-200 text-forest-700 px-4 py-3 rounded-lg mb-4 text-sm">
-              {success}
             </div>
           )}
 
@@ -100,8 +112,9 @@ export function Signup() {
                 placeholder="Repeat your password"
               />
             </div>
-            <button type="submit" disabled={loading} className="btn btn-primary w-full py-3.5">
-              {loading ? 'Creating Account...' : 'Sign Up'}
+            <button type="submit" disabled={loading} className="btn btn-primary w-full py-3.5 flex items-center justify-center gap-2">
+              {loading ? 'Creating Account...' : 'Sign Up Free'}
+              {!loading && <ArrowRight className="w-5 h-5" />}
             </button>
           </form>
 
@@ -111,6 +124,12 @@ export function Signup() {
               Log In
             </Link>
           </p>
+        </div>
+
+        <div className="text-center mt-6">
+          <button onClick={() => navigate('/')} className="text-sm text-ink-400 hover:text-forest-700 transition-colors">
+            Back to home
+          </button>
         </div>
       </div>
     </div>

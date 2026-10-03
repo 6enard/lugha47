@@ -1,25 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { ArrowRight } from 'lucide-react';
 
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) navigate('/');
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setError('');
-      setSuccess('');
       setLoading(true);
       await login(email, password);
-      setSuccess('Login successful! Redirecting...');
-      setTimeout(() => { navigate('/'); }, 1000);
+      navigate('/');
     } catch (err: any) {
       let errorMessage = 'Failed to log in. Please try again.';
       if (err.code === 'auth/user-not-found') errorMessage = 'No account found with this email. Please sign up first.';
@@ -34,24 +36,22 @@ export function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-sm w-full">
+      <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <img src="/lughalogo.png" alt="LUGHA47" className="w-16 h-16 object-contain mx-auto mb-4" />
+          <button onClick={() => navigate('/')} className="inline-block">
+            <img src="/lughalogo.png" alt="LUGHA47" className="w-14 h-14 object-contain mx-auto mb-3" />
+          </button>
           <h1 className="text-3xl font-bold text-forest-700 font-heading mb-1">LUGHA47</h1>
           <p className="text-ink-400 text-sm">Welcome back! Continue learning</p>
         </div>
 
         <div className="card p-8">
-          <h2 className="text-xl font-bold text-ink-900 mb-6">Log In</h2>
+          <h2 className="text-2xl font-bold text-ink-900 mb-2">Log In</h2>
+          <p className="text-ink-400 text-sm mb-6">Sign in to access your lessons and progress.</p>
 
           {error && (
-            <div className="bg-kanga-50 border border-kanga-200 text-kanga-700 px-4 py-3 rounded-lg mb-4 text-sm">
+            <div className="bg-kanga-50 border border-kanga-200 text-kanga-700 px-4 py-3 rounded-xl mb-4 text-sm">
               {error}
-            </div>
-          )}
-          {success && (
-            <div className="bg-forest-50 border border-forest-200 text-forest-700 px-4 py-3 rounded-lg mb-4 text-sm">
-              {success}
             </div>
           )}
 
@@ -84,17 +84,24 @@ export function Login() {
                 placeholder="Enter your password"
               />
             </div>
-            <button type="submit" disabled={loading} className="btn btn-primary w-full py-3.5">
+            <button type="submit" disabled={loading} className="btn btn-primary w-full py-3.5 flex items-center justify-center gap-2">
               {loading ? 'Logging In...' : 'Log In'}
+              {!loading && <ArrowRight className="w-5 h-5" />}
             </button>
           </form>
 
           <p className="mt-6 text-center text-ink-400 text-sm">
             Don't have an account?{' '}
             <Link to="/signup" className="text-forest-700 hover:text-forest-800 font-bold">
-              Sign Up
+              Sign Up Free
             </Link>
           </p>
+        </div>
+
+        <div className="text-center mt-6">
+          <button onClick={() => navigate('/')} className="text-sm text-ink-400 hover:text-forest-700 transition-colors">
+            Back to home
+          </button>
         </div>
       </div>
     </div>

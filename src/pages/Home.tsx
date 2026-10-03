@@ -1,6 +1,20 @@
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, LogOut, ArrowRight, Sparkles, Globe, MessageCircle, Flame, Home as HomeIcon } from 'lucide-react';
+import {
+  BookOpen,
+  LogOut,
+  ArrowRight,
+  Sparkles,
+  Globe,
+  MessageCircle,
+  Flame,
+  Home as HomeIcon,
+  Zap,
+  Trophy,
+  Users,
+  Star,
+
+} from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getLanguages, saveUserLanguageSelection } from '../services/dataService';
 import { LanguageSelector } from '../components/LanguageSelector';
@@ -26,8 +40,23 @@ const CATEGORY_CONFIG: Record<Category, { title: string; subtitle: string }> = {
   },
 };
 
+const LANGUAGES_LIST = [
+  { id: 'kalenjin', name: 'Kalenjin', native: 'Kalenjin' },
+  { id: 'kikuyu', name: 'Kikuyu', native: 'Gĩkũyũ' },
+  { id: 'luo', name: 'Luo', native: 'Dholuo' },
+  { id: 'kamba', name: 'Kamba', native: 'Kikamba' },
+  { id: 'luhya', name: 'Luhya', native: 'Luluhya' },
+  { id: 'gusii', name: 'Gusii', native: 'Ekegusii' },
+  { id: 'somali', name: 'Somali', native: 'Soomaali' },
+];
+
+const HERO_IMG = 'https://images.pexels.com/photos/4921096/pexels-photo-4921096.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
+const SECTION2_IMG = 'https://images.pexels.com/photos/8091179/pexels-photo-8091179.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
+const SECTION3_IMG = 'https://images.pexels.com/photos/7229097/pexels-photo-7229097.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
+const CULTURE_IMG = 'https://images.pexels.com/photos/35034039/pexels-photo-35034039.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
+
 export function Home() {
-  const { user, logout } = useAuth();
+  const { user, logout, openAuthGate } = useAuth();
   const navigate = useNavigate();
   const [view, setView] = useState<HomeView>('dashboard');
   const [languages, setLanguages] = useState<any[]>([]);
@@ -49,9 +78,19 @@ export function Home() {
     loadData();
   }, []);
 
+  const requireAuth = (action: () => void) => {
+    if (!user) {
+      openAuthGate();
+      return;
+    }
+    action();
+  };
+
   const handleCategoryClick = (category: Category) => {
-    setPendingCategory(category);
-    setView('language-pick');
+    requireAuth(() => {
+      setPendingCategory(category);
+      setView('language-pick');
+    });
   };
 
   const handleSelectLanguage = async (languageId: string) => {
@@ -73,7 +112,8 @@ export function Home() {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login');
+      setView('dashboard');
+      navigate('/');
     } catch (error) {
       console.error('Failed to log out');
     }
@@ -95,10 +135,10 @@ export function Home() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      {/* Slim sticky top bar */}
-      <nav className="bg-white/90 backdrop-blur-md border-b border-gray-200/60 sticky top-0 z-40">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="flex justify-between items-center h-14">
+      {/* ── Nav Bar ── */}
+      <nav className="bg-white/95 backdrop-blur-md border-b border-gray-200/60 sticky top-0 z-40">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex justify-between items-center h-16">
             <button
               onClick={() => setView('dashboard')}
               className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
@@ -108,183 +148,433 @@ export function Home() {
                 alt="LUGHA47"
                 className="w-8 h-8 object-contain"
               />
-              <span className="text-lg font-bold text-forest-700 font-heading">LUGHA47</span>
+              <span className="text-lg font-bold text-forest-700 font-heading tracking-tight">LUGHA47</span>
             </button>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-sun-50 border border-sun-200 rounded-full text-sm font-bold text-sun-700">
-                <Flame className="w-4 h-4" />
-                <span>0</span>
-              </div>
-              <span className="text-xs text-ink-400 font-medium hidden sm:block max-w-[160px] truncate">{user?.email}</span>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-ink-600 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden sm:inline">Logout</span>
-              </button>
+              {user ? (
+                <>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-sun-50 border border-sun-200 rounded-full text-sm font-bold text-sun-700">
+                    <Flame className="w-4 h-4" />
+                    <span>0</span>
+                  </div>
+                  <span className="text-xs text-ink-400 font-medium hidden sm:block max-w-[160px] truncate">{user?.email}</span>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-ink-600 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span className="hidden sm:inline">Logout</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => navigate('/login')}
+                    className="text-sm font-bold text-ink-700 hover:text-forest-700 transition-colors px-3 py-1.5"
+                  >
+                    Log In
+                  </button>
+                  <button
+                    onClick={() => navigate('/signup')}
+                    className="btn btn-primary px-5 py-2 text-sm"
+                  >
+                    Sign Up Free
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-5xl mx-auto px-4 py-8">
+      <main className="max-w-6xl mx-auto px-4">
+        {/* ═══════════════════════════════════════════════════
+            DASHBOARD VIEW — Babbel-style public landing page
+           ═══════════════════════════════════════════════════ */}
         {view === 'dashboard' && (
-          <div className="screen-enter">
-            {/* Hero */}
-            <div className="mb-10 text-center">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-forest-50 rounded-full mb-4 border border-forest-200">
-                <Sparkles className="w-3.5 h-3.5 text-forest-600" />
-                <span className="text-xs font-semibold text-forest-700">Preserve Culture Through Language</span>
-              </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-ink-900 mb-3 leading-tight">
-                Preserve Kenya's{' '}
-                <span className="text-forest-600">Linguistic Heritage</span>
-              </h1>
-              <p className="text-base md:text-lg text-ink-500 max-w-2xl mx-auto">
-                Keep Kenyan languages alive for future generations through interactive, culturally rich lessons.
-              </p>
-            </div>
+          <div>
+            {/* ── HERO SECTION ── */}
+            <section className="pt-12 md:pt-20 pb-16">
+              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div className="text-center md:text-left">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-forest-50 rounded-full mb-5 border border-forest-200">
+                    <Sparkles className="w-3.5 h-3.5 text-forest-600" />
+                    <span className="text-xs font-semibold text-forest-700">Preserve Culture Through Language</span>
+                  </div>
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ink-900 leading-[1.1] mb-5 text-balance">
+                    Which <span className="text-forest-600 italic">language</span> do you want to learn?
+                  </h1>
+                  <p className="text-lg text-ink-500 mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                    Keep Kenya's indigenous languages alive. Learn Kalenjin, Kikuyu, Luo, and more through interactive lessons designed for real-life conversations.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+                    <button
+                      onClick={() => handleCategoryClick('lessons')}
+                      className="btn btn-primary px-8 py-4 text-lg flex items-center justify-center gap-2"
+                    >
+                      Start Learning <ArrowRight className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => handleCategoryClick('culture')}
+                      className="btn btn-secondary px-8 py-4 text-lg flex items-center justify-center gap-2"
+                    >
+                      Explore Culture <Globe className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
 
-            {/* Three category cards */}
-            <div className="mb-10">
-              <h2 className="text-xl font-bold text-ink-900 mb-4">What would you like to do?</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="relative">
+                  <div className="absolute -top-4 -right-4 w-64 h-64 bg-forest-100 rounded-full blur-3xl opacity-60"></div>
+                  <div className="absolute -bottom-4 -left-4 w-48 h-48 bg-sun-100 rounded-full blur-3xl opacity-50"></div>
+                  <div className="relative rounded-3xl overflow-hidden shadow-xl">
+                    <img
+                      src={HERO_IMG}
+                      alt="People having a conversation"
+                      className="w-full h-[320px] md:h-[420px] object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ── LANGUAGE PILLS ROW ── */}
+            <section className="pb-16">
+              <div className="text-center mb-6">
+                <p className="text-sm font-bold text-ink-400 uppercase tracking-widest">7 Languages Available</p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-2.5">
+                {LANGUAGES_LIST.map((lang) => (
+                  <button
+                    key={lang.id}
+                    onClick={() => handleCategoryClick('lessons')}
+                    className="px-5 py-2.5 bg-white border-2 border-gray-200 rounded-full font-bold text-sm text-ink-700 hover:border-forest-400 hover:bg-forest-50 transition-all"
+                  >
+                    {lang.name}
+                    <span className="text-ink-300 font-medium ml-1.5">{lang.native}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* ── "THE EFFECTIVE WAY" SECTION ── */}
+            <section className="py-16 border-t border-gray-200/60">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-3">
+                  The effective way to learn a language online
+                </h2>
+                <p className="text-ink-500 max-w-2xl mx-auto">
+                  LUGHA47 combines proven learning methods with cultural depth, so you can speak with confidence.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {/* Feature 1 */}
+                <div className="text-center">
+                  <div className="rounded-2xl overflow-hidden mb-5 shadow-card">
+                    <img src={SECTION2_IMG} alt="Learn to speak with confidence" className="w-full h-56 object-cover" />
+                  </div>
+                  <h3 className="text-xl font-bold text-ink-900 mb-2">Learn to speak with confidence</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed">
+                    You'll learn practical, useful skills you can apply right away — so you can reach your goal of having real-life conversations faster.
+                  </p>
+                </div>
+
+                {/* Feature 2 */}
+                <div className="text-center">
+                  <div className="rounded-2xl overflow-hidden mb-5 shadow-card">
+                    <img src={SECTION3_IMG} alt="Learn at your own pace" className="w-full h-56 object-cover" />
+                  </div>
+                  <h3 className="text-xl font-bold text-ink-900 mb-2">Learn at your own pace</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed">
+                    Achieve your goals with lessons tailored to your level. Stay motivated with progress trackers, quiz scores, and visual feedback.
+                  </p>
+                </div>
+
+                {/* Feature 3 */}
+                <div className="text-center">
+                  <div className="rounded-2xl overflow-hidden mb-5 shadow-card">
+                    <img src={CULTURE_IMG} alt="Develop language skills with culture" className="w-full h-56 object-cover" />
+                  </div>
+                  <h3 className="text-xl font-bold text-ink-900 mb-2">Connect with culture</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed">
+                    Go beyond vocabulary — explore traditions, proverbs, foods, and customs that give each language its soul.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* ── THE METHOD SECTION ── */}
+            <section className="py-16 border-t border-gray-200/60">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-3">
+                  The proven LUGHA47 method
+                </h2>
+                <p className="text-ink-500 max-w-2xl mx-auto">
+                  Our approach blends interactive lessons, real-life conversations, and cultural immersion.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="card p-8 text-center">
+                  <div className="w-14 h-14 bg-forest-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-forest-100">
+                    <Zap className="w-7 h-7 text-forest-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-ink-900 mb-2">Learn Fast. Talk Sooner.</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed">
+                    Quickly become conversation-ready with flashcards, sentence building, and quizzes designed for all learning styles.
+                  </p>
+                </div>
+
+                <div className="card p-8 text-center">
+                  <div className="w-14 h-14 bg-sun-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-sun-100">
+                    <Trophy className="w-7 h-7 text-sun-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-ink-900 mb-2">Track Your Progress</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed">
+                    Quiz scores, lesson completion markers, and best-score tracking keep you motivated and moving forward.
+                  </p>
+                </div>
+
+                <div className="card p-8 text-center">
+                  <div className="w-14 h-14 bg-lake-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-lake-100">
+                    <Users className="w-7 h-7 text-lake-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-ink-900 mb-2">Built for Communities</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed">
+                    Courses crafted to preserve the heritage of Kenya's communities — from greetings to proverbs to everyday conversations.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* ── WHAT WOULD YOU LIKE TO DO? ── */}
+            <section className="py-16 border-t border-gray-200/60">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-3">What would you like to do?</h2>
+                <p className="text-ink-500 max-w-2xl mx-auto">Choose how you want to start your journey.</p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-5">
                 <button
                   onClick={() => handleCategoryClick('lessons')}
-                  className="card card-hover p-6 text-left"
+                  className="card card-hover p-7 text-left group"
                 >
-                  <div className="w-12 h-12 bg-forest-600 rounded-xl flex items-center justify-center mb-4">
-                    <BookOpen className="w-6 h-6 text-white" />
+                  <div className="w-14 h-14 bg-forest-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <BookOpen className="w-7 h-7 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-ink-900 mb-2">Lessons</h3>
-                  <p className="text-ink-500 text-sm leading-relaxed mb-3">
-                    Flashcards, sentence building, and quizzes.
+                  <h3 className="text-xl font-bold text-ink-900 mb-2">Lessons</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed mb-4">
+                    Interactive flashcards, sentence building exercises, and quizzes for all levels.
                   </p>
                   <div className="flex items-center gap-1.5 text-forest-700 font-bold text-sm">
-                    Start Learning <ArrowRight className="w-4 h-4" />
+                    Start Learning <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </button>
 
                 <button
                   onClick={() => handleCategoryClick('culture')}
-                  className="card card-hover p-6 text-left border-amber-200"
+                  className="card card-hover p-7 text-left group border-amber-200"
                 >
-                  <div className="w-12 h-12 bg-sun-400 rounded-xl flex items-center justify-center mb-4">
-                    <Globe className="w-6 h-6 text-ink-900" />
+                  <div className="w-14 h-14 bg-sun-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <Globe className="w-7 h-7 text-ink-900" />
                   </div>
-                  <h3 className="text-lg font-bold text-ink-900 mb-2">Culture</h3>
-                  <p className="text-ink-500 text-sm leading-relaxed mb-3">
-                    Traditions, proverbs, foods, and customs.
+                  <h3 className="text-xl font-bold text-ink-900 mb-2">Culture</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed mb-4">
+                    Traditions, proverbs, foods, names, and customs of each community.
                   </p>
                   <div className="flex items-center gap-1.5 text-sun-700 font-bold text-sm">
-                    Explore <ArrowRight className="w-4 h-4" />
+                    Explore <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </button>
 
                 <button
                   onClick={() => handleCategoryClick('conversations')}
-                  className="card card-hover p-6 text-left border-lake-200"
+                  className="card card-hover p-7 text-left group border-lake-200"
                 >
-                  <div className="w-12 h-12 bg-lake-600 rounded-xl flex items-center justify-center mb-4">
-                    <MessageCircle className="w-6 h-6 text-white" />
+                  <div className="w-14 h-14 bg-lake-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <MessageCircle className="w-7 h-7 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-ink-900 mb-2">Conversations</h3>
-                  <p className="text-ink-500 text-sm leading-relaxed mb-3">
-                    Practice everyday real-life situations.
+                  <h3 className="text-xl font-bold text-ink-900 mb-2">Conversations</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed mb-4">
+                    Practice real-life situations — at home, the market, school, and more.
                   </p>
                   <div className="flex items-center gap-1.5 text-lake-700 font-bold text-sm">
-                    Start <ArrowRight className="w-4 h-4" />
+                    Practice <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </button>
               </div>
-            </div>
+            </section>
 
-            {/* Mission */}
-            <div className="card p-8 mb-8">
-              <h2 className="text-xl font-bold text-ink-900 mb-2">Our Mission</h2>
-              <p className="text-ink-500 text-sm leading-relaxed mb-6">
-                Every language carries the wisdom, stories, and identity of its people. LUGHA47 is dedicated to preserving Kenya's indigenous languages by making them accessible, engaging, and relevant for modern learners.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-sun-400 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Globe className="w-5 h-5 text-ink-900" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-ink-900 text-sm">Cultural Identity</h3>
-                    <p className="text-ink-400 text-xs mt-0.5">Keep your heritage alive.</p>
-                  </div>
+            {/* ── TESTIMONIAL / SOCIAL PROOF ── */}
+            <section className="py-16 border-t border-gray-200/60">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-3">Learners love LUGHA47</h2>
+                <div className="flex items-center justify-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-sun-400 text-sun-400" />
+                  ))}
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-forest-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <BookOpen className="w-5 h-5 text-white" />
+                <p className="text-ink-400 text-sm">Join thousands of Kenyans reconnecting with their roots</p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-5">
+                {[
+                  { quote: "I finally learned to greet my grandmother in Kalenjin. She was so proud!", name: "Chebet K.", lang: "Learning Kalenjin" },
+                  { quote: "The conversation practice feels so real. I can bargain at the market in Kikuyu now!", name: "Kamau N.", lang: "Learning Kikuyu" },
+                  { quote: "The cultural lessons are a treasure. My kids are learning our language and our stories.", name: "Omondi A.", lang: "Learning Luo" },
+                ].map((t, i) => (
+                  <div key={i} className="card p-7">
+                    <div className="flex gap-0.5 mb-3">
+                      {[...Array(5)].map((_, j) => (
+                        <Star key={j} className="w-4 h-4 fill-sun-400 text-sun-400" />
+                      ))}
+                    </div>
+                    <p className="text-ink-700 leading-relaxed mb-4 italic">"{t.quote}"</p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-forest-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="font-bold text-forest-700 text-sm">{t.name.charAt(0)}</span>
+                      </div>
+                      <div>
+                        <p className="font-bold text-ink-900 text-sm">{t.name}</p>
+                        <p className="text-ink-400 text-xs">{t.lang}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-ink-900 text-sm">Interactive Learning</h3>
-                    <p className="text-ink-400 text-xs mt-0.5">Natural, fun, meaningful.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-lake-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MessageCircle className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-ink-900 text-sm">Real Life Practice</h3>
-                    <p className="text-ink-400 text-xs mt-0.5">Use what you learn daily.</p>
+                ))}
+              </div>
+            </section>
+
+            {/* ── FREE TRIAL / SIGN UP CTA ── */}
+            <section className="py-16 border-t border-gray-200/60">
+              <div className="bg-gradient-to-br from-forest-700 to-forest-800 rounded-3xl p-10 md:p-16 text-center text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-72 h-72 bg-forest-600/40 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-sun-400/10 rounded-full blur-3xl"></div>
+                <div className="relative z-10">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    {user ? "Continue your journey" : "Begin your journey today — it's free"}
+                  </h2>
+                  <p className="text-forest-100 mb-8 max-w-lg mx-auto leading-relaxed">
+                    {user
+                      ? "Pick up where you left off and keep your language alive."
+                      : "Join thousands of Kenyans reconnecting with their linguistic roots. Sign up free and try your first lesson today."}
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    {user ? (
+                      <button
+                        onClick={() => handleCategoryClick('lessons')}
+                        className="btn btn-sun px-8 py-4 text-lg inline-flex items-center justify-center gap-2"
+                      >
+                        Continue Learning <ArrowRight className="w-5 h-5" />
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => navigate('/signup')}
+                          className="btn btn-sun px-8 py-4 text-lg inline-flex items-center justify-center gap-2"
+                        >
+                          Sign Up Free <ArrowRight className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => navigate('/login')}
+                          className="px-8 py-4 text-lg font-bold text-white border-2 border-white/30 rounded-2xl hover:bg-white/10 transition-all"
+                        >
+                          I already have an account
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
 
-            {/* CTA */}
-            <div className="bg-forest-700 rounded-2xl p-8 text-center text-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-forest-600/50 rounded-full blur-3xl"></div>
-              <div className="relative z-10">
-                <h2 className="text-xl md:text-2xl font-bold mb-2">Begin Your Journey Today</h2>
-                <p className="text-forest-100 text-sm mb-5 max-w-md mx-auto">
-                  Join thousands of Kenyans reconnecting with their linguistic roots.
-                </p>
-                <button
-                  onClick={() => handleCategoryClick('lessons')}
-                  className="btn btn-sun px-6 py-3 inline-flex items-center gap-2"
-                >
-                  Get Started <ArrowRight className="w-5 h-5" />
-                </button>
+            {/* ── FAQ SECTION ── */}
+            <section className="py-16 border-t border-gray-200/60">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-8 text-center">
+                  Frequently asked questions
+                </h2>
+                <div className="space-y-3">
+                  {[
+                    { q: "What is LUGHA47, and how does it work?", a: "LUGHA47 is a free language learning platform designed to preserve Kenya's indigenous languages. You learn through interactive flashcards, sentence building exercises, quizzes, conversation practice, and cultural lessons." },
+                    { q: "What languages can I learn?", a: "Currently we offer seven languages: Kalenjin, Kikuyu, Luo, Kamba, Luhya, Gusii, and Somali — each with vocabulary lessons, conversation scenarios, and deep cultural content." },
+                    { q: "Can I try LUGHA47 for free?", a: "Absolutely! Signing up is completely free, and you get access to all lessons, quizzes, conversation practice, and cultural content at no cost." },
+                    { q: "Do I need any prior knowledge?", a: "No! Our lessons start from the very basics — greetings, numbers, family words — and build up to sentence construction and real conversations. All levels are welcome." },
+                    { q: "How does progress tracking work?", a: "Every quiz you complete saves your score. You can see your best score per lesson, track which lessons you've completed, and follow your improvement over time." },
+                  ].map((faq, i) => (
+                    <details key={i} className="card p-0 group">
+                      <summary className="cursor-pointer p-5 font-bold text-ink-900 text-base flex items-center justify-between list-none">
+                        {faq.q}
+                        <span className="text-forest-600 text-xl transition-transform group-open:rotate-45">+</span>
+                      </summary>
+                      <div className="px-5 pb-5 text-ink-500 text-sm leading-relaxed">
+                        {faq.a}
+                      </div>
+                    </details>
+                  ))}
+                </div>
               </div>
-            </div>
+            </section>
+
+            {/* ── FOOTER ── */}
+            <footer className="py-12 border-t border-gray-200/60">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="flex items-center gap-2.5">
+                  <img src="/lughalogo.png" alt="LUGHA47" className="w-7 h-7 object-contain" />
+                  <span className="text-base font-bold text-forest-700 font-heading">LUGHA47</span>
+                </div>
+                <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm text-ink-400 font-medium">
+                  <button onClick={() => handleCategoryClick('lessons')} className="hover:text-forest-700 transition-colors">Lessons</button>
+                  <button onClick={() => handleCategoryClick('conversations')} className="hover:text-forest-700 transition-colors">Conversations</button>
+                  <button onClick={() => handleCategoryClick('culture')} className="hover:text-forest-700 transition-colors">Culture</button>
+                  {!user && <button onClick={() => navigate('/signup')} className="hover:text-forest-700 transition-colors">Sign Up</button>}
+                  {!user && <button onClick={() => navigate('/login')} className="hover:text-forest-700 transition-colors">Log In</button>}
+                </div>
+                <p className="text-xs text-ink-300">Preserving Kenya's linguistic heritage</p>
+              </div>
+            </footer>
           </div>
         )}
 
+        {/* ═══════════════════════════════════════════════════
+            CONTENT VIEWS (auth-gated)
+           ═══════════════════════════════════════════════════ */}
         {view === 'language-pick' && (
-          <LanguageSelector
-            languages={languages}
-            onSelectLanguage={handleSelectLanguage}
-            onBack={() => setView('dashboard')}
-            title={languagePickConfig?.title}
-            subtitle={languagePickConfig?.subtitle}
-          />
+          <div className="py-8">
+            <LanguageSelector
+              languages={languages}
+              onSelectLanguage={handleSelectLanguage}
+              onBack={() => setView('dashboard')}
+              title={languagePickConfig?.title}
+              subtitle={languagePickConfig?.subtitle}
+            />
+          </div>
         )}
 
         {view === 'lessons' && selectedLanguage && (
-          <LessonViewer
-            languageId={selectedLanguage}
-            onBack={() => setView('language-pick')}
-          />
+          <div className="py-8">
+            <LessonViewer
+              languageId={selectedLanguage}
+              onBack={() => setView('language-pick')}
+            />
+          </div>
         )}
 
         {view === 'conversations' && selectedLanguage && (
-          <ConversationPractice
-            languageId={selectedLanguage}
-            onBack={() => setView('language-pick')}
-          />
+          <div className="py-8">
+            <ConversationPractice
+              languageId={selectedLanguage}
+              onBack={() => setView('language-pick')}
+            />
+          </div>
         )}
 
         {view === 'culture' && selectedLanguage && (
-          <CulturalLessons
-            languageId={selectedLanguage}
-            onBack={() => setView('language-pick')}
-          />
+          <div className="py-8">
+            <CulturalLessons
+              languageId={selectedLanguage}
+              onBack={() => setView('language-pick')}
+            />
+          </div>
         )}
       </main>
 
@@ -293,7 +583,7 @@ export function Home() {
         <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 md:hidden">
           <div className="flex justify-around items-center h-16">
             <button
-              onClick={() => { setView('dashboard'); }}
+              onClick={() => setView('dashboard')}
               className={`flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-lg transition-colors ${
                 view === 'dashboard' ? 'text-forest-700' : 'text-ink-300'
               }`}

@@ -19,6 +19,9 @@ interface AuthContextType {
   signup: (email: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  authGateOpen: boolean;
+  openAuthGate: (redirectLabel?: string) => void;
+  closeAuthGate: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -34,6 +37,7 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authGateOpen, setAuthGateOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -70,16 +74,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const login = async (email: string, password: string) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      setUser({
-        uid: userCredential.user.uid,
-        email: userCredential.user.email || email,
-      });
-    } catch (error: any) {
-      throw error;
-    }
+    setUser({
+      uid: userCredential.user.uid,
+      email: userCredential.user.email || email,
+    });
   };
 
   const logout = async () => {
@@ -87,12 +87,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   };
 
+  const openAuthGate = () => setAuthGateOpen(true);
+  const closeAuthGate = () => setAuthGateOpen(false);
+
   const value = {
     user,
     loading,
     signup,
     login,
-    logout
+    logout,
+    authGateOpen,
+    openAuthGate,
+    closeAuthGate,
   };
 
   return (
