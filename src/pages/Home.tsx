@@ -9,6 +9,8 @@ import {
   MessageCircle,
   Flame,
   Home as HomeIcon,
+  ChevronLeft,
+  ChevronRight,
   Zap,
   Trophy,
   Users,
@@ -22,7 +24,7 @@ import {
   Compass,
   type LucideIcon,
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getLanguages, saveUserLanguageSelection } from '../services/dataService';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { LessonViewer } from '../components/LessonViewer';
@@ -71,6 +73,7 @@ export function Home() {
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const [pendingCategory, setPendingCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
+  const marqueeRef = useRef<HTMLDivElement>(null);
 
 
   useEffect(() => {
@@ -248,8 +251,34 @@ export function Home() {
 
             {/* ── LANGUAGE SCROLLER (infinite) ── */}
             <section className="pb-16 overflow-hidden">
-              <h2 className="text-xl font-bold text-ink-900 mb-5">I want to learn</h2>
-              <div className="lang-marquee group">
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-xl font-bold text-ink-900">I want to learn</h2>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      if (marqueeRef.current) {
+                        marqueeRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+                      }
+                    }}
+                    className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-card flex items-center justify-center text-ink-600 hover:bg-gray-50 hover:border-forest-300 transition-all"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (marqueeRef.current) {
+                        marqueeRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+                      }
+                    }}
+                    className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-card flex items-center justify-center text-ink-600 hover:bg-gray-50 hover:border-forest-300 transition-all"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+              <div className="lang-marquee group" ref={marqueeRef}>
                 <div className="lang-marquee-track">
                   {[...LANGUAGES_LIST, ...LANGUAGES_LIST, ...LANGUAGES_LIST].map((lang, idx) => {
                     const accent = getAccent(lang.id);
@@ -258,13 +287,13 @@ export function Home() {
                       <button
                         key={`${lang.id}-${idx}`}
                         onClick={() => handleCategoryClick('lessons')}
-                        className="flex-shrink-0 w-44 group/item text-left"
+                        className="flex-shrink-0 w-32 group/item text-left"
                       >
-                        <div className={`w-44 h-44 rounded-2xl bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-3 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all`}>
-                          <Icon className="w-12 h-12 text-white" />
+                        <div className={`w-32 h-32 rounded-2xl bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-3 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all`}>
+                          <Icon className="w-8 h-8 text-white" />
                         </div>
-                        <p className="font-bold text-ink-900 text-base">{lang.name}</p>
-                        <p className={`text-sm font-bold ${accent.text}`}>{lang.native}</p>
+                        <p className="font-bold text-ink-900 text-sm">{lang.name}</p>
+                        <p className={`text-xs font-bold ${accent.text}`}>{lang.native}</p>
                       </button>
                     );
                   })}
