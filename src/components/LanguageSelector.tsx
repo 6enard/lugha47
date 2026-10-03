@@ -11,12 +11,16 @@ interface LanguageSelectorProps {
   languages: Language[];
   onSelectLanguage: (languageId: string) => void;
   onBack: () => void;
+  title?: string;
+  subtitle?: string;
 }
 
 export function LanguageSelector({
   languages,
   onSelectLanguage,
   onBack,
+  title = 'Choose Your Language',
+  subtitle = 'Select a language to start your cultural journey today',
 }: LanguageSelectorProps) {
   return (
     <>
@@ -30,10 +34,10 @@ export function LanguageSelector({
 
       <div className="mb-16 text-center">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-          Choose Your Language
+          {title}
         </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Select a language to start your cultural journey today
+          {subtitle}
         </p>
       </div>
 

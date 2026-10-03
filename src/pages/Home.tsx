@@ -1,16 +1,30 @@
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Languages, BookOpen, Trophy, TrendingUp, LogOut, ArrowRight, Sparkles, Globe, Users, MessageCircle } from 'lucide-react';
+import { BookOpen, Trophy, LogOut, ArrowRight, Sparkles, Globe, Users, MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getLanguages, saveUserLanguageSelection } from '../services/dataService';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { LessonViewer } from '../components/LessonViewer';
 import { ConversationPractice } from '../components/ConversationPractice';
-import { CulturalLessons, CultureOverviewSection } from '../components/CulturalLessons';
-import { getAllLanguageConversations } from '../data/conversations';
+import { CulturalLessons } from '../components/CulturalLessons';
 
-type HomeView = 'dashboard' | 'languages' | 'lessons' | 'conversations' | 'culture';
+type HomeView = 'dashboard' | 'language-pick' | 'lessons' | 'conversations' | 'culture';
+type Category = 'lessons' | 'conversations' | 'culture';
 
+const CATEGORY_CONFIG: Record<Category, { title: string; subtitle: string }> = {
+  lessons: {
+    title: 'Learn a Language',
+    subtitle: 'Pick a language to start interactive lessons with vocabulary cards, sentence building, and quizzes',
+  },
+  conversations: {
+    title: 'Practice Real Conversations',
+    subtitle: 'Choose a language to practice everyday conversations — at home, the market, the restaurant, and more',
+  },
+  culture: {
+    title: 'Explore Culture',
+    subtitle: 'Select a language to discover the traditions, proverbs, foods, names, and customs of each community',
+  },
+};
 
 export function Home() {
   const { user, logout } = useAuth();
@@ -18,6 +32,7 @@ export function Home() {
   const [view, setView] = useState<HomeView>('dashboard');
   const [languages, setLanguages] = useState<any[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
+  const [pendingCategory, setPendingCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,9 +49,18 @@ export function Home() {
     loadData();
   }, []);
 
+  const handleCategoryClick = (category: Category) => {
+    setPendingCategory(category);
+    setView('language-pick');
+  };
+
   const handleSelectLanguage = async (languageId: string) => {
     setSelectedLanguage(languageId);
-    setView('lessons');
+    if (pendingCategory) {
+      setView(pendingCategory);
+    } else {
+      setView('lessons');
+    }
     try {
       if (user) {
         await saveUserLanguageSelection(user.uid, languageId);
@@ -68,6 +92,8 @@ export function Home() {
       </div>
     );
   }
+
+  const languagePickConfig = pendingCategory ? CATEGORY_CONFIG[pendingCategory] : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50">
@@ -123,22 +149,67 @@ export function Home() {
               <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 Connect with your roots and keep Kenyan languages alive for future generations through interactive, culturally rich lessons.
               </p>
+            </div>
 
-              <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+            {/* Three category cards */}
+            <div className="mb-24">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">What Would You Like to Do?</h2>
+                <p className="text-lg text-gray-600">Choose a category to begin</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                {/* Lessons */}
                 <button
-                  onClick={() => setView('languages')}
-                  className="group px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  onClick={() => handleCategoryClick('lessons')}
+                  className="group bg-white rounded-3xl shadow-lg p-10 border border-gray-200/50 hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 text-left hover:-translate-y-2"
                 >
-                  <span className="flex items-center gap-2 justify-center">
+                  <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <BookOpen className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-3">Lessons</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Learn vocabulary through flashcards, build sentences, and test yourself with quizzes.
+                  </p>
+                  <div className="flex items-center gap-2 text-emerald-600 font-bold group-hover:gap-3 transition-all duration-300">
                     Start Learning
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
+                  </div>
                 </button>
+
+                {/* Culture */}
                 <button
-                  onClick={() => document.getElementById('culture')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="px-8 py-4 bg-white text-gray-700 rounded-2xl font-bold text-lg shadow-md hover:shadow-lg transition-all duration-300 border-2 border-gray-200 hover:border-emerald-300"
+                  onClick={() => handleCategoryClick('culture')}
+                  className="group bg-white rounded-3xl shadow-lg p-10 border border-gray-200/50 hover:shadow-2xl hover:border-amber-300 transition-all duration-300 text-left hover:-translate-y-2"
                 >
-                  Explore Culture
+                  <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <Globe className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-3">Culture</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Discover traditions, proverbs, foods, names, and customs of each community.
+                  </p>
+                  <div className="flex items-center gap-2 text-amber-600 font-bold group-hover:gap-3 transition-all duration-300">
+                    Explore Culture
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </button>
+
+                {/* Real Life Conversations */}
+                <button
+                  onClick={() => handleCategoryClick('conversations')}
+                  className="group bg-white rounded-3xl shadow-lg p-10 border border-gray-200/50 hover:shadow-2xl hover:border-sky-300 transition-all duration-300 text-left hover:-translate-y-2"
+                >
+                  <div className="w-20 h-20 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <MessageCircle className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-3">Real Life Conversations</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Practice everyday situations — at home, the market, the restaurant, and more.
+                  </p>
+                  <div className="flex items-center gap-2 text-sky-600 font-bold group-hover:gap-3 transition-all duration-300">
+                    Start Conversing
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </button>
               </div>
             </div>
@@ -173,103 +244,13 @@ export function Home() {
                 </div>
                 <div className="group text-center p-8 rounded-2xl hover:bg-white transition-all duration-300 hover:shadow-lg">
                   <div className="w-20 h-20 bg-gradient-to-br from-sky-400 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <TrendingUp className="w-10 h-10 text-white" />
+                    <MessageCircle className="w-10 h-10 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Track Your Journey</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Real Life Practice</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    Monitor your progress with detailed analytics as you master your native language.
+                    Use what you learn in everyday conversations that mirror real Kenyan life.
                   </p>
                 </div>
-              </div>
-            </div>
-
-            <CultureOverviewSection
-              languages={languages}
-              selectedLanguage={selectedLanguage}
-              onExploreLanguage={(langId) => {
-                setSelectedLanguage(langId);
-                setView('culture');
-              }}
-            />
-
-            <div className="mb-24" id="real-life">
-              <div className="text-center mb-12">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 rounded-full mb-6 border border-emerald-200">
-                  <MessageCircle className="w-4 h-4 text-emerald-600" />
-                  <span className="text-sm font-semibold text-emerald-700">Words → Sentences → Conversation</span>
-                </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Real Life Conversations</h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                  Practice everyday situations — at home, the market, the restaurant, and more. Choose a language to see the scenarios.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                {getAllLanguageConversations().map((langConv, index) => {
-                  const isCurrentLang = selectedLanguage === langConv.languageId;
-                  return (
-                    <button
-                      key={langConv.languageId}
-                      onClick={() => {
-                        setSelectedLanguage(langConv.languageId);
-                        setView('conversations');
-                      }}
-                      className="group bg-white rounded-3xl shadow-lg p-8 border border-gray-200/50 hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 text-left hover:-translate-y-2"
-                      style={{ animationDelay: `${index * 80}ms` }}
-                    >
-                      <div className="flex items-center gap-4 mb-5">
-                        <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                          <Languages className="w-8 h-8 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-2xl font-bold text-gray-900">{langConv.languageName}</h3>
-                          <p className="text-emerald-600 font-bold">{langConv.nativeName}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500 font-semibold">
-                          {langConv.scenarios.length} scenarios
-                        </span>
-                        {isCurrentLang && (
-                          <span className="px-3 py-1 bg-emerald-100 border border-emerald-200 rounded-full text-xs font-bold text-emerald-700">
-                            Your Language
-                          </span>
-                        )}
-                      </div>
-                      <div className="mt-4 flex items-center gap-2 text-emerald-600 font-bold group-hover:gap-3 transition-all duration-300">
-                        Start Conversing
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="mb-24">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Available Languages</h2>
-                <p className="text-lg text-gray-600">Choose from Kenya's rich linguistic diversity</p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {languages.map((lang, index) => (
-                  <div
-                    key={lang.id}
-                    className="group bg-white rounded-3xl shadow-lg p-8 border border-gray-200/50 hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 cursor-pointer hover:-translate-y-2"
-                    onClick={() => setView('languages')}
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                      <Languages className="w-10 h-10 text-white" />
-                    </div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-2">{lang.name}</h3>
-                    <p className="text-emerald-600 font-bold text-xl mb-4">{lang.nativeSpelling}</p>
-                    <p className="text-gray-600 mb-6 leading-relaxed">{lang.description}</p>
-                    <div className="flex items-center gap-2 text-emerald-600 font-bold group-hover:gap-3 transition-all duration-300">
-                      Start Learning <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
 
@@ -290,11 +271,11 @@ export function Home() {
                   LUGHA47 makes it easy, engaging, and deeply meaningful.
                 </p>
                 <button
-                  onClick={() => setView('languages')}
+                  onClick={() => handleCategoryClick('lessons')}
                   className="group bg-white text-emerald-700 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-emerald-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
                 >
                   <span className="flex items-center gap-2 justify-center">
-                    Choose Your Language
+                    Get Started
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
@@ -315,32 +296,34 @@ export function Home() {
           </>
         )}
 
-        {view === 'languages' && (
+        {view === 'language-pick' && (
           <LanguageSelector
             languages={languages}
             onSelectLanguage={handleSelectLanguage}
             onBack={() => setView('dashboard')}
+            title={languagePickConfig?.title}
+            subtitle={languagePickConfig?.subtitle}
           />
         )}
 
         {view === 'lessons' && selectedLanguage && (
           <LessonViewer
             languageId={selectedLanguage}
-            onBack={() => setView('languages')}
+            onBack={() => setView('language-pick')}
           />
         )}
 
         {view === 'conversations' && selectedLanguage && (
           <ConversationPractice
             languageId={selectedLanguage}
-            onBack={() => setView('dashboard')}
+            onBack={() => setView('language-pick')}
           />
         )}
 
         {view === 'culture' && selectedLanguage && (
           <CulturalLessons
             languageId={selectedLanguage}
-            onBack={() => setView('dashboard')}
+            onBack={() => setView('language-pick')}
           />
         )}
       </main>
