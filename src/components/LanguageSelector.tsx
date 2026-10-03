@@ -1,4 +1,6 @@
-import { ArrowLeft, Languages, ArrowRight } from 'lucide-react';
+import { Languages, ArrowRight } from 'lucide-react';
+import { ScreenHeader } from './ui';
+import { getAccent } from '../data/languageAccents';
 
 interface Language {
   id: string;
@@ -23,51 +25,38 @@ export function LanguageSelector({
   subtitle = 'Select a language to start your cultural journey today',
 }: LanguageSelectorProps) {
   return (
-    <>
-      <button
-        onClick={onBack}
-        className="group flex items-center gap-2 text-emerald-600 font-semibold hover:text-emerald-700 mb-12 transition-all duration-300 hover:gap-3"
-      >
-        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-        Back to Dashboard
-      </button>
+    <div className="screen-enter">
+      <ScreenHeader title={title} subtitle={subtitle} onBack={onBack} backLabel="Back" />
 
-      <div className="mb-16 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-          {title}
-        </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          {subtitle}
-        </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        {languages.map((language) => {
+          const accent = getAccent(language.id);
+          return (
+            <button
+              key={language.id}
+              onClick={() => onSelectLanguage(language.id)}
+              className={`card card-hover p-6 text-left ${accent.border}`}
+            >
+              <div className={`w-14 h-14 bg-gradient-to-br ${accent.iconBg} rounded-xl flex items-center justify-center mb-4 shadow-sm`}>
+                <Languages className="w-7 h-7 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-ink-900 mb-1">
+                {language.name}
+              </h3>
+              <p className={`text-lg font-bold ${accent.text} mb-3`}>
+                {language.nativeSpelling}
+              </p>
+              <p className="text-ink-500 text-sm leading-relaxed mb-4">
+                {language.description}
+              </p>
+              <div className={`flex items-center gap-1.5 font-bold text-sm ${accent.text}`}>
+                Start
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </button>
+          );
+        })}
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {languages.map((language, index) => (
-          <button
-            key={language.id}
-            onClick={() => onSelectLanguage(language.id)}
-            className="group bg-white rounded-3xl shadow-lg p-8 border border-gray-200/50 hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 text-left hover:-translate-y-2"
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-              <Languages className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-2">
-              {language.name}
-            </h3>
-            <p className="text-xl text-emerald-600 font-bold mb-4">
-              {language.nativeSpelling}
-            </p>
-            <p className="text-gray-600 mb-6 leading-relaxed">
-              {language.description}
-            </p>
-            <div className="flex items-center gap-2 text-emerald-600 font-bold group-hover:gap-3 transition-all duration-300">
-              Start Learning
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </button>
-        ))}
-      </div>
-    </>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, XCircle, Sparkles, RotateCcw } from 'lucide-react';
+import { ArrowRight, CheckCircle2, XCircle, Sparkles, RotateCcw } from 'lucide-react';
 import { SentenceExercise, SentenceBlock, getLanguageName, LanguageId } from '../data/sentences';
+import { ScreenHeader, ProgressBar } from './ui';
 
 interface SentenceBuilderProps {
   exercises: SentenceExercise[];
@@ -57,13 +58,10 @@ export function SentenceBuilder({ exercises, languageId, onComplete, onBack }: S
     const placedIds = placedBlocks.map((b) => b.id);
     const isCorrect = placedIds.length === correctOrder.length &&
       placedIds.every((id, i) => id === correctOrder[i]);
-
     setCheckResult(isCorrect ? 'correct' : 'incorrect');
   };
 
-  const handleReset = () => {
-    initBlocks();
-  };
+  const handleReset = () => { initBlocks(); };
 
   const handleNext = () => {
     if (!isLastExercise) {
@@ -73,178 +71,155 @@ export function SentenceBuilder({ exercises, languageId, onComplete, onBack }: S
     }
   };
 
-  if (!currentExercise) {
-    return null;
-  }
+  if (!currentExercise) return null;
 
   const langName = getLanguageName(languageId);
 
+  const allPlaced = availableBlocks.length === 0 && placedBlocks.length > 0;
+
   return (
-    <>
-      <button
-        onClick={onBack}
-        className="group flex items-center gap-2 text-emerald-600 font-semibold hover:text-emerald-700 mb-12 transition-all duration-300 hover:gap-3"
-      >
-        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-        Back to Lesson
-      </button>
+    <div className="screen-enter max-w-2xl mx-auto pb-32">
+      <ScreenHeader
+        title="Build the Sentence"
+        subtitle={`Arrange the blocks to say the sentence in ${langName}`}
+        onBack={onBack}
+        backLabel="Back to Lesson"
+        icon={<Sparkles className="w-7 h-7 text-forest-600" />}
+      />
 
-      <div className="mb-16 text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 rounded-full mb-6 border border-emerald-200">
-          <Sparkles className="w-4 h-4 text-emerald-600" />
-          <span className="text-sm font-semibold text-emerald-700">Sentence Builder</span>
-        </div>
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-          Build the Sentence
-        </h1>
-        <p className="text-xl text-gray-600">
-          Arrange the blocks to say the sentence in {langName}
-        </p>
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-sm font-bold text-ink-400">
+          Sentence {currentIndex + 1} of {exercises.length}
+        </span>
       </div>
+      <ProgressBar current={currentIndex} total={exercises.length} className="mb-6" />
 
-      <div className="max-w-3xl mx-auto">
-        {/* Progress dots */}
-        <div className="mb-8 flex justify-center gap-2">
-          {exercises.map((_, idx) => (
-            <div
-              key={idx}
-              className={`h-3 rounded-full transition-all duration-300 ${
-                idx === currentIndex
-                  ? 'w-10 bg-gradient-to-r from-emerald-600 to-teal-600'
-                  : idx < currentIndex
-                  ? 'w-3 bg-emerald-500'
-                  : 'w-3 bg-gray-300'
-              }`}
-            />
-          ))}
-        </div>
+      {/* English prompt + drop zone */}
+      <div className="card p-6 md:p-8 mb-4">
+        <p className="text-xs font-bold text-lake-600 uppercase tracking-widest mb-3">
+          English
+        </p>
+        <p className="text-2xl md:text-3xl font-bold text-ink-800 mb-6">
+          {currentExercise.english}
+        </p>
 
-        {/* English prompt */}
-        <div className="bg-gradient-to-br from-white via-emerald-50/30 to-teal-50/30 rounded-3xl shadow-2xl p-12 border border-gray-200/50 backdrop-blur mb-6">
-          <p className="text-sm font-bold text-teal-700 uppercase tracking-widest mb-4">
-            English
-          </p>
-          <p className="text-4xl md:text-5xl font-bold text-gray-800 mb-10">
-            {currentExercise.english}
-          </p>
-
-          {/* Drop zone */}
-          <div className={`min-h-32 rounded-2xl border-3 border-dashed p-6 transition-all duration-300 ${
-            checkResult === 'correct'
-              ? 'border-emerald-400 bg-emerald-50'
-              : checkResult === 'incorrect'
-              ? 'border-red-400 bg-red-50'
-              : placedBlocks.length === 0
-              ? 'border-gray-300 bg-gray-50/50'
-              : 'border-emerald-300 bg-white'
-          }`}>
-            {placedBlocks.length === 0 ? (
-              <p className="text-gray-400 text-lg text-center py-8 font-medium">
-                Tap blocks below to build your sentence
-              </p>
-            ) : (
-              <div className="flex flex-wrap gap-3 items-center justify-center py-4">
-                {placedBlocks.map((block) => (
-                  <button
-                    key={block.id}
-                    onClick={() => handleRemoveBlock(block)}
-                    disabled={checkResult === 'correct'}
-                    className="group px-6 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl font-bold text-xl shadow-lg transition-all duration-300 hover:scale-105 disabled:cursor-default"
-                  >
-                    {block.text}
-                    {checkResult === null && (
-                      <XCircle className="w-4 h-4 inline ml-2 opacity-50 group-hover:opacity-100 transition-opacity" />
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Feedback banner */}
-          {checkResult === 'correct' && (
-            <div className="mt-6 flex items-center gap-3 px-6 py-4 bg-emerald-100 rounded-2xl border border-emerald-200">
-              <CheckCircle2 className="w-6 h-6 text-emerald-600 flex-shrink-0" />
-              <p className="text-emerald-800 font-bold text-lg">
-                Perfect! That's the correct sentence.
-              </p>
-            </div>
-          )}
-          {checkResult === 'incorrect' && (
-            <div className="mt-6 flex items-center gap-3 px-6 py-4 bg-red-100 rounded-2xl border border-red-200">
-              <XCircle className="w-6 h-6 text-red-600 flex-shrink-0" />
-              <p className="text-red-800 font-bold text-lg">
-                Not quite right. Try rearranging the blocks.
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Available blocks */}
-        <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200/50 mb-6">
-          <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-5">
-            Available Words
-          </p>
-          {availableBlocks.length > 0 ? (
-            <div className="flex flex-wrap gap-3 items-center justify-center">
-              {availableBlocks.map((block) => (
+        {/* Drop zone */}
+        <div className={`min-h-28 rounded-xl border-2 border-dashed p-5 transition-all duration-200 ${
+          checkResult === 'correct'
+            ? 'border-forest-400 bg-forest-50'
+            : checkResult === 'incorrect'
+            ? 'border-kanga-400 bg-kanga-50'
+            : placedBlocks.length === 0
+            ? 'border-gray-300 bg-gray-50'
+            : 'border-forest-300 bg-white'
+        }`}>
+          {placedBlocks.length === 0 ? (
+            <p className="text-gray-400 text-base text-center py-6 font-medium">
+              Tap blocks below to build your sentence
+            </p>
+          ) : (
+            <div className="flex flex-wrap gap-2 items-center justify-center py-3">
+              {placedBlocks.map((block) => (
                 <button
                   key={block.id}
-                  onClick={() => handlePlaceBlock(block)}
+                  onClick={() => handleRemoveBlock(block)}
                   disabled={checkResult === 'correct'}
-                  className="px-6 py-4 bg-white border-2 border-gray-200 text-gray-800 rounded-2xl font-bold text-xl shadow-md hover:border-emerald-400 hover:bg-emerald-50 hover:scale-105 hover:shadow-lg transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="px-5 py-3 bg-forest-600 text-white rounded-xl font-bold text-lg border-b-4 border-forest-800 active:border-b-0 active:translate-y-1 transition-all duration-150 disabled:cursor-default"
                 >
                   {block.text}
+                  {checkResult === null && (
+                    <XCircle className="w-4 h-4 inline ml-2 opacity-50" />
+                  )}
                 </button>
               ))}
             </div>
-          ) : (
-            <p className="text-gray-400 text-center py-4 font-medium">
-              {placedBlocks.length > 0 ? 'All blocks placed' : 'No blocks available'}
-            </p>
           )}
         </div>
+      </div>
 
-        {/* Action buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          {checkResult !== 'correct' && (
+      {/* Available blocks */}
+      <div className="card p-5 mb-4">
+        <p className="text-xs font-bold text-ink-400 uppercase tracking-widest mb-4">
+          Available Words
+        </p>
+        {availableBlocks.length > 0 ? (
+          <div className="flex flex-wrap gap-2 items-center justify-center">
+            {availableBlocks.map((block) => (
+              <button
+                key={block.id}
+                onClick={() => handlePlaceBlock(block)}
+                disabled={checkResult === 'correct'}
+                className="px-5 py-3 bg-white border-2 border-gray-300 text-ink-800 rounded-xl font-bold text-lg border-b-4 active:border-b-2 active:translate-y-0.5 hover:border-forest-400 hover:bg-forest-50 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                {block.text}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className="text-ink-300 text-center py-3 font-medium text-sm">
+            {placedBlocks.length > 0 ? 'All blocks placed' : 'No blocks available'}
+          </p>
+        )}
+      </div>
+
+      {/* Pinned bottom action bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t-2 shadow-lg"
+        style={{
+          backgroundColor: checkResult === 'correct' ? '#dcecdc' : checkResult === 'incorrect' ? '#fee2e2' : '#ffffff',
+          borderColor: checkResult === 'correct' ? '#5fa55f' : checkResult === 'incorrect' ? '#fca5a5' : '#e3e7e0',
+        }}
+      >
+        <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+          {checkResult === 'correct' ? (
+            <>
+              <div className="flex items-center gap-2.5">
+                <CheckCircle2 className="w-6 h-6 text-forest-700 flex-shrink-0" />
+                <p className="font-bold text-sm text-forest-800">Perfect!</p>
+              </div>
+              <button
+                onClick={handleNext}
+                className="btn btn-primary px-6 py-3 flex items-center gap-2 flex-shrink-0"
+              >
+                {isLastExercise ? 'Continue to Quiz' : 'Next Sentence'}
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </>
+          ) : checkResult === 'incorrect' ? (
+            <>
+              <div className="flex items-center gap-2.5">
+                <XCircle className="w-6 h-6 text-kanga-700 flex-shrink-0" />
+                <p className="font-bold text-sm text-kanga-800">Try rearranging the blocks</p>
+              </div>
+              <button
+                onClick={handleReset}
+                className="btn btn-danger px-6 py-3 flex items-center gap-2 flex-shrink-0"
+              >
+                <RotateCcw className="w-5 h-5" />
+                Reset
+              </button>
+            </>
+          ) : (
             <>
               <button
                 onClick={handleReset}
                 disabled={placedBlocks.length === 0}
-                className="flex items-center gap-2 justify-center px-6 py-4 bg-white border-2 border-gray-200 text-gray-700 rounded-2xl font-bold hover:bg-gray-50 hover:border-gray-300 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn btn-secondary px-5 py-3 flex items-center gap-2"
               >
                 <RotateCcw className="w-5 h-5" />
                 Reset
               </button>
               <button
                 onClick={handleCheck}
-                disabled={availableBlocks.length > 0}
-                className="flex items-center gap-2 justify-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl font-bold text-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!allPlaced}
+                className="btn btn-primary px-6 py-3 flex items-center gap-2"
               >
                 <CheckCircle2 className="w-5 h-5" />
-                Check Answer
+                Check
               </button>
             </>
           )}
-          {checkResult === 'correct' && (
-            <button
-              onClick={handleNext}
-              className="group flex items-center gap-2 justify-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl font-bold text-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
-            >
-              {isLastExercise ? 'Continue to Quiz' : 'Next Sentence'}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          )}
-        </div>
-
-        {/* Exercise counter */}
-        <div className="mt-8 text-center">
-          <span className="text-sm font-bold text-gray-600">
-            Sentence {currentIndex + 1} of {exercises.length}
-          </span>
         </div>
       </div>
-    </>
+    </div>
   );
 }

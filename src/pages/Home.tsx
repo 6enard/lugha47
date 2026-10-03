@@ -1,6 +1,6 @@
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Trophy, LogOut, ArrowRight, Sparkles, Globe, Users, MessageCircle } from 'lucide-react';
+import { BookOpen, LogOut, ArrowRight, Sparkles, Globe, MessageCircle, Flame, Home as HomeIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getLanguages, saveUserLanguageSelection } from '../services/dataService';
 import { LanguageSelector } from '../components/LanguageSelector';
@@ -81,41 +81,44 @@ export function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block relative">
-            <div className="w-16 h-16 border-4 border-emerald-100 border-t-emerald-600 rounded-full animate-spin mb-4"></div>
-            <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-emerald-400 rounded-full animate-spin" style={{ animationDuration: '1.5s' }}></div>
-          </div>
-          <p className="text-gray-600 font-medium">Loading your dashboard...</p>
+          <div className="w-10 h-10 border-4 border-forest-100 border-t-forest-600 rounded-full animate-spin mx-auto mb-3"></div>
+          <p className="text-ink-400 font-medium text-sm">Loading...</p>
         </div>
       </div>
     );
   }
 
   const languagePickConfig = pendingCategory ? CATEGORY_CONFIG[pendingCategory] : null;
+  const showBottomBar = view === 'dashboard' || view === 'language-pick';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50">
-      <nav className="bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200/50 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+    <div className="min-h-screen pb-20 md:pb-0">
+      {/* Slim sticky top bar */}
+      <nav className="bg-white/90 backdrop-blur-md border-b border-gray-200/60 sticky top-0 z-40">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="flex justify-between items-center h-14">
             <button
               onClick={() => setView('dashboard')}
-              className="flex items-center gap-3 hover:opacity-80 transition-all duration-300 group"
+              className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
             >
               <img
                 src="/lughalogo.png"
-                alt="LUGHA47 Logo"
-                className="w-12 h-12 object-contain group-hover:scale-105 transition-all duration-300"
+                alt="LUGHA47"
+                className="w-8 h-8 object-contain"
               />
-              <span className="text-2xl font-bold bg-gradient-to-r from-emerald-700 to-teal-700 bg-clip-text text-transparent">LUGHA47</span>
+              <span className="text-lg font-bold text-forest-700 font-heading">LUGHA47</span>
             </button>
-            <div className="flex items-center gap-6">
-              <span className="text-sm text-gray-600 font-medium hidden sm:block">{user?.email}</span>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-sun-50 border border-sun-200 rounded-full text-sm font-bold text-sun-700">
+                <Flame className="w-4 h-4" />
+                <span>0</span>
+              </div>
+              <span className="text-xs text-ink-400 font-medium hidden sm:block max-w-[160px] truncate">{user?.email}</span>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 px-5 py-2.5 text-gray-700 hover:bg-gray-100 rounded-xl transition-all duration-300 font-medium"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-ink-600 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium"
               >
                 <LogOut className="w-4 h-4" />
                 <span className="hidden sm:inline">Logout</span>
@@ -125,175 +128,132 @@ export function Home() {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="max-w-5xl mx-auto px-4 py-8">
         {view === 'dashboard' && (
-          <>
-            <div className="mb-24 text-center relative">
-              <div className="absolute inset-0 -z-10 overflow-hidden">
-                <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute top-20 right-1/4 w-80 h-80 bg-teal-200/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="screen-enter">
+            {/* Hero */}
+            <div className="mb-10 text-center">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-forest-50 rounded-full mb-4 border border-forest-200">
+                <Sparkles className="w-3.5 h-3.5 text-forest-600" />
+                <span className="text-xs font-semibold text-forest-700">Preserve Culture Through Language</span>
               </div>
-
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 rounded-full mb-6 border border-emerald-200">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
-                <span className="text-sm font-semibold text-emerald-700">Preserve Culture Through Language</span>
-              </div>
-
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-                Preserve Kenya's
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600">
-                  Linguistic Heritage
-                </span>
+              <h1 className="text-3xl md:text-4xl font-bold text-ink-900 mb-3 leading-tight">
+                Preserve Kenya's{' '}
+                <span className="text-forest-600">Linguistic Heritage</span>
               </h1>
-              <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Connect with your roots and keep Kenyan languages alive for future generations through interactive, culturally rich lessons.
+              <p className="text-base md:text-lg text-ink-500 max-w-2xl mx-auto">
+                Keep Kenyan languages alive for future generations through interactive, culturally rich lessons.
               </p>
             </div>
 
             {/* Three category cards */}
-            <div className="mb-24">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">What Would You Like to Do?</h2>
-                <p className="text-lg text-gray-600">Choose a category to begin</p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                {/* Lessons */}
+            <div className="mb-10">
+              <h2 className="text-xl font-bold text-ink-900 mb-4">What would you like to do?</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <button
                   onClick={() => handleCategoryClick('lessons')}
-                  className="group bg-white rounded-3xl shadow-lg p-10 border border-gray-200/50 hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 text-left hover:-translate-y-2"
+                  className="card card-hover p-6 text-left"
                 >
-                  <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                    <BookOpen className="w-10 h-10 text-white" />
+                  <div className="w-12 h-12 bg-forest-600 rounded-xl flex items-center justify-center mb-4">
+                    <BookOpen className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-3xl font-bold text-gray-900 mb-3">Lessons</h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    Learn vocabulary through flashcards, build sentences, and test yourself with quizzes.
+                  <h3 className="text-lg font-bold text-ink-900 mb-2">Lessons</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed mb-3">
+                    Flashcards, sentence building, and quizzes.
                   </p>
-                  <div className="flex items-center gap-2 text-emerald-600 font-bold group-hover:gap-3 transition-all duration-300">
-                    Start Learning
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-center gap-1.5 text-forest-700 font-bold text-sm">
+                    Start Learning <ArrowRight className="w-4 h-4" />
                   </div>
                 </button>
 
-                {/* Culture */}
                 <button
                   onClick={() => handleCategoryClick('culture')}
-                  className="group bg-white rounded-3xl shadow-lg p-10 border border-gray-200/50 hover:shadow-2xl hover:border-amber-300 transition-all duration-300 text-left hover:-translate-y-2"
+                  className="card card-hover p-6 text-left border-amber-200"
                 >
-                  <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                    <Globe className="w-10 h-10 text-white" />
+                  <div className="w-12 h-12 bg-sun-400 rounded-xl flex items-center justify-center mb-4">
+                    <Globe className="w-6 h-6 text-ink-900" />
                   </div>
-                  <h3 className="text-3xl font-bold text-gray-900 mb-3">Culture</h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    Discover traditions, proverbs, foods, names, and customs of each community.
+                  <h3 className="text-lg font-bold text-ink-900 mb-2">Culture</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed mb-3">
+                    Traditions, proverbs, foods, and customs.
                   </p>
-                  <div className="flex items-center gap-2 text-amber-600 font-bold group-hover:gap-3 transition-all duration-300">
-                    Explore Culture
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-center gap-1.5 text-sun-700 font-bold text-sm">
+                    Explore <ArrowRight className="w-4 h-4" />
                   </div>
                 </button>
 
-                {/* Real Life Conversations */}
                 <button
                   onClick={() => handleCategoryClick('conversations')}
-                  className="group bg-white rounded-3xl shadow-lg p-10 border border-gray-200/50 hover:shadow-2xl hover:border-sky-300 transition-all duration-300 text-left hover:-translate-y-2"
+                  className="card card-hover p-6 text-left border-lake-200"
                 >
-                  <div className="w-20 h-20 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                    <MessageCircle className="w-10 h-10 text-white" />
+                  <div className="w-12 h-12 bg-lake-600 rounded-xl flex items-center justify-center mb-4">
+                    <MessageCircle className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-3xl font-bold text-gray-900 mb-3">Real Life Conversations</h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    Practice everyday situations — at home, the market, the restaurant, and more.
+                  <h3 className="text-lg font-bold text-ink-900 mb-2">Conversations</h3>
+                  <p className="text-ink-500 text-sm leading-relaxed mb-3">
+                    Practice everyday real-life situations.
                   </p>
-                  <div className="flex items-center gap-2 text-sky-600 font-bold group-hover:gap-3 transition-all duration-300">
-                    Start Conversing
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-center gap-1.5 text-lake-700 font-bold text-sm">
+                    Start <ArrowRight className="w-4 h-4" />
                   </div>
                 </button>
               </div>
             </div>
 
-            <div id="mission" className="mb-24 bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-xl p-12 border border-gray-200/50 backdrop-blur">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Mission</h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                  Every language carries the wisdom, stories, and identity of its people.
-                  LUGHA47 is dedicated to preserving Kenya's indigenous languages by making
-                  them accessible, engaging, and relevant for modern learners.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="group text-center p-8 rounded-2xl hover:bg-white transition-all duration-300 hover:shadow-lg">
-                  <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Globe className="w-10 h-10 text-white" />
+            {/* Mission */}
+            <div className="card p-8 mb-8">
+              <h2 className="text-xl font-bold text-ink-900 mb-2">Our Mission</h2>
+              <p className="text-ink-500 text-sm leading-relaxed mb-6">
+                Every language carries the wisdom, stories, and identity of its people. LUGHA47 is dedicated to preserving Kenya's indigenous languages by making them accessible, engaging, and relevant for modern learners.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-sun-400 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Globe className="w-5 h-5 text-ink-900" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Cultural Identity</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Language is the heart of culture. Keep your heritage alive and pass it to the next generation.
-                  </p>
+                  <div>
+                    <h3 className="font-bold text-ink-900 text-sm">Cultural Identity</h3>
+                    <p className="text-ink-400 text-xs mt-0.5">Keep your heritage alive.</p>
+                  </div>
                 </div>
-                <div className="group text-center p-8 rounded-2xl hover:bg-white transition-all duration-300 hover:shadow-lg">
-                  <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <BookOpen className="w-10 h-10 text-white" />
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-forest-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Interactive Learning</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Engaging lessons that make language learning natural, fun, and deeply meaningful.
-                  </p>
+                  <div>
+                    <h3 className="font-bold text-ink-900 text-sm">Interactive Learning</h3>
+                    <p className="text-ink-400 text-xs mt-0.5">Natural, fun, meaningful.</p>
+                  </div>
                 </div>
-                <div className="group text-center p-8 rounded-2xl hover:bg-white transition-all duration-300 hover:shadow-lg">
-                  <div className="w-20 h-20 bg-gradient-to-br from-sky-400 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <MessageCircle className="w-10 h-10 text-white" />
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-lake-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Real Life Practice</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Use what you learn in everyday conversations that mirror real Kenyan life.
-                  </p>
+                  <div>
+                    <h3 className="font-bold text-ink-900 text-sm">Real Life Practice</h3>
+                    <p className="text-ink-400 text-xs mt-0.5">Use what you learn daily.</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 rounded-3xl shadow-2xl p-16 text-white mb-16 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-80 h-80 bg-white rounded-full blur-3xl"></div>
-              </div>
-
-              <div className="max-w-3xl mx-auto text-center relative z-10">
-                <div className="w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm">
-                  <Trophy className="w-12 h-12 text-white" />
-                </div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-6">Begin Your Language Journey Today</h2>
-                <p className="text-emerald-50 mb-10 text-xl leading-relaxed">
+            {/* CTA */}
+            <div className="bg-forest-700 rounded-2xl p-8 text-center text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-forest-600/50 rounded-full blur-3xl"></div>
+              <div className="relative z-10">
+                <h2 className="text-xl md:text-2xl font-bold mb-2">Begin Your Journey Today</h2>
+                <p className="text-forest-100 text-sm mb-5 max-w-md mx-auto">
                   Join thousands of Kenyans reconnecting with their linguistic roots.
-                  Whether you're learning your mother tongue or exploring Kenya's diverse cultures,
-                  LUGHA47 makes it easy, engaging, and deeply meaningful.
                 </p>
                 <button
                   onClick={() => handleCategoryClick('lessons')}
-                  className="group bg-white text-emerald-700 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-emerald-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+                  className="btn btn-sun px-6 py-3 inline-flex items-center gap-2"
                 >
-                  <span className="flex items-center gap-2 justify-center">
-                    Get Started
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
+                  Get Started <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
             </div>
-
-            <div className="text-center text-gray-600 py-8">
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <Users className="w-5 h-5 text-emerald-600" />
-                <p className="text-base font-semibold text-gray-700">
-                  Preserving languages for future generations
-                </p>
-              </div>
-              <p className="text-sm">
-                Our identity, stories, and future live through the languages we speak.
-              </p>
-            </div>
-          </>
+          </div>
         )}
 
         {view === 'language-pick' && (
@@ -327,6 +287,44 @@ export function Home() {
           />
         )}
       </main>
+
+      {/* Bottom tab bar (mobile only) */}
+      {showBottomBar && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 md:hidden">
+          <div className="flex justify-around items-center h-16">
+            <button
+              onClick={() => { setView('dashboard'); }}
+              className={`flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-lg transition-colors ${
+                view === 'dashboard' ? 'text-forest-700' : 'text-ink-300'
+              }`}
+            >
+              <HomeIcon className="w-5 h-5" />
+              <span className="text-xs font-semibold">Home</span>
+            </button>
+            <button
+              onClick={() => handleCategoryClick('lessons')}
+              className="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-lg text-ink-300"
+            >
+              <BookOpen className="w-5 h-5" />
+              <span className="text-xs font-semibold">Learn</span>
+            </button>
+            <button
+              onClick={() => handleCategoryClick('conversations')}
+              className="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-lg text-ink-300"
+            >
+              <MessageCircle className="w-5 h-5" />
+              <span className="text-xs font-semibold">Practice</span>
+            </button>
+            <button
+              onClick={() => handleCategoryClick('culture')}
+              className="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-lg text-ink-300"
+            >
+              <Globe className="w-5 h-5" />
+              <span className="text-xs font-semibold">Culture</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
