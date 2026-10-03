@@ -287,10 +287,10 @@ export function Home() {
                       <button
                         key={`${lang.id}-${idx}`}
                         onClick={() => handleCategoryClick('lessons')}
-                        className="flex-shrink-0 w-32 group/item text-left"
+                        className="flex-shrink-0 w-24 group/item text-left"
                       >
-                        <div className={`w-32 h-32 rounded-2xl bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-3 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all`}>
-                          <Icon className="w-8 h-8 text-white" />
+                        <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-2.5 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all`}>
+                          <Icon className="w-6 h-6 text-white" />
                         </div>
                         <p className="font-bold text-ink-900 text-sm">{lang.name}</p>
                         <p className={`text-xs font-bold ${accent.text}`}>{lang.native}</p>
