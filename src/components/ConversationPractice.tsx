@@ -13,7 +13,8 @@ import {
 } from 'lucide-react';
 import {
   ConversationScenario,
-  getConversationScenarios,
+  getConversationsForLanguage,
+  getLanguageConversationInfo,
 } from '../data/conversations';
 
 const iconMap: Record<string, typeof HomeIcon> = {
@@ -25,34 +26,27 @@ const iconMap: Record<string, typeof HomeIcon> = {
   school: School,
 };
 
-function getLanguageName(lang: string): string {
-  const names: Record<string, string> = {
-    kalenjin: 'Kalenjin',
-    kikuyu: 'Kikuyu',
-    luo: 'Luo',
-  };
-  return names[lang] || lang;
-}
-
 interface ConversationPracticeProps {
   languageId: string;
   onBack: () => void;
 }
 
 export function ConversationPractice({ languageId, onBack }: ConversationPracticeProps) {
-  const [scenarios] = useState<ConversationScenario[]>(getConversationScenarios);
+  const [scenarios] = useState<ConversationScenario[]>(getConversationsForLanguage(languageId));
   const [selectedScenario, setSelectedScenario] = useState<ConversationScenario | null>(null);
   const [visibleTurns, setVisibleTurns] = useState(1);
   const [showEnglish, setShowEnglish] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const langInfo = getLanguageConversationInfo(languageId);
+  const langName = langInfo?.languageName || languageId;
+  const nativeName = langInfo?.nativeName || languageId;
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [visibleTurns]);
-
-  const langName = getLanguageName(languageId);
 
   const handleSelectScenario = (scenario: ConversationScenario) => {
     setSelectedScenario(scenario);
@@ -98,10 +92,11 @@ export function ConversationPractice({ languageId, onBack }: ConversationPractic
             <span className="text-sm font-semibold text-emerald-700">Real Life Conversations</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-            Practice Real Situations
+            {langName} Conversations
           </h1>
+          <p className="text-xl text-emerald-600 font-bold mb-2">{nativeName}</p>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Learn {langName} through everyday conversations. Choose a scenario to start.
+            Practice {langName} through everyday conversations. Choose a scenario to start.
           </p>
         </div>
 
@@ -213,7 +208,6 @@ export function ConversationPractice({ languageId, onBack }: ConversationPractic
           <div className="space-y-6">
             {turns.map((turn) => {
               const isSpeakerA = turn.speaker === 'a';
-              const translation = turn.translations[languageId as 'kalenjin' | 'kikuyu' | 'luo'];
               return (
                 <div
                   key={turn.id}
@@ -242,7 +236,7 @@ export function ConversationPractice({ languageId, onBack }: ConversationPractic
                       {isSpeakerA ? 'Person A' : 'Person B'}
                     </p>
                     <p className="text-2xl md:text-3xl font-bold leading-tight mb-2">
-                      {translation}
+                      {turn.text}
                     </p>
                     {showEnglish && (
                       <p
