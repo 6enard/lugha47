@@ -6,9 +6,10 @@ import { getLanguages, saveUserLanguageSelection } from '../services/dataService
 import { LanguageSelector } from '../components/LanguageSelector';
 import { LessonViewer } from '../components/LessonViewer';
 import { ConversationPractice } from '../components/ConversationPractice';
+import { CulturalLessons, CultureOverviewSection } from '../components/CulturalLessons';
 import { getAllLanguageConversations } from '../data/conversations';
 
-type HomeView = 'dashboard' | 'languages' | 'lessons' | 'conversations';
+type HomeView = 'dashboard' | 'languages' | 'lessons' | 'conversations' | 'culture';
 
 const scenarioIcons = [
   { icon: HomeIcon, color: 'from-amber-400 to-orange-500' },
@@ -142,10 +143,10 @@ export function Home() {
                   </span>
                 </button>
                 <button
-                  onClick={() => document.getElementById('real-life')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => document.getElementById('culture')?.scrollIntoView({ behavior: 'smooth' })}
                   className="px-8 py-4 bg-white text-gray-700 rounded-2xl font-bold text-lg shadow-md hover:shadow-lg transition-all duration-300 border-2 border-gray-200 hover:border-emerald-300"
                 >
-                  Try Real Conversations
+                  Explore Culture
                 </button>
               </div>
             </div>
@@ -189,6 +190,15 @@ export function Home() {
                 </div>
               </div>
             </div>
+
+            <CultureOverviewSection
+              languages={languages}
+              selectedLanguage={selectedLanguage}
+              onExploreLanguage={(langId) => {
+                setSelectedLanguage(langId);
+                setView('culture');
+              }}
+            />
 
             <div className="mb-24" id="real-life">
               <div className="text-center mb-12">
@@ -331,6 +341,13 @@ export function Home() {
 
         {view === 'conversations' && selectedLanguage && (
           <ConversationPractice
+            languageId={selectedLanguage}
+            onBack={() => setView('dashboard')}
+          />
+        )}
+
+        {view === 'culture' && selectedLanguage && (
+          <CulturalLessons
             languageId={selectedLanguage}
             onBack={() => setView('dashboard')}
           />
