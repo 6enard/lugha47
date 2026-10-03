@@ -6,8 +6,10 @@ import {
   query,
   where,
   getDocs,
+  orderBy,
 } from 'firebase/firestore';
 import staticData from '../data/lessons.json';
+import { seedFirestoreIfEmpty } from './seedService';
 
 export interface Language {
   id: string;
@@ -56,15 +58,57 @@ export interface QuizResult {
   completedAt: Date;
 }
 
+let seedPromise: Promise<void> | null = null;
+
+function ensureSeeded(): Promise<void> {
+  if (!seedPromise) {
+    seedPromise = seedFirestoreIfEmpty();
+  }
+  return seedPromise;
+}
+
 export const getLanguages = async (): Promise<Language[]> => {
+  await ensureSeeded();
+  try {
+    const snapshot = await getDocs(collection(db, 'languages'));
+    if (!snapshot.empty) {
+      return snapshot.docs.map((d) => ({ id: d.id, ...d.data() })) as Language[];
+    }
+  } catch (error) {
+    console.error('Error fetching languages from Firestore:', error);
+  }
   return staticData.languages as Language[];
 };
 
 export const getLessons = async (): Promise<Lesson[]> => {
+  await ensureSeeded();
+  try {
+    const q = query(collection(db, 'lessons'), orderBy('orderIndex', 'asc'));
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
+      return snapshot.docs.map((d) => ({ id: d.id, ...d.data() })) as Lesson[];
+    }
+  } catch (error) {
+    console.error('Error fetching lessons from Firestore:', error);
+  }
   return (staticData.lessons as Lesson[]).sort((a, b) => a.orderIndex - b.orderIndex);
 };
 
 export const getLessonContent = async (lessonId: string): Promise<LessonContent[]> => {
+  await ensureSeeded();
+  try {
+    const q = query(
+      collection(db, 'lessonContent'),
+      where('lessonId', '==', lessonId),
+      orderBy('orderIndex', 'asc')
+    );
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
+      return snapshot.docs.map((d) => ({ id: d.id, ...d.data() })) as LessonContent[];
+    }
+  } catch (error) {
+    console.error('Error fetching lesson content from Firestore:', error);
+  }
   return (staticData.lessonContent as LessonContent[])
     .filter((c) => c.lessonId === lessonId)
     .sort((a, b) => a.orderIndex - b.orderIndex);
@@ -132,6 +176,20 @@ export const getUserProgress = async (userId: string): Promise<Record<string, bo
 };
 
 export const getQuizQuestions = async (lessonId: string): Promise<QuizQuestion[]> => {
+  await ensureSeeded();
+  try {
+    const q = query(
+      collection(db, 'quizQuestions'),
+      where('lessonId', '==', lessonId),
+      orderBy('orderIndex', 'asc')
+    );
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
+      return snapshot.docs.map((d) => ({ id: d.id, ...d.data() })) as QuizQuestion[];
+    }
+  } catch (error) {
+    console.error('Error fetching quiz questions from Firestore:', error);
+  }
   return (staticData.quizQuestions as QuizQuestion[])
     .filter((q) => q.lessonId === lessonId)
     .sort((a, b) => a.orderIndex - b.orderIndex);
