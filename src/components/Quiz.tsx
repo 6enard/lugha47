@@ -18,9 +18,10 @@ interface QuizProps {
   languageId: string;
   onComplete: (score: number, total: number) => void;
   onRetry: () => void;
+  onBackToLessons: () => void;
 }
 
-export function Quiz({ questions, languageId, onComplete, onRetry }: QuizProps) {
+export function Quiz({ questions, languageId, onComplete, onRetry, onBackToLessons }: QuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -108,7 +109,7 @@ export function Quiz({ questions, languageId, onComplete, onRetry }: QuizProps) 
               Try Again
             </button>
             <button
-              onClick={() => window.location.reload()}
+              onClick={onBackToLessons}
               className="px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl font-bold hover:shadow-lg transition-all duration-300 shadow-md hover:scale-105"
             >
               Back to Lessons

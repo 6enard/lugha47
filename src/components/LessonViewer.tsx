@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, BookOpen, CheckCircle2, ArrowRight, Target } from 'lucide-react';
+import { ArrowLeft, BookOpen, CheckCircle2, ArrowRight, Target, MessageSquare } from 'lucide-react';
 import { getLessons, getLessonContent, getQuizQuestions, saveQuizResult, Lesson, LessonContent, QuizQuestion } from '../services/dataService';
 import { Quiz } from './Quiz';
+import { SentenceBuilder } from './SentenceBuilder';
+import { getExercisesForLesson, SentenceExercise } from '../data/sentences';
 import { useAuth } from '../contexts/AuthContext';
 
 interface LessonViewerProps {
@@ -18,9 +20,10 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
   const [lessons, setLessons] = useState<LessonWithContent[]>([]);
   const [selectedLesson, setSelectedLesson] = useState<LessonWithContent | null>(null);
   const [loading, setLoading] = useState(true);
-  const [viewMode, setViewMode] = useState<'grid' | 'detail' | 'quiz'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'detail' | 'sentences' | 'quiz'>('grid');
   const [cardIndex, setCardIndex] = useState(0);
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
+  const [sentenceExercises, setSentenceExercises] = useState<SentenceExercise[]>([]);
 
   useEffect(() => {
     const loadLessons = async () => {
@@ -59,6 +62,13 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
     return names[lang] || lang;
   };
 
+  const handleStartSentences = () => {
+    if (!selectedLesson) return;
+    const exercises = getExercisesForLesson(selectedLesson.id);
+    setSentenceExercises(exercises);
+    setViewMode('sentences');
+  };
+
   const handleStartQuiz = async () => {
     if (!selectedLesson) return;
 
@@ -95,6 +105,21 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
     setViewMode('quiz');
   };
 
+  if (viewMode === 'sentences' && selectedLesson) {
+    if (sentenceExercises.length === 0) {
+      handleStartQuiz();
+      return null;
+    }
+    return (
+      <SentenceBuilder
+        exercises={sentenceExercises}
+        languageId={languageId}
+        onComplete={handleStartQuiz}
+        onBack={() => setViewMode('detail')}
+      />
+    );
+  }
+
   if (viewMode === 'quiz' && selectedLesson) {
     return (
       <>
@@ -120,6 +145,7 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
           languageId={languageId}
           onComplete={handleQuizComplete}
           onRetry={handleQuizRetry}
+          onBackToLessons={() => setViewMode('grid')}
         />
       </>
     );
@@ -227,10 +253,10 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
 
               {isLastCard ? (
                 <button
-                  onClick={handleStartQuiz}
+                  onClick={handleStartSentences}
                   className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl font-bold hover:shadow-lg transition-all duration-300 shadow-md hover:scale-105"
                 >
-                  Take Quiz
+                  Build Sentences
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               ) : (
@@ -248,22 +274,31 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
               <div className="mt-10 bg-gradient-to-r from-white to-emerald-50/50 rounded-2xl p-8 border-2 border-emerald-200 shadow-lg">
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                    <Target className="w-8 h-8 text-white" />
+                    <MessageSquare className="w-8 h-8 text-white" />
                   </div>
                   <div className="flex-1">
                     <p className="text-2xl font-bold text-gray-900 mb-3">
-                      Ready to test your knowledge?
+                      Ready to build sentences?
                     </p>
                     <p className="text-gray-600 mb-6 leading-relaxed text-lg">
-                      You've completed this lesson! Take the quiz to gauge your progress and reinforce what you've learned.
+                      You've learned the words — now put them together! Build real sentences from word blocks before taking the quiz.
                     </p>
-                    <button
-                      onClick={handleStartQuiz}
-                      className="group bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-8 py-4 rounded-2xl font-bold hover:shadow-lg transition-all duration-300 shadow-md hover:scale-105 inline-flex items-center gap-2"
-                    >
-                      Start Quiz
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <button
+                        onClick={handleStartSentences}
+                        className="group bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-8 py-4 rounded-2xl font-bold hover:shadow-lg transition-all duration-300 shadow-md hover:scale-105 inline-flex items-center gap-2"
+                      >
+                        Build Sentences
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                      <button
+                        onClick={handleStartQuiz}
+                        className="px-8 py-4 bg-white border-2 border-gray-200 text-gray-700 rounded-2xl font-bold hover:bg-gray-50 hover:border-emerald-300 transition-all duration-300 shadow-md inline-flex items-center gap-2"
+                      >
+                        <Target className="w-5 h-5" />
+                        Skip to Quiz
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Languages } from 'lucide-react';
 
 export function Signup() {
   const [email, setEmail] = useState('');
