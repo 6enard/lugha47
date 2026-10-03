@@ -13,11 +13,16 @@ import {
   Trophy,
   Users,
   Star,
-  Languages,
-  ChevronLeft,
-  ChevronRight,
+  Footprints,
+  Sprout,
+  Fish,
+  Hammer,
+  Beef,
+  Gem,
+  Compass,
+  type LucideIcon,
 } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { getLanguages, saveUserLanguageSelection } from '../services/dataService';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { LessonViewer } from '../components/LessonViewer';
@@ -43,14 +48,14 @@ const CATEGORY_CONFIG: Record<Category, { title: string; subtitle: string }> = {
   },
 };
 
-const LANGUAGES_LIST = [
-  { id: 'kalenjin', name: 'Kalenjin', native: 'Kalenjin' },
-  { id: 'kikuyu', name: 'Kikuyu', native: 'Gĩkũyũ' },
-  { id: 'luo', name: 'Luo', native: 'Dholuo' },
-  { id: 'kamba', name: 'Kamba', native: 'Kikamba' },
-  { id: 'luhya', name: 'Luhya', native: 'Luluhya' },
-  { id: 'gusii', name: 'Gusii', native: 'Ekegusii' },
-  { id: 'somali', name: 'Somali', native: 'Soomaali' },
+const LANGUAGES_LIST: { id: string; name: string; native: string; Icon: LucideIcon }[] = [
+  { id: 'kalenjin', name: 'Kalenjin', native: 'Kalenjin', Icon: Footprints },
+  { id: 'kikuyu', name: 'Kikuyu', native: 'Gĩkũyũ', Icon: Sprout },
+  { id: 'luo', name: 'Luo', native: 'Dholuo', Icon: Fish },
+  { id: 'kamba', name: 'Kamba', native: 'Kikamba', Icon: Hammer },
+  { id: 'luhya', name: 'Luhya', native: 'Luluhya', Icon: Beef },
+  { id: 'gusii', name: 'Gusii', native: 'Ekegusii', Icon: Gem },
+  { id: 'somali', name: 'Somali', native: 'Soomaali', Icon: Compass },
 ];
 
 const HERO_IMG = 'https://images.pexels.com/photos/4921096/pexels-photo-4921096.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
@@ -66,7 +71,7 @@ export function Home() {
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const [pendingCategory, setPendingCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
-  const langScrollRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     const loadData = async () => {
@@ -241,47 +246,29 @@ export function Home() {
               </div>
             </section>
 
-            {/* ── LANGUAGE SCROLLER ── */}
-            <section className="pb-16">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-xl font-bold text-ink-900">I want to learn</h2>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => langScrollRef.current?.scrollBy({ left: -240, behavior: 'smooth' })}
-                    className="w-9 h-9 rounded-full border-2 border-gray-200 flex items-center justify-center text-ink-500 hover:border-forest-400 hover:text-forest-600 transition-all"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => langScrollRef.current?.scrollBy({ left: 240, behavior: 'smooth' })}
-                    className="w-9 h-9 rounded-full border-2 border-gray-200 flex items-center justify-center text-ink-500 hover:border-forest-400 hover:text-forest-600 transition-all"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
+            {/* ── LANGUAGE SCROLLER (infinite) ── */}
+            <section className="pb-16 overflow-hidden">
+              <h2 className="text-xl font-bold text-ink-900 mb-5">I want to learn</h2>
+              <div className="lang-marquee group">
+                <div className="lang-marquee-track">
+                  {[...LANGUAGES_LIST, ...LANGUAGES_LIST, ...LANGUAGES_LIST].map((lang, idx) => {
+                    const accent = getAccent(lang.id);
+                    const Icon = lang.Icon;
+                    return (
+                      <button
+                        key={`${lang.id}-${idx}`}
+                        onClick={() => handleCategoryClick('lessons')}
+                        className="flex-shrink-0 w-44 group/item text-left"
+                      >
+                        <div className={`w-44 h-44 rounded-2xl bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-3 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all`}>
+                          <Icon className="w-12 h-12 text-white" />
+                        </div>
+                        <p className="font-bold text-ink-900 text-base">{lang.name}</p>
+                        <p className={`text-sm font-bold ${accent.text}`}>{lang.native}</p>
+                      </button>
+                    );
+                  })}
                 </div>
-              </div>
-              <div
-                ref={langScrollRef}
-                className="flex gap-4 overflow-x-auto pb-4 scroll-smooth snap-x"
-                style={{ scrollbarWidth: 'thin' }}
-              >
-                {LANGUAGES_LIST.map((lang) => {
-                  const accent = getAccent(lang.id);
-                  return (
-                    <button
-                      key={lang.id}
-                      onClick={() => handleCategoryClick('lessons')}
-                      className="snap-start flex-shrink-0 w-44 group text-left"
-                    >
-                      <div className={`w-44 h-44 rounded-2xl bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-3 shadow-card group-hover:shadow-card-hover group-hover:scale-[1.03] transition-all`}>
-                        <Languages className="w-12 h-12 text-white" />
-                      </div>
-                      <p className="font-bold text-ink-900 text-base">{lang.name}</p>
-                      <p className={`text-sm font-bold ${accent.text}`}>{lang.native}</p>
-                    </button>
-                  );
-                })}
-                <div className="flex-shrink-0 w-2" />
               </div>
             </section>
 

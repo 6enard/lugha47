@@ -96,6 +96,30 @@
   }
 }
 
+/* Infinite language marquee */
+@keyframes langMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333%); }
+}
+
+.lang-marquee {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+}
+
+.lang-marquee-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: langMarquee 40s linear infinite;
+}
+
+.group:hover .lang-marquee-track {
+  animation-play-state: paused;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
