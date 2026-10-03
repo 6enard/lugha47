@@ -1,6 +1,6 @@
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Languages, BookOpen, Trophy, TrendingUp, LogOut, ArrowRight, Sparkles, Globe, Users, MessageCircle, Home as HomeIcon, ShoppingCart, Car, UtensilsCrossed, School } from 'lucide-react';
+import { Languages, BookOpen, Trophy, TrendingUp, LogOut, ArrowRight, Sparkles, Globe, Users, MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getLanguages, saveUserLanguageSelection } from '../services/dataService';
 import { LanguageSelector } from '../components/LanguageSelector';
@@ -11,14 +11,6 @@ import { getAllLanguageConversations } from '../data/conversations';
 
 type HomeView = 'dashboard' | 'languages' | 'lessons' | 'conversations' | 'culture';
 
-const scenarioIcons = [
-  { icon: HomeIcon, color: 'from-amber-400 to-orange-500' },
-  { icon: ShoppingCart, color: 'from-emerald-400 to-teal-500' },
-  { icon: Car, color: 'from-sky-400 to-cyan-500' },
-  { icon: UtensilsCrossed, color: 'from-rose-400 to-pink-500' },
-  { icon: Users, color: 'from-violet-400 to-purple-500' },
-  { icon: School, color: 'from-blue-400 to-indigo-500' },
-];
 
 export function Home() {
   const { user, logout } = useAuth();
@@ -208,51 +200,50 @@ export function Home() {
                 </div>
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Real Life Conversations</h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                  Practice everyday situations — at home, the market, the restaurant, and more — in each of Kenya's languages.
+                  Practice everyday situations — at home, the market, the restaurant, and more. Choose a language to see the scenarios.
                 </p>
               </div>
 
-              {getAllLanguageConversations().map((langConv) => {
-                const isCurrentLang = selectedLanguage === langConv.languageId;
-                return (
-                  <div key={langConv.languageId} className="mb-10">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg">
-                        <Languages className="w-7 h-7 text-white" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                {getAllLanguageConversations().map((langConv, index) => {
+                  const isCurrentLang = selectedLanguage === langConv.languageId;
+                  return (
+                    <button
+                      key={langConv.languageId}
+                      onClick={() => {
+                        setSelectedLanguage(langConv.languageId);
+                        setView('conversations');
+                      }}
+                      className="group bg-white rounded-3xl shadow-lg p-8 border border-gray-200/50 hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 text-left hover:-translate-y-2"
+                      style={{ animationDelay: `${index * 80}ms` }}
+                    >
+                      <div className="flex items-center gap-4 mb-5">
+                        <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                          <Languages className="w-8 h-8 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-900">{langConv.languageName}</h3>
+                          <p className="text-emerald-600 font-bold">{langConv.nativeName}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-gray-900">{langConv.languageName}</h3>
-                        <p className="text-emerald-600 font-bold">{langConv.nativeName}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-500 font-semibold">
+                          {langConv.scenarios.length} scenarios
+                        </span>
+                        {isCurrentLang && (
+                          <span className="px-3 py-1 bg-emerald-100 border border-emerald-200 rounded-full text-xs font-bold text-emerald-700">
+                            Your Language
+                          </span>
+                        )}
                       </div>
-                      {isCurrentLang && (
-                        <span className="ml-2 px-3 py-1 bg-emerald-100 border border-emerald-200 rounded-full text-xs font-bold text-emerald-700">Your Language</span>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {langConv.scenarios.map((scenario, index) => {
-                        const iconData = scenarioIcons[index % scenarioIcons.length];
-                        const Icon = iconData.icon;
-                        return (
-                          <button
-                            key={scenario.id}
-                            onClick={() => {
-                              setSelectedLanguage(langConv.languageId);
-                              setView('conversations');
-                            }}
-                            className="group bg-white rounded-2xl shadow-lg p-5 border border-gray-200/50 hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 text-left hover:-translate-y-1"
-                          >
-                            <div className={`w-12 h-12 bg-gradient-to-br ${iconData.color} rounded-xl flex items-center justify-center mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                              <Icon className="w-6 h-6 text-white" />
-                            </div>
-                            <h4 className="text-base font-bold text-gray-900 mb-1">{scenario.title}</h4>
-                            <p className="text-xs text-gray-500 leading-relaxed">{scenario.description}</p>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
+                      <div className="mt-4 flex items-center gap-2 text-emerald-600 font-bold group-hover:gap-3 transition-all duration-300">
+                        Start Conversing
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="mb-24">
