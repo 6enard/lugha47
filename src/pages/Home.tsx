@@ -13,14 +13,17 @@ import {
   Trophy,
   Users,
   Star,
-
+  Languages,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getLanguages, saveUserLanguageSelection } from '../services/dataService';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { LessonViewer } from '../components/LessonViewer';
 import { ConversationPractice } from '../components/ConversationPractice';
 import { CulturalLessons } from '../components/CulturalLessons';
+import { getAccent } from '../data/languageAccents';
 
 type HomeView = 'dashboard' | 'language-pick' | 'lessons' | 'conversations' | 'culture';
 type Category = 'lessons' | 'conversations' | 'culture';
@@ -63,6 +66,7 @@ export function Home() {
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const [pendingCategory, setPendingCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
+  const langScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -237,28 +241,53 @@ export function Home() {
               </div>
             </section>
 
-            {/* ── LANGUAGE PILLS ROW ── */}
+            {/* ── LANGUAGE SCROLLER ── */}
             <section className="pb-16">
-              <div className="text-center mb-6">
-                <p className="text-sm font-bold text-ink-400 uppercase tracking-widest">7 Languages Available</p>
-              </div>
-              <div className="flex flex-wrap justify-center gap-2.5">
-                {LANGUAGES_LIST.map((lang) => (
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-xl font-bold text-ink-900">I want to learn</h2>
+                <div className="flex gap-2">
                   <button
-                    key={lang.id}
-                    onClick={() => handleCategoryClick('lessons')}
-                    className="px-5 py-2.5 bg-white border-2 border-gray-200 rounded-full font-bold text-sm text-ink-700 hover:border-forest-400 hover:bg-forest-50 transition-all"
+                    onClick={() => langScrollRef.current?.scrollBy({ left: -240, behavior: 'smooth' })}
+                    className="w-9 h-9 rounded-full border-2 border-gray-200 flex items-center justify-center text-ink-500 hover:border-forest-400 hover:text-forest-600 transition-all"
                   >
-                    {lang.name}
-                    <span className="text-ink-300 font-medium ml-1.5">{lang.native}</span>
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
-                ))}
+                  <button
+                    onClick={() => langScrollRef.current?.scrollBy({ left: 240, behavior: 'smooth' })}
+                    className="w-9 h-9 rounded-full border-2 border-gray-200 flex items-center justify-center text-ink-500 hover:border-forest-400 hover:text-forest-600 transition-all"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+              <div
+                ref={langScrollRef}
+                className="flex gap-4 overflow-x-auto pb-4 scroll-smooth snap-x"
+                style={{ scrollbarWidth: 'thin' }}
+              >
+                {LANGUAGES_LIST.map((lang) => {
+                  const accent = getAccent(lang.id);
+                  return (
+                    <button
+                      key={lang.id}
+                      onClick={() => handleCategoryClick('lessons')}
+                      className="snap-start flex-shrink-0 w-44 group text-left"
+                    >
+                      <div className={`w-44 h-44 rounded-2xl bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-3 shadow-card group-hover:shadow-card-hover group-hover:scale-[1.03] transition-all`}>
+                        <Languages className="w-12 h-12 text-white" />
+                      </div>
+                      <p className="font-bold text-ink-900 text-base">{lang.name}</p>
+                      <p className={`text-sm font-bold ${accent.text}`}>{lang.native}</p>
+                    </button>
+                  );
+                })}
+                <div className="flex-shrink-0 w-2" />
               </div>
             </section>
 
-            {/* ── "THE EFFECTIVE WAY" SECTION ── */}
+            {/* ── "THE EFFECTIVE WAY" — Alternating rows ── */}
             <section className="py-16 border-t border-gray-200/60">
-              <div className="text-center mb-12">
+              <div className="text-center mb-14">
                 <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-3">
                   The effective way to learn a language online
                 </h2>
@@ -267,38 +296,65 @@ export function Home() {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-8">
-                {/* Feature 1 */}
-                <div className="text-center">
-                  <div className="rounded-2xl overflow-hidden mb-5 shadow-card">
-                    <img src={SECTION2_IMG} alt="Learn to speak with confidence" className="w-full h-56 object-cover" />
+              <div className="space-y-16 md:space-y-24">
+                {/* Row 1 — image left, text right */}
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                  <div className="rounded-3xl overflow-hidden shadow-card order-1">
+                    <img src={SECTION2_IMG} alt="Learn to speak with confidence" className="w-full h-64 md:h-80 object-cover" />
                   </div>
-                  <h3 className="text-xl font-bold text-ink-900 mb-2">Learn to speak with confidence</h3>
-                  <p className="text-ink-500 text-sm leading-relaxed">
-                    You'll learn practical, useful skills you can apply right away — so you can reach your goal of having real-life conversations faster.
-                  </p>
+                  <div className="order-2">
+                    <p className="text-xs font-bold text-forest-600 uppercase tracking-widest mb-3">Interactive Lessons</p>
+                    <h3 className="text-2xl md:text-3xl font-bold text-ink-900 mb-3">Learn to speak with confidence</h3>
+                    <p className="text-ink-500 leading-relaxed mb-6">
+                      You'll learn practical, useful skills you can apply right away — so you can reach your goal of having real-life conversations faster. Flashcards, sentence building, and quizzes reinforce every word.
+                    </p>
+                    <button
+                      onClick={() => handleCategoryClick('lessons')}
+                      className="btn btn-primary px-6 py-3 inline-flex items-center gap-2"
+                    >
+                      Start Learning <ArrowRight className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
 
-                {/* Feature 2 */}
-                <div className="text-center">
-                  <div className="rounded-2xl overflow-hidden mb-5 shadow-card">
-                    <img src={SECTION3_IMG} alt="Learn at your own pace" className="w-full h-56 object-cover" />
+                {/* Row 2 — image right, text left */}
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                  <div className="order-2 md:order-1">
+                    <p className="text-xs font-bold text-sun-600 uppercase tracking-widest mb-3">Flexible Progress</p>
+                    <h3 className="text-2xl md:text-3xl font-bold text-ink-900 mb-3">Learn at your own pace</h3>
+                    <p className="text-ink-500 leading-relaxed mb-6">
+                      Achieve your goals with lessons tailored to your level. Stay motivated with progress trackers, quiz scores, and visual feedback. It's like having a private tutor in your pocket.
+                    </p>
+                    <button
+                      onClick={() => handleCategoryClick('lessons')}
+                      className="btn btn-primary px-6 py-3 inline-flex items-center gap-2"
+                    >
+                      Track Your Progress <ArrowRight className="w-5 h-5" />
+                    </button>
                   </div>
-                  <h3 className="text-xl font-bold text-ink-900 mb-2">Learn at your own pace</h3>
-                  <p className="text-ink-500 text-sm leading-relaxed">
-                    Achieve your goals with lessons tailored to your level. Stay motivated with progress trackers, quiz scores, and visual feedback.
-                  </p>
+                  <div className="rounded-3xl overflow-hidden shadow-card order-1 md:order-2">
+                    <img src={SECTION3_IMG} alt="Learn at your own pace" className="w-full h-64 md:h-80 object-cover" />
+                  </div>
                 </div>
 
-                {/* Feature 3 */}
-                <div className="text-center">
-                  <div className="rounded-2xl overflow-hidden mb-5 shadow-card">
-                    <img src={CULTURE_IMG} alt="Develop language skills with culture" className="w-full h-56 object-cover" />
+                {/* Row 3 — image left, text right */}
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                  <div className="rounded-3xl overflow-hidden shadow-card order-1">
+                    <img src={CULTURE_IMG} alt="Connect with culture" className="w-full h-64 md:h-80 object-cover" />
                   </div>
-                  <h3 className="text-xl font-bold text-ink-900 mb-2">Connect with culture</h3>
-                  <p className="text-ink-500 text-sm leading-relaxed">
-                    Go beyond vocabulary — explore traditions, proverbs, foods, and customs that give each language its soul.
-                  </p>
+                  <div className="order-2">
+                    <p className="text-xs font-bold text-lake-600 uppercase tracking-widest mb-3">Cultural Immersion</p>
+                    <h3 className="text-2xl md:text-3xl font-bold text-ink-900 mb-3">Connect with culture</h3>
+                    <p className="text-ink-500 leading-relaxed mb-6">
+                      Go beyond vocabulary — explore traditions, proverbs, foods, and customs that give each language its soul. Learn the words and the world they come from.
+                    </p>
+                    <button
+                      onClick={() => handleCategoryClick('culture')}
+                      className="btn btn-primary px-6 py-3 inline-flex items-center gap-2"
+                    >
+                      Explore Culture <ArrowRight className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </section>
