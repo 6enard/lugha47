@@ -304,43 +304,43 @@ export function Home() {
             </section>
 
             {/* ── THE METHOD SECTION ── */}
-            <section className="py-16 border-t border-gray-200/60">
+            <section className="py-16 bg-forest-700 border-y border-forest-800 -mx-4 px-4">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-3">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
                   The proven LUGHA47 method
                 </h2>
-                <p className="text-ink-500 max-w-2xl mx-auto">
+                <p className="text-forest-100 max-w-2xl mx-auto">
                   Our approach blends interactive lessons, real-life conversations, and cultural immersion.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="card p-8 text-center">
-                  <div className="w-14 h-14 bg-forest-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-forest-100">
-                    <Zap className="w-7 h-7 text-forest-600" />
+              <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div className="bg-forest-600/40 backdrop-blur-sm rounded-2xl p-8 text-center border border-forest-500/30">
+                  <div className="w-14 h-14 bg-forest-300/20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-forest-300/30">
+                    <Zap className="w-7 h-7 text-forest-100" />
                   </div>
-                  <h3 className="text-lg font-bold text-ink-900 mb-2">Learn Fast. Talk Sooner.</h3>
-                  <p className="text-ink-500 text-sm leading-relaxed">
+                  <h3 className="text-lg font-bold text-white mb-2">Learn Fast. Talk Sooner.</h3>
+                  <p className="text-forest-100 text-sm leading-relaxed">
                     Quickly become conversation-ready with flashcards, sentence building, and quizzes designed for all learning styles.
                   </p>
                 </div>
 
-                <div className="card p-8 text-center">
-                  <div className="w-14 h-14 bg-sun-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-sun-100">
-                    <Trophy className="w-7 h-7 text-sun-600" />
+                <div className="bg-forest-600/40 backdrop-blur-sm rounded-2xl p-8 text-center border border-forest-500/30">
+                  <div className="w-14 h-14 bg-sun-400/20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-sun-400/30">
+                    <Trophy className="w-7 h-7 text-sun-300" />
                   </div>
-                  <h3 className="text-lg font-bold text-ink-900 mb-2">Track Your Progress</h3>
-                  <p className="text-ink-500 text-sm leading-relaxed">
+                  <h3 className="text-lg font-bold text-white mb-2">Track Your Progress</h3>
+                  <p className="text-forest-100 text-sm leading-relaxed">
                     Quiz scores, lesson completion markers, and best-score tracking keep you motivated and moving forward.
                   </p>
                 </div>
 
-                <div className="card p-8 text-center">
-                  <div className="w-14 h-14 bg-lake-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-lake-100">
-                    <Users className="w-7 h-7 text-lake-600" />
+                <div className="bg-forest-600/40 backdrop-blur-sm rounded-2xl p-8 text-center border border-forest-500/30">
+                  <div className="w-14 h-14 bg-lake-400/20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-lake-400/30">
+                    <Users className="w-7 h-7 text-lake-200" />
                   </div>
-                  <h3 className="text-lg font-bold text-ink-900 mb-2">Built for Communities</h3>
-                  <p className="text-ink-500 text-sm leading-relaxed">
+                  <h3 className="text-lg font-bold text-white mb-2">Built for Communities</h3>
+                  <p className="text-forest-100 text-sm leading-relaxed">
                     Courses crafted to preserve the heritage of Kenya's communities — from greetings to proverbs to everyday conversations.
                   </p>
                 </div>
@@ -406,41 +406,69 @@ export function Home() {
             </section>
 
             {/* ── TESTIMONIAL / SOCIAL PROOF ── */}
-            <section className="py-16 border-t border-gray-200/60">
+            <section className="py-16 bg-forest-700 border-y border-forest-800 -mx-4 px-4">
               <div className="text-center mb-10">
-                <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-3">Learners love LUGHA47</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">Learners love LUGHA47</h2>
                 <div className="flex items-center justify-center gap-1 mb-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-sun-400 text-sun-400" />
                   ))}
                 </div>
-                <p className="text-ink-400 text-sm">Join thousands of Kenyans reconnecting with their roots</p>
+                <p className="text-forest-100 text-sm">Join thousands of Kenyans reconnecting with their roots</p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-5">
+              <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
                 {[
                   { quote: "I finally learned to greet my grandmother in Kalenjin. She was so proud!", name: "Chebet K.", lang: "Learning Kalenjin" },
                   { quote: "The conversation practice feels so real. I can bargain at the market in Kikuyu now!", name: "Kamau N.", lang: "Learning Kikuyu" },
                   { quote: "The cultural lessons are a treasure. My kids are learning our language and our stories.", name: "Omondi A.", lang: "Learning Luo" },
                 ].map((t, i) => (
-                  <div key={i} className="card p-7">
+                  <div key={i} className="bg-forest-600/40 backdrop-blur-sm rounded-2xl p-7 border border-forest-500/30">
                     <div className="flex gap-0.5 mb-3">
                       {[...Array(5)].map((_, j) => (
                         <Star key={j} className="w-4 h-4 fill-sun-400 text-sun-400" />
                       ))}
                     </div>
-                    <p className="text-ink-700 leading-relaxed mb-4 italic">"{t.quote}"</p>
+                    <p className="text-forest-50 leading-relaxed mb-4 italic">"{t.quote}"</p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-forest-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="font-bold text-forest-700 text-sm">{t.name.charAt(0)}</span>
+                      <div className="w-10 h-10 bg-forest-300/20 rounded-full flex items-center justify-center flex-shrink-0 border border-forest-300/30">
+                        <span className="font-bold text-forest-100 text-sm">{t.name.charAt(0)}</span>
                       </div>
                       <div>
-                        <p className="font-bold text-ink-900 text-sm">{t.name}</p>
-                        <p className="text-ink-400 text-xs">{t.lang}</p>
+                        <p className="font-bold text-white text-sm">{t.name}</p>
+                        <p className="text-forest-200 text-xs">{t.lang}</p>
                       </div>
                     </div>
                   </div>
                 ))}
+              </div>
+            </section>
+
+            {/* ── FAQ SECTION ── */}
+            <section className="py-16 border-t border-gray-200/60">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-8 text-center">
+                  Frequently asked questions
+                </h2>
+                <div className="space-y-3">
+                  {[
+                    { q: "What is LUGHA47, and how does it work?", a: "LUGHA47 is a free language learning platform designed to preserve Kenya's indigenous languages. You learn through interactive flashcards, sentence building exercises, quizzes, conversation practice, and cultural lessons." },
+                    { q: "What languages can I learn?", a: "Currently we offer seven languages: Kalenjin, Kikuyu, Luo, Kamba, Luhya, Gusii, and Somali — each with vocabulary lessons, conversation scenarios, and deep cultural content." },
+                    { q: "Can I try LUGHA47 for free?", a: "Absolutely! Signing up is completely free, and you get access to all lessons, quizzes, conversation practice, and cultural content at no cost." },
+                    { q: "Do I need any prior knowledge?", a: "No! Our lessons start from the very basics — greetings, numbers, family words — and build up to sentence construction and real conversations. All levels are welcome." },
+                    { q: "How does progress tracking work?", a: "Every quiz you complete saves your score. You can see your best score per lesson, track which lessons you've completed, and follow your improvement over time." },
+                  ].map((faq, i) => (
+                    <details key={i} className="card p-0 group">
+                      <summary className="cursor-pointer p-5 font-bold text-ink-900 text-base flex items-center justify-between list-none">
+                        {faq.q}
+                        <span className="text-forest-600 text-xl transition-transform group-open:rotate-45">+</span>
+                      </summary>
+                      <div className="px-5 pb-5 text-ink-500 text-sm leading-relaxed">
+                        {faq.a}
+                      </div>
+                    </details>
+                  ))}
+                </div>
               </div>
             </section>
 
@@ -483,34 +511,6 @@ export function Home() {
                       </>
                     )}
                   </div>
-                </div>
-              </div>
-            </section>
-
-            {/* ── FAQ SECTION ── */}
-            <section className="py-16 border-t border-gray-200/60">
-              <div className="max-w-3xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-8 text-center">
-                  Frequently asked questions
-                </h2>
-                <div className="space-y-3">
-                  {[
-                    { q: "What is LUGHA47, and how does it work?", a: "LUGHA47 is a free language learning platform designed to preserve Kenya's indigenous languages. You learn through interactive flashcards, sentence building exercises, quizzes, conversation practice, and cultural lessons." },
-                    { q: "What languages can I learn?", a: "Currently we offer seven languages: Kalenjin, Kikuyu, Luo, Kamba, Luhya, Gusii, and Somali — each with vocabulary lessons, conversation scenarios, and deep cultural content." },
-                    { q: "Can I try LUGHA47 for free?", a: "Absolutely! Signing up is completely free, and you get access to all lessons, quizzes, conversation practice, and cultural content at no cost." },
-                    { q: "Do I need any prior knowledge?", a: "No! Our lessons start from the very basics — greetings, numbers, family words — and build up to sentence construction and real conversations. All levels are welcome." },
-                    { q: "How does progress tracking work?", a: "Every quiz you complete saves your score. You can see your best score per lesson, track which lessons you've completed, and follow your improvement over time." },
-                  ].map((faq, i) => (
-                    <details key={i} className="card p-0 group">
-                      <summary className="cursor-pointer p-5 font-bold text-ink-900 text-base flex items-center justify-between list-none">
-                        {faq.q}
-                        <span className="text-forest-600 text-xl transition-transform group-open:rotate-45">+</span>
-                      </summary>
-                      <div className="px-5 pb-5 text-ink-500 text-sm leading-relaxed">
-                        {faq.a}
-                      </div>
-                    </details>
-                  ))}
                 </div>
               </div>
             </section>
