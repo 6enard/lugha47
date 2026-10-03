@@ -249,55 +249,53 @@ export function Home() {
               </div>
             </section>
 
-            {/* ── LANGUAGE SCROLLER (infinite) ── */}
-            <section className="pb-16 overflow-hidden">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-xl font-bold text-ink-900">I want to learn</h2>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => {
-                      if (marqueeRef.current) {
-                        marqueeRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-                      }
-                    }}
-                    className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-card flex items-center justify-center text-ink-600 hover:bg-gray-50 hover:border-forest-300 transition-all"
-                    aria-label="Scroll left"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (marqueeRef.current) {
-                        marqueeRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-                      }
-                    }}
-                    className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-card flex items-center justify-center text-ink-600 hover:bg-gray-50 hover:border-forest-300 transition-all"
-                    aria-label="Scroll right"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
+            {/* ── LANGUAGE SCROLLER ── */}
+            <section className="pb-16">
+              <h2 className="text-xl font-bold text-ink-900 mb-5">I want to learn</h2>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    if (marqueeRef.current) {
+                      marqueeRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+                    }
+                  }}
+                  className="flex-shrink-0 flex items-center justify-center text-ink-400 hover:text-forest-700 transition-colors p-1"
+                  aria-label="Scroll left"
+                >
+                  <ChevronLeft className="w-7 h-7" />
+                </button>
+                <div className="lang-marquee group flex-1" ref={marqueeRef}>
+                  <div className="lang-marquee-track">
+                    {[...LANGUAGES_LIST, ...LANGUAGES_LIST, ...LANGUAGES_LIST].map((lang, idx) => {
+                      const accent = getAccent(lang.id);
+                      const Icon = lang.Icon;
+                      return (
+                        <button
+                          key={`${lang.id}-${idx}`}
+                          onClick={() => handleCategoryClick('lessons')}
+                          className="flex-shrink-0 w-24 group/item text-left"
+                        >
+                          <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-2.5 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all`}>
+                            <Icon className="w-6 h-6 text-white" />
+                          </div>
+                          <p className="font-bold text-ink-900 text-sm">{lang.name}</p>
+                          <p className={`text-xs font-bold ${accent.text}`}>{lang.native}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-              <div className="lang-marquee group" ref={marqueeRef}>
-                <div className="lang-marquee-track">
-                  {[...LANGUAGES_LIST, ...LANGUAGES_LIST, ...LANGUAGES_LIST].map((lang, idx) => {
-                    const accent = getAccent(lang.id);
-                    const Icon = lang.Icon;
-                    return (
-                      <button
-                        key={`${lang.id}-${idx}`}
-                        onClick={() => handleCategoryClick('lessons')}
-                        className="flex-shrink-0 w-24 group/item text-left"
-                      >
-                        <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-2.5 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all`}>
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        <p className="font-bold text-ink-900 text-sm">{lang.name}</p>
-                        <p className={`text-xs font-bold ${accent.text}`}>{lang.native}</p>
-                      </button>
-                    );
-                  })}
-                </div>
+                <button
+                  onClick={() => {
+                    if (marqueeRef.current) {
+                      marqueeRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+                    }
+                  }}
+                  className="flex-shrink-0 flex items-center justify-center text-ink-400 hover:text-forest-700 transition-colors p-1"
+                  aria-label="Scroll right"
+                >
+                  <ChevronRight className="w-7 h-7" />
+                </button>
               </div>
             </section>
 
