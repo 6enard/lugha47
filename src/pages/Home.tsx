@@ -1,12 +1,23 @@
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Languages, BookOpen, Trophy, TrendingUp, LogOut, ArrowRight, Sparkles, Globe, Users } from 'lucide-react';
+import { Languages, BookOpen, Trophy, TrendingUp, LogOut, ArrowRight, Sparkles, Globe, Users, MessageCircle, Home as HomeIcon, ShoppingCart, Car, UtensilsCrossed, School } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getLanguages, saveUserLanguageSelection } from '../services/dataService';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { LessonViewer } from '../components/LessonViewer';
+import { ConversationPractice } from '../components/ConversationPractice';
+import { getConversationScenarios } from '../data/conversations';
 
-type HomeView = 'dashboard' | 'languages' | 'lessons';
+type HomeView = 'dashboard' | 'languages' | 'lessons' | 'conversations';
+
+const scenarioIcons = [
+  { icon: HomeIcon, color: 'from-amber-400 to-orange-500' },
+  { icon: ShoppingCart, color: 'from-emerald-400 to-teal-500' },
+  { icon: Car, color: 'from-sky-400 to-cyan-500' },
+  { icon: UtensilsCrossed, color: 'from-rose-400 to-pink-500' },
+  { icon: Users, color: 'from-violet-400 to-purple-500' },
+  { icon: School, color: 'from-blue-400 to-indigo-500' },
+];
 
 export function Home() {
   const { user, logout } = useAuth();
@@ -131,10 +142,10 @@ export function Home() {
                   </span>
                 </button>
                 <button
-                  onClick={() => document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => document.getElementById('real-life')?.scrollIntoView({ behavior: 'smooth' })}
                   className="px-8 py-4 bg-white text-gray-700 rounded-2xl font-bold text-lg shadow-md hover:shadow-lg transition-all duration-300 border-2 border-gray-200 hover:border-emerald-300"
                 >
-                  Learn More
+                  Try Real Conversations
                 </button>
               </div>
             </div>
@@ -176,6 +187,64 @@ export function Home() {
                     Monitor your progress with detailed analytics as you master your native language.
                   </p>
                 </div>
+              </div>
+            </div>
+
+            <div className="mb-24" id="real-life">
+              <div className="text-center mb-12">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 rounded-full mb-6 border border-emerald-200">
+                  <MessageCircle className="w-4 h-4 text-emerald-600" />
+                  <span className="text-sm font-semibold text-emerald-700">Words → Sentences → Conversation</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Real Life Conversations</h2>
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  Practice {languages.length > 0 ? 'your language' : 'Kalenjin, Kikuyu, or Luo'} in everyday situations — at home, the market, the restaurant, and more.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-8">
+                {getConversationScenarios().map((scenario, index) => {
+                  const iconData = scenarioIcons[index % scenarioIcons.length];
+                  const Icon = iconData.icon;
+                  return (
+                    <button
+                      key={scenario.id}
+                      onClick={() => {
+                        if (!selectedLanguage) {
+                          setView('languages');
+                        } else {
+                          setView('conversations');
+                        }
+                      }}
+                      className="group bg-white rounded-2xl shadow-lg p-6 border border-gray-200/50 hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 text-left hover:-translate-y-1"
+                    >
+                      <div className={`w-14 h-14 bg-gradient-to-br ${iconData.color} rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <Icon className="w-7 h-7 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">{scenario.title}</h3>
+                      <p className="text-sm text-gray-500 leading-relaxed">{scenario.description}</p>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="text-center">
+                <button
+                  onClick={() => {
+                    if (!selectedLanguage) {
+                      setView('languages');
+                    } else {
+                      setView('conversations');
+                    }
+                  }}
+                  className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  Start Practicing
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+                {!selectedLanguage && (
+                  <p className="mt-3 text-sm text-gray-500">Pick a language first to begin</p>
+                )}
               </div>
             </div>
 
@@ -260,6 +329,13 @@ export function Home() {
           <LessonViewer
             languageId={selectedLanguage}
             onBack={() => setView('languages')}
+          />
+        )}
+
+        {view === 'conversations' && selectedLanguage && (
+          <ConversationPractice
+            languageId={selectedLanguage}
+            onBack={() => setView('dashboard')}
           />
         )}
       </main>
