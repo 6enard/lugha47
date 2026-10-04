@@ -1,5 +1,12 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowRight,
+  faArrowLeft,
+  faTarget,
+  faMessage,
+  faBookOpen,
+} from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, Target, MessageSquare, BookOpen } from 'lucide-react';
 import { getLessons, getLessonContent, getQuizQuestions, saveQuizResult, saveUserProgress, getBestQuizScore, Lesson, LessonContent, QuizQuestion } from '../services/dataService';
 import { Quiz } from './Quiz';
 import { SentenceBuilder } from './SentenceBuilder';
@@ -144,7 +151,7 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
           subtitle="Test your knowledge and track your progress"
           onBack={() => setViewMode('detail')}
           backLabel="Back to Lesson"
-          icon={<Target className="w-7 h-7 text-forest-600" />}
+          icon={<FontAwesomeIcon icon={faTarget} className="text-2xl text-forest-600" />}
         />
         <Quiz
           questions={quizQuestions}
@@ -181,7 +188,7 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
           subtitle={selectedLesson.description}
           onBack={() => setViewMode('list')}
           backLabel="Back to Lessons"
-          icon={<BookOpen className="w-7 h-7 text-forest-600" />}
+          icon={<FontAwesomeIcon icon={faBookOpen} className="text-2xl text-forest-600" />}
         />
 
         {/* Progress dots */}
@@ -231,7 +238,7 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
             disabled={cardIndex === 0}
             className="btn btn-secondary px-5 py-3 flex items-center gap-2"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <FontAwesomeIcon icon={faArrowLeft} className="text-base" />
             <span className="hidden sm:inline">Previous</span>
           </button>
 
@@ -241,7 +248,7 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
               className="btn btn-primary px-6 py-3 flex items-center gap-2"
             >
               Build Sentences
-              <ArrowRight className="w-5 h-5" />
+              <FontAwesomeIcon icon={faArrowRight} className="text-base" />
             </button>
           ) : (
             <button
@@ -249,7 +256,7 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
               className="btn btn-primary px-6 py-3 flex items-center gap-2"
             >
               Next
-              <ArrowRight className="w-5 h-5" />
+              <FontAwesomeIcon icon={faArrowRight} className="text-base" />
             </button>
           )}
         </div>
@@ -259,7 +266,7 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
           <div className="mt-6 card p-6 border-sun-200 bg-sun-50/50">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-sun-400 rounded-xl flex items-center justify-center flex-shrink-0">
-                <MessageSquare className="w-6 h-6 text-ink-900" />
+                <FontAwesomeIcon icon={faMessage} className="text-xl text-ink-900" />
               </div>
               <div className="flex-1">
                 <p className="text-lg font-bold text-ink-900 mb-1">
@@ -274,13 +281,13 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
                     className="btn btn-primary px-6 py-3 flex items-center justify-center gap-2"
                   >
                     Build Sentences
-                    <ArrowRight className="w-5 h-5" />
+                    <FontAwesomeIcon icon={faArrowRight} className="text-base" />
                   </button>
                   <button
                     onClick={handleStartQuiz}
                     className="btn btn-secondary px-6 py-3 flex items-center justify-center gap-2"
                   >
-                    <Target className="w-5 h-5" />
+                    <FontAwesomeIcon icon={faTarget} className="text-base" />
                     Skip to Quiz
                   </button>
                 </div>

@@ -1,4 +1,5 @@
-import { CheckCircle2, ArrowRight, Star } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faArrowRight, faStar } from '@fortawesome/free-solid-svg-icons';
 import { ScreenHeader } from './ui';
 
 export interface LessonListLesson {
@@ -54,7 +55,7 @@ export function LessonList({
               <div className="flex-shrink-0">
                 {isCompleted ? (
                   <div className="w-11 h-11 rounded-full bg-forest-500 flex items-center justify-center shadow-sm">
-                    <CheckCircle2 className="w-6 h-6 text-white" />
+                    <FontAwesomeIcon icon={faCheckCircle} className="text-xl text-white" />
                   </div>
                 ) : (
                   <div
@@ -83,7 +84,7 @@ export function LessonList({
               <div className="flex items-center gap-3 flex-shrink-0">
                 {score !== undefined && score > 0 && (
                   <div className="flex items-center gap-1 text-sun-600 font-bold text-sm">
-                    <Star className="w-4 h-4 fill-sun-400 text-sun-400" />
+                    <FontAwesomeIcon icon={faStar} className="text-sm text-sun-400" />
                     {score}%
                   </div>
                 )}
@@ -92,7 +93,7 @@ export function LessonList({
                     Next up
                   </span>
                 )}
-                <ArrowRight className="w-5 h-5 text-gray-400" />
+                <FontAwesomeIcon icon={faArrowRight} className="text-base text-gray-400" />
               </div>
             </button>
           );

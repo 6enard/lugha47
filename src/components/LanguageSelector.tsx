@@ -1,4 +1,5 @@
-import { Languages, ArrowRight } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLanguage, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { ScreenHeader } from './ui';
 import { getAccent } from '../data/languageAccents';
 
@@ -38,7 +39,7 @@ export function LanguageSelector({
               className={`card card-hover p-6 text-left ${accent.border}`}
             >
               <div className={`w-14 h-14 bg-gradient-to-br ${accent.iconBg} rounded-xl flex items-center justify-center mb-4 shadow-sm`}>
-                <Languages className="w-7 h-7 text-white" />
+                <FontAwesomeIcon icon={faLanguage} className="text-xl text-white" />
               </div>
               <h3 className="text-xl font-bold text-ink-900 mb-1">
                 {language.name}
@@ -51,7 +52,7 @@ export function LanguageSelector({
               </p>
               <div className={`flex items-center gap-1.5 font-bold text-sm ${accent.text}`}>
                 Start
-                <ArrowRight className="w-4 h-4" />
+                <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
               </div>
             </button>
           );

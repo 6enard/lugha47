@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { CheckCircle2, XCircle, ArrowRight, Trophy, RotateCcw } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCheckCircle,
+  faCircleXmark,
+  faArrowRight,
+  faTrophy,
+  faRotateLeft,
+} from '@fortawesome/free-solid-svg-icons';
 import { ProgressBar } from './ui';
 
 export interface QuizQuestion {
@@ -80,7 +87,7 @@ export function Quiz({ questions, languageId, onComplete, onRetry, onBackToLesso
       <div className="screen-enter max-w-xl mx-auto">
         <div className="card p-8 md:p-12 text-center">
           <div className="w-20 h-20 bg-sun-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
-            <Trophy className="w-10 h-10 text-ink-900" />
+            <FontAwesomeIcon icon={faTrophy} className="text-3xl text-ink-900" />
           </div>
 
           <h2 className="text-3xl md:text-4xl font-bold text-ink-900 mb-4">Quiz Complete!</h2>
@@ -99,7 +106,7 @@ export function Quiz({ questions, languageId, onComplete, onRetry, onBackToLesso
               onClick={onRetry}
               className="btn btn-secondary px-6 py-3 flex items-center justify-center gap-2"
             >
-              <RotateCcw className="w-5 h-5" />
+              <FontAwesomeIcon icon={faRotateLeft} className="text-base" />
               Try Again
             </button>
             <button
@@ -107,7 +114,7 @@ export function Quiz({ questions, languageId, onComplete, onRetry, onBackToLesso
               className="btn btn-primary px-6 py-3 flex items-center justify-center gap-2"
             >
               Back to Lessons
-              <ArrowRight className="w-5 h-5" />
+              <FontAwesomeIcon icon={faArrowRight} className="text-base" />
             </button>
           </div>
         </div>
@@ -169,13 +176,13 @@ export function Quiz({ questions, languageId, onComplete, onRetry, onBackToLesso
                 <div className="flex items-center justify-between">
                   <span>{translation}</span>
                   {isAnswered && isSelected && isCorrect && (
-                    <CheckCircle2 className="w-6 h-6 text-forest-600" />
+                    <FontAwesomeIcon icon={faCheckCircle} className="text-xl text-forest-600" />
                   )}
                   {isAnswered && isSelected && !isCorrect && (
-                    <XCircle className="w-6 h-6 text-kanga-600" />
+                    <FontAwesomeIcon icon={faCircleXmark} className="text-xl text-kanga-600" />
                   )}
                   {isAnswered && !isSelected && isCorrect && (
-                    <CheckCircle2 className="w-6 h-6 text-forest-600" />
+                    <FontAwesomeIcon icon={faCheckCircle} className="text-xl text-forest-600" />
                   )}
                 </div>
               </button>
@@ -192,9 +199,9 @@ export function Quiz({ questions, languageId, onComplete, onRetry, onBackToLesso
           <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5">
               {isCorrectAnswer ? (
-                <CheckCircle2 className="w-6 h-6 text-forest-700 flex-shrink-0" />
+                <FontAwesomeIcon icon={faCheckCircle} className="text-xl text-forest-700 flex-shrink-0" />
               ) : (
-                <XCircle className="w-6 h-6 text-kanga-700 flex-shrink-0" />
+                <FontAwesomeIcon icon={faCircleXmark} className="text-xl text-kanga-700 flex-shrink-0" />
               )}
               <div>
                 <p className={`font-bold text-sm ${isCorrectAnswer ? 'text-forest-800' : 'text-kanga-800'}`}>
@@ -212,7 +219,7 @@ export function Quiz({ questions, languageId, onComplete, onRetry, onBackToLesso
               className={`btn ${isCorrectAnswer ? 'btn-primary' : 'btn-danger'} px-6 py-3 flex items-center gap-2 flex-shrink-0`}
             >
               {isLastQuestion ? 'See Results' : 'Next'}
-              <ArrowRight className="w-5 h-5" />
+              <FontAwesomeIcon icon={faArrowRight} className="text-base" />
             </button>
           </div>
         </div>

@@ -1,0 +1,90 @@
+import { FontAwesomeIcon, type FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
+import {
+  faArrowRight,
+  faArrowLeft,
+  faBookOpen,
+  faGlobe,
+  faMessage,
+  faHouse,
+  faShoppingCart,
+  faCar,
+  faUtensils,
+  faUsers,
+  faSchool,
+  faRotateLeft,
+  faStar,
+  faCheckCircle,
+  faCircleXmark,
+  faTrophy,
+  faBolt,
+  faFire,
+  faCompass,
+  faGem,
+  faDrumstickBite,
+  faSeedling,
+  faFish,
+  faHammer,
+  faFootprints,
+  faEnvelope,
+  faLock,
+  faXmark,
+  faChevronLeft,
+  faChevronRight,
+  faSparkles,
+  faMusic,
+  faMapLocationDot,
+  faLanguage,
+  faGear,
+  faCheck,
+  type IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
+
+export type IconName = keyof typeof iconMap;
+
+export const iconMap = {
+  arrowRight: faArrowRight,
+  arrowLeft: faArrowLeft,
+  bookOpen: faBookOpen,
+  globe: faGlobe,
+  message: faMessage,
+  house: faHouse,
+  shoppingCart: faShoppingCart,
+  car: faCar,
+  utensils: faUtensils,
+  users: faUsers,
+  school: faSchool,
+  rotateLeft: faRotateLeft,
+  star: faStar,
+  checkCircle: faCheckCircle,
+  circleXmark: faCircleXmark,
+  trophy: faTrophy,
+  bolt: faBolt,
+  fire: faFire,
+  compass: faCompass,
+  gem: faGem,
+  drumstickBite: faDrumstickBite,
+  seedling: faSeedling,
+  fish: faFish,
+  hammer: faHammer,
+  footprints: faFootprints,
+  envelope: faEnvelope,
+  lock: faLock,
+  xmark: faXmark,
+  chevronLeft: faChevronLeft,
+  chevronRight: faChevronRight,
+  sparkles: faSparkles,
+  music: faMusic,
+  mapLocationDot: faMapLocationDot,
+  language: faLanguage,
+  gear: faGear,
+  check: faCheck,
+} as const;
+
+interface IconProps extends Omit<FontAwesomeIconProps, 'icon'> {
+  icon: IconDefinition;
+  className?: string;
+}
+
+export function Icon({ icon, className = '', ...rest }: IconProps) {
+  return <FontAwesomeIcon icon={icon} className={className} {...rest} />;
+}

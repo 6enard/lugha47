@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { X, Mail, Lock, ArrowRight } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark, faEnvelope, faLock, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
 
 export function AuthGate() {
@@ -68,7 +69,7 @@ export function AuthGate() {
             onClick={closeAuthGate}
             className="absolute top-6 right-6 text-ink-300 hover:text-ink-600 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <FontAwesomeIcon icon={faXmark} className="text-lg" />
           </button>
 
           <div className="text-center mb-6">
@@ -93,7 +94,7 @@ export function AuthGate() {
             <div>
               <label className="block text-sm font-bold text-ink-700 mb-1.5">Email</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-ink-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <FontAwesomeIcon icon={faEnvelope} className="text-sm text-ink-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
                   required
@@ -108,7 +109,7 @@ export function AuthGate() {
             <div>
               <label className="block text-sm font-bold text-ink-700 mb-1.5">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-ink-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <FontAwesomeIcon icon={faLock} className="text-sm text-ink-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   required
@@ -124,7 +125,7 @@ export function AuthGate() {
               <div>
                 <label className="block text-sm font-bold text-ink-700 mb-1.5">Confirm Password</label>
                 <div className="relative">
-                  <Lock className="w-4 h-4 text-ink-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <FontAwesomeIcon icon={faLock} className="text-sm text-ink-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="password"
                     required
@@ -139,7 +140,7 @@ export function AuthGate() {
 
             <button type="submit" disabled={loading} className="btn btn-primary w-full py-3.5 flex items-center justify-center gap-2">
               {loading ? 'Please wait...' : mode === 'login' ? 'Sign In' : 'Create Account'}
-              {!loading && <ArrowRight className="w-5 h-5" />}
+              {!loading && <FontAwesomeIcon icon={faArrowRight} className="text-base" />}
             </button>
           </form>
 

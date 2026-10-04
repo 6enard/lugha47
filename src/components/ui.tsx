@@ -1,4 +1,5 @@
-import { ArrowLeft } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import type { ReactNode } from 'react';
 
 /* ── ScreenHeader ───────────────────────────────────── */
@@ -24,7 +25,7 @@ export function ScreenHeader({
           onClick={onBack}
           className="group flex items-center gap-1.5 text-forest-700 font-semibold text-sm mb-4 transition-all duration-200 hover:gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-300 rounded-lg px-1"
         >
-          <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
+          <FontAwesomeIcon icon={faArrowLeft} className="text-xs transition-transform group-hover:-translate-x-0.5" />
           {backLabel}
         </button>
       )}
