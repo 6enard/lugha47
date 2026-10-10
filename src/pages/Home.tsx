@@ -275,12 +275,12 @@ export function Home() {
                           onClick={() => handleCategoryClick('lessons')}
                           className="flex-shrink-0 w-24 group/item text-left"
                         >
-                          <div className={`relative w-24 h-24 rounded-full bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-2.5 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all overflow-hidden`}>
-                            <Icon className="w-6 h-6 text-white" />
+                          <div className="relative w-24 h-24 flex items-center justify-center mb-2.5 group-hover/item:scale-[1.03] transition-transform">
+                            <Icon className={`w-6 h-6 ${accent.text}`} />
                             <img
                               src={lang.image}
                               alt={`${lang.name} cultural symbol`}
-                              className="absolute inset-0 w-full h-full object-contain p-1"
+                              className="absolute inset-0 w-full h-full object-contain"
                               onError={(event) => {
                                 event.currentTarget.style.display = 'none';
                               }}
