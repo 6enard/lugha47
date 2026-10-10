@@ -60,7 +60,7 @@ const LANGUAGES_LIST: { id: string; name: string; native: string; Icon: LucideIc
   { id: 'somali', name: 'Somali', native: 'Soomaali', Icon: Compass, image: '/somali.png' },
 ];
 
-const HERO_IMG = 'https://i.ebayimg.com/images/g/0i4AAOSwAyNnX4~h/s-l1600.webp';
+const HERO_IMG = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeW7UjKU1nhyOQihW79siRpxfuDtMpazvAgSKOh81wo5XZjRx-pO_WxAiI&s=10';
 const SECTION2_IMG = 'https://images.pexels.com/photos/8091179/pexels-photo-8091179.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 const SECTION3_IMG = 'https://images.pexels.com/photos/7229097/pexels-photo-7229097.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 const CULTURE_IMG = 'https://images.pexels.com/photos/35034039/pexels-photo-35034039.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
