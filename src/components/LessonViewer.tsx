@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRight,
   faArrowLeft,
-  faTarget,
+  faBullseye,
   faMessage,
   faBookOpen,
 } from '@fortawesome/free-solid-svg-icons';
@@ -151,7 +151,7 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
           subtitle="Test your knowledge and track your progress"
           onBack={() => setViewMode('detail')}
           backLabel="Back to Lesson"
-          icon={<FontAwesomeIcon icon={faTarget} className="text-2xl text-forest-600" />}
+          icon={<FontAwesomeIcon icon={faBullseye} className="text-2xl text-forest-600" />}
         />
         <Quiz
           questions={quizQuestions}
@@ -287,7 +287,7 @@ export function LessonViewer({ languageId, onBack }: LessonViewerProps) {
                     onClick={handleStartQuiz}
                     className="btn btn-secondary px-6 py-3 flex items-center justify-center gap-2"
                   >
-                    <FontAwesomeIcon icon={faTarget} className="text-base" />
+                    <FontAwesomeIcon icon={faBullseye} className="text-base" />
                     Skip to Quiz
                   </button>
                 </div>

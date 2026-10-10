@@ -50,14 +50,14 @@ const CATEGORY_CONFIG: Record<Category, { title: string; subtitle: string }> = {
   },
 };
 
-const LANGUAGES_LIST: { id: string; name: string; native: string; Icon: LucideIcon }[] = [
-  { id: 'kalenjin', name: 'Kalenjin', native: 'Kalenjin', Icon: Footprints },
-  { id: 'kikuyu', name: 'Kikuyu', native: 'Gĩkũyũ', Icon: Sprout },
-  { id: 'luo', name: 'Luo', native: 'Dholuo', Icon: Fish },
-  { id: 'kamba', name: 'Kamba', native: 'Kikamba', Icon: Hammer },
-  { id: 'luhya', name: 'Luhya', native: 'Luluhya', Icon: Beef },
-  { id: 'gusii', name: 'Gusii', native: 'Ekegusii', Icon: Gem },
-  { id: 'somali', name: 'Somali', native: 'Soomaali', Icon: Compass },
+const LANGUAGES_LIST: { id: string; name: string; native: string; Icon: LucideIcon; image: string }[] = [
+  { id: 'kalenjin', name: 'Kalenjin', native: 'Kalenjin', Icon: Footprints, image: '/kalenjin.png' },
+  { id: 'kikuyu', name: 'Kikuyu', native: 'Gĩkũyũ', Icon: Sprout, image: '/kikuyu.png' },
+  { id: 'luo', name: 'Luo', native: 'Dholuo', Icon: Fish, image: '/luo.png' },
+  { id: 'kamba', name: 'Kamba', native: 'Kikamba', Icon: Hammer, image: '/kamba.png' },
+  { id: 'luhya', name: 'Luhya', native: 'Luluhya', Icon: Beef, image: '/lughya.png' },
+  { id: 'gusii', name: 'Gusii', native: 'Ekegusii', Icon: Gem, image: '/kisii.png' },
+  { id: 'somali', name: 'Somali', native: 'Soomaali', Icon: Compass, image: '/somali.png' },
 ];
 
 const HERO_IMG = 'https://images.pexels.com/photos/4921096/pexels-photo-4921096.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
@@ -275,8 +275,16 @@ export function Home() {
                           onClick={() => handleCategoryClick('lessons')}
                           className="flex-shrink-0 w-24 group/item text-left"
                         >
-                          <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-2.5 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all`}>
+                          <div className={`relative w-24 h-24 rounded-full bg-gradient-to-br ${accent.iconBg} flex items-center justify-center mb-2.5 shadow-card group-hover/item:shadow-card-hover group-hover/item:scale-[1.03] transition-all overflow-hidden`}>
                             <Icon className="w-6 h-6 text-white" />
+                            <img
+                              src={lang.image}
+                              alt={`${lang.name} cultural symbol`}
+                              className="absolute inset-0 w-full h-full object-contain p-1"
+                              onError={(event) => {
+                                event.currentTarget.style.display = 'none';
+                              }}
+                            />
                           </div>
                           <p className="font-bold text-ink-900 text-sm">{lang.name}</p>
                           <p className={`text-xs font-bold ${accent.text}`}>{lang.native}</p>
